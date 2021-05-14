@@ -1,0 +1,324 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+body{
+    font-family: 'Raleway';
+    overflow-x: hidden;
+}
+
+.principalLinks{
+  text-decoration: none!important;
+}
+
+.principalLinks:hover{
+  box-shadow: 0px 30px 30px -14px rgba(0, 0, 0, 0.25);
+}
+
+
+.containerHome {
+    margin-top: 10%;
+    display: flex;
+    -webkit-display: box;
+    -moz-display: box;
+    -ms-display: flexbox;
+    -webkit-display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    text-align: center;
+  }
+
+.container {
+    display: flex;
+    -webkit-display: box;
+    -moz-display: box;
+    -ms-display: flexbox;
+    -webkit-display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    max-width: 100%!important;
+    margin: 0px;
+  }
+
+
+  .cards {
+    display: flex;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+
+  @media(min-width: 40rem) {
+    .cards {
+      width: 50%;
+    }
+  }
+
+  @media(min-width: 56rem) {
+    .cards {
+      width: 33.3%;
+    }
+  }
+
+  .card-item {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    width: 100%;
+    border-radius: 6px;
+    box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    transition: transform 0.5s;
+    -webkit-transition: transform 0.5s;
+  }
+  
+  .card-itemUGO {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    width: 100%;
+    border-radius: 6px;
+    box-shadow: 0 20px 60px -60px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    transition: transform 0.5s;
+    -webkit-transition: transform 0.5s;
+  }
+
+  .card-info {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: 1rem;
+    min-height: 105px;
+    line-height: 1.5em;
+  }
+
+  .card-title {
+    font-size: 25px;
+    line-height: 1.1em;
+    color: #32325d;
+    margin-bottom: 0.2em;
+  }
+
+
+  .card-image {
+    margin: auto;
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 6px 6px 0px 0px;
+    opacity: 0.91;
+    background-color: #fff;
+    transition: transform .2s;
+  }
+
+  .thumbnail {
+    margin-top: 65px;
+    margin-left: 40%;
+    transition: 0.2s;
+  }
+
+  .thumbnail:hover {
+    transform: scale(1.2);
+  }
+
+  .accordion {
+    background-color: #fff;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
+
+  .active,
+  .accordion:hover {
+    background-color: #D9F2F3;
+  }
+
+  .accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+  }
+
+  .panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    width: 100%;
+    transition: max-height 0.2s ease-out;
+  }
+
+  .titolCategoria{
+    text-align: center;
+    padding: 10px;
+  }
+
+  .iconsYear{
+    float: right;
+    color: green;
+    font-size: 35px;
+    padding: 20px;
+    margin-right: 20px;
+    text-align: right;
+    transition: 0.2s;
+  }
+
+  .iconsDelete{
+    color: red;
+    font-size: 35px;
+    transition: 0.2s;
+  }
+
+  .iconsEdit{
+    color: lightseagreen;
+    font-size: 35px;
+    transition: 0.2s;
+  }
+
+  .iconsYear:hover{
+    transform: scale(1.5);
+  }
+  
+
+  .iconsDelete:hover{
+    transform: scale(1.5);
+  }
+
+  
+  .iconsEdit:hover{
+    transform: scale(1.5);
+  }
+
+
+  form{
+    margin: 20px;
+  }
+
+  .formButtonHidden{
+    margin: 0px;
+  }
+
+  .editarButton{
+    background: none;
+    padding: 0px;
+    border: none;
+  }
+
+
+  .three-dots:after {
+    cursor: pointer;
+    color: #FCC;
+    content: '\2807';
+    font-size: 20px;
+    padding: 0 5px;
+  }
+  
+  .dropdown {
+    position: absolute;
+    right: 10px;
+    background-color: #66D;
+    box-shadow: 0px 0px 3px 3px #66D;
+    outline: none;
+    opacity: 0;
+    z-index: -1;
+    max-height: 0;
+    transition: opacity 0.1s, z-index 0.1s, max-height 5s;
+  }
+  
+  .dropdown-container:focus {
+    outline: none;
+  }
+  
+  .dropdown-container:focus .dropdown {
+    opacity: 1;
+    z-index: 100;
+    max-height: 100vh;
+    transition: opacity 0.2s, z-index 0.2s, max-height 0.2s;
+  }
+
+
+  .login-form {
+		width: 340px;
+    	margin: 50px auto;
+	}
+    .login-form form {
+    	margin-bottom: 15px;
+        background: #f7f7f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+    .login-form h2 {
+        margin: 0 0 15px;
+    }
+    .form-control, .btn {
+        min-height: 38px;
+        border-radius: 2px;
+    }
+    .btn {        
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    
+    /* 
+    
+    
+    
+    */
+
+
+
+    .flip-box {
+      background-color: transparent;
+      width: 48px;
+      perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    }
+    
+    /* This container is needed to position the front and back side */
+    .flip-box-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+    
+    /* Do an horizontal flip when you move the mouse over the flip box container */
+    .flip-box:hover .flip-box-inner {
+      transform: rotateY(180deg);
+    }
+    
+    /* Position the front and back side */
+    .flip-box-front, .flip-box-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden; /* Safari */
+      backface-visibility: hidden;
+    }
+    
+    /* Style the front side (fallback if image is missing) */
+    .flip-box-front {
+      background-color: #bbb;
+      color: black;
+    }
+    
+    /* Style the back side */
+    .flip-box-back {
+      transform: rotateY(180deg);
+    }
+
+    .margenes{
+      background-color:gray;
+    }
