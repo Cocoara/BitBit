@@ -75,6 +75,8 @@ $route['updatePassword'] = 'UpdatePassword_controller/updatePassword';
 
 
 $route['nuevareparacion'] = 'Nuevareparacion_controller/index'; 
+$route['editarReparacion'] = 'EditarReparacion_controller/editar_reparacion'; 
+
 $route['anadirnuevareparacion'] = 'Reparaciones_controller/anadirnuevareparacion'; 
 
 $route['misreparaciones'] = 'Reparaciones_controller/index'; 

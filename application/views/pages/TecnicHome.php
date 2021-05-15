@@ -56,8 +56,6 @@ unset($_SESSION['access']);
         margin-top: 150px;
     }
 </style>
-
-
 <section>
 
     <div class="container-fluid margetop">
@@ -73,37 +71,35 @@ unset($_SESSION['access']);
 
                         <hr>
 
-                        <form action="" method="POST" id="estado">
-                       
 
-                        <label for="estado">Estado: </label>
-                        <select class="form-control" name="estado" id="estado" form="estado">
-                            <?php foreach ($estados as $estados_item) : ?>
-                                <option value="<?php echo $estados_item['id_Estado'] ?>"><?php echo $estados_item['Descrip'] ?></option>
-                            <?php endforeach; ?>
-                            
-                        </select>
-                        </form>
-                       
-
-
-                        <br>
-                        <hr>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $incidencies_item['id_incidencia'] ?>">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detalles<?php echo $incidencies_item['id_incidencia'] ?>">
                             Detalles
+                        </button>
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editar<?php echo $incidencies_item['id_incidencia'] ?>">
+                            Editar
                         </button>
 
                     </div>
                     <div class="card-footer text-muted">Fecha de entrada: <?php echo $incidencies_item['Fecha_entrada'] ?></div>
+                    <?php
+                    if ($this->session->flashdata('success')) {
+                    ?>
+                        <div class="alert alert-success">
+                            <?php echo $this->session->flashdata('success'); ?>
+                        </div>
+                    <?php }
+                    unset($_SESSION['success']);
+                    ?>
                 </div>
                 &nbsp;
 
 
-                <div class="modal fade" id="exampleModal<?php echo $incidencies_item['id_incidencia'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                <div class="modal fade" id="detalles<?php echo $incidencies_item['id_incidencia'] ?>" tabindex="-1" aria-labelledby="detallesLabel" aria-hidden="true">
+                    <div class=" modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel"><?php echo $incidencies_item['Diagnostico_prev'] ?></h5>
+                                <h5 class="modal-title" id="detallesLabel"><?php echo $incidencies_item['Diagnostico_prev'] ?></h5>
 
 
 
@@ -135,9 +131,86 @@ unset($_SESSION['access']);
                         </div>
                     </div>
                 </div>
+
+                <!--  -->
+
+
+                <div class="modal fade" id="editar<?php echo $incidencies_item['id_incidencia'] ?>" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editarLabel"><?php echo $incidencies_item['Diagnostico_prev'] ?></h5>
+
+
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="<?php echo base_url("editarReparacion") ?>" method="POST" id="estado">
+
+
+                                <label for="estado">Estado: </label>
+                                <select class="form-control mb-2" name="estado" id="estado" form="estado">
+                                    <option disabled selected value="<?php echo $incidencies_item['id_Estado'] ?>"><?php echo $estados[$incidencies_item['id_Estado'] - 1]['Descrip']; ?> </option>
+
+
+                                    <?php foreach ($estados as $estados_item) : ?>
+                                        <option value="<?php echo $estados_item['id_Estado'] ?>"><?php echo $estados_item['Descrip'] ?></option>
+                                    <?php endforeach; ?>
+
+                                </select>
+
+                                <input name="id_incidencia" value="<?php echo $incidencies_item['id_incidencia'] ?>" hidden />
+
+                                <label for="fecha_entrada">Fecha de entrada de la incidencia: </label>
+                                <input name="fecha_entrada" id="fecha_entrada" readonly class="form-control mb-2" value="<?php echo $incidencies_item['Fecha_entrada'] ?>" placeholder="Fecha de entrada de la incidencia" />
+
+                                <label for="desc_averia">Descripción de la avería: </label>
+                                <textarea name="desc_averia" id="desc_averia" class="form-control mb-2" placeholder="Descripción de la avería"><?php echo $incidencies_item['desc_averia'] ?></textarea>
+
+                                <label for="uuid">UUID: </label>
+                                <input name="uuid" id="uuid" readonly class="form-control mb-2" value="<?php echo $incidencies_item['uuid'] ?>" placeholder="UUID" />
+
+                                <label for="Marca">Marca: </label>
+                                <input name="Marca" id="Marca" class="form-control mb-2" value="<?php echo $incidencies_item['Marca'] ?>" placeholder="Marca" />
+
+                                <label for="Modelo">Modelo: </label>
+                                <input name="Modelo" id="Modelo" class="form-control mb-2" value="<?php echo $incidencies_item['Modelo'] ?>" placeholder="Modelo" />
+
+                                <label for="Numero_serie">Número de serie: </label>
+                                <input name="Numero_serie" id="Numero_serie" class="form-control mb-2" value="<?php echo $incidencies_item['Numero_serie'] ?>" placeholder="Número de serie" />
+
+                                <label for="Diagnostico_prev">Diagnóstico previo: </label>
+                                <input name="Diagnostico_prev" id="Diagnostico_prev" class="form-control mb-2" value="<?php echo $incidencies_item['Diagnostico_prev'] ?>" placeholder="Diagnóstico previo" />
+
+                                <label for="Telf">Teléfono: </label>
+                                <input name="Telf" id="Telf" class="form-control mb-2" value="<?php echo $incidencies_item['Telf'] ?>" placeholder="Teléfono" />
+
+                                <label for="tiempo_reparcionrca">Tiempo de reparación: </label>
+                                <input name="tiempo_reparcion" id="tiempo_reparcion" class="form-control mb-2" value="<?php echo $incidencies_item['tiempo_reparcion'] ?>" placeholder="Tiempo de reparación" />
+
+                                <label for="descripcion_gestor">Descripción del Gestor: </label>
+                                <input name="descripcion_gestor" id="descripcion_gestor" class="form-control mb-2" value="<?php echo $incidencies_item['descripcion_gestor'] ?>" placeholder="Descripción del Gestor" />
+
+                                <div class="modal-footer">
+                                    <input class="btn btn-success" type="submit" value="Guardar" />
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
 
 <!-- Modal -->
+<script>
+    $().alert("close");
+
+    $(".alert").delay(2000).slideUp(200, function() {
+        $(this).alert('close');
+    });
+</script>
