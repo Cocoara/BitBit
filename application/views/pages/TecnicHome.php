@@ -1,16 +1,6 @@
 <head>
     <title>Inicio</title>
 </head>
-<!-- 
-<?php
-if ($this->session->flashdata('access')) {
-?>
-    <div class="alert alert-danger" style="margin-top: 120px;">
-        <?php echo $this->session->flashdata('access'); ?>
-    </div>
-<?php }
-unset($_SESSION['access']);
-?> -->
 
 <style>
     @media (max-width: 576px) {
@@ -91,6 +81,16 @@ unset($_SESSION['access']);
                     <?php }
                     unset($_SESSION['success']);
                     ?>
+
+                    <?php
+                    if ($this->session->flashdata('error')) {
+                    ?>
+                        <div class="alert alert-danger">
+                            <?php echo $this->session->flashdata('error'); ?>
+                        </div>
+                    <?php }
+                    unset($_SESSION['error']);
+                    ?>
                 </div>
                 &nbsp;
 
@@ -152,7 +152,8 @@ unset($_SESSION['access']);
 
                                 <label for="estado">Estado: </label>
                                 <select class="form-control mb-2" name="estado" id="estado" form="estado">
-                                    <option disabled selected value="<?php echo $incidencies_item['id_Estado'] ?>"><?php echo $estados[$incidencies_item['id_Estado'] - 1]['Descrip']; ?> </option>
+                                
+                                    <option disabled selected value="<?php echo $incidencies_item['id_Estado'] ?>"><?php if($incidencies_item['id_Estado']!=null){ echo $estados[$incidencies_item['id_Estado']-1]['Descrip'];}else{ echo $estados[0]['Descrip'];} ?> </option>
 
 
                                     <?php foreach ($estados as $estados_item) : ?>

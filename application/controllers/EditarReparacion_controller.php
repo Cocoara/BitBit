@@ -46,10 +46,8 @@ class EditarReparacion_controller  extends CI_Controller
 			redirect('');
 		}
 		else{
-			$this->session->set_flashdata('error', "Revisa las credenciales, recuerda que la contraseña debe contener mas de 8 carácteres");
-			$this->load->view('templates/header');
-			$this->load->view('register/index');
-			$this->load->view('templates/footer');
+			$this->session->set_flashdata('error', "Hubo un error en la edición de los datos de la incidencia");
+			redirect('');
 		}
 	}
 }
