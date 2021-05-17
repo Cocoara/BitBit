@@ -1,3 +1,12 @@
+<?php
+                    if ($this->session->flashdata('success')) {
+                    ?>
+                        <div class="alert alert-success" style="margin-top:78px">
+                            <?php echo $this->session->flashdata('success'); ?>
+                        </div>
+                    <?php }
+                    unset($_SESSION['success']);
+                    ?>
 <head>
     <title>Inicio</title>
 </head>
@@ -48,7 +57,7 @@
 </style>
 <section>
 
-    <div class="container-fluid margetop">
+    <div class="container-fluid margetop h-100">
         <div class="row d-flex justify-content-center">
             <?php foreach ($incidencies as $incidencies_item) : ?>
                 <div class="card text-center">
@@ -72,15 +81,6 @@
 
                     </div>
                     <div class="card-footer text-muted">Fecha de entrada: <?php echo $incidencies_item['Fecha_entrada'] ?></div>
-                    <?php
-                    if ($this->session->flashdata('success')) {
-                    ?>
-                        <div class="alert alert-success">
-                            <?php echo $this->session->flashdata('success'); ?>
-                        </div>
-                    <?php }
-                    unset($_SESSION['success']);
-                    ?>
 
                     <?php
                     if ($this->session->flashdata('error')) {
@@ -147,13 +147,13 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="<?php echo base_url("editarReparacion") ?>" method="POST" id="estado">
+                           
+                            <form action="<?php echo base_url("editarReparacion") ?>" method="POST">
 
-
-                                <label for="estado">Estado: </label>
-                                <select class="form-control mb-2" name="estado" id="estado" form="estado">
+                            <label for="estado">Estado: </label>
+                                <select class="form-control mb-2" name="estado" id="estado" >
                                 
-                                    <option disabled selected value="<?php echo $incidencies_item['id_Estado'] ?>"><?php if($incidencies_item['id_Estado']!=null){ echo $estados[$incidencies_item['id_Estado']-1]['Descrip'];}else{ echo $estados[0]['Descrip'];} ?> </option>
+                                    <option disabled selected value="<?php echo $incidencies_item['id_Estado'] ?>"><?php if($incidencies_item['id_Estado']!=null){ echo $estados[$incidencies_item['id_Estado']-1]['Descrip'];}if($incidencies_item['id_Estado']==null){ echo $estados[0]['Descrip'];} ?> </option>
 
 
                                     <?php foreach ($estados as $estados_item) : ?>
@@ -161,6 +161,7 @@
                                     <?php endforeach; ?>
 
                                 </select>
+                               
 
                                 <input name="id_incidencia" value="<?php echo $incidencies_item['id_incidencia'] ?>" hidden />
 

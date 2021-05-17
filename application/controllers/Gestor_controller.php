@@ -25,7 +25,10 @@ class Gestor_controller extends CI_Controller
             $crud = new grocery_CRUD();
             $crud->set_table('incidencia');
             $crud->callback_after_insert(array($this,'uuid_callback'));
-            $crud->callback_after_update(array($this, 'notification'));
+            $crud->callback_after_insert(array($this,'estado_to_zero'));
+
+          
+            // $crud->callback_after_update(array($this, 'notification'));
 
 
             $crud->set_theme('incidencies');
@@ -67,10 +70,24 @@ class Gestor_controller extends CI_Controller
 
         $post_array['uuid'] = $id;
         $this->db->set('uuid', $post_array['uuid']);
+        $this->db->where('uuid', null);
         $this->db->update('incidencia');
         return $post_array;
         
     }
+
+    function estado_to_zero()
+    {   
+       
+        $estado = 1;
+        $this->db->set('id_Estado', $estado);
+        $this->db->where('id_Estado', null);
+        $this->db->update('incidencia');
+        return $estado;
+        
+    }
+
+    
 
 
 

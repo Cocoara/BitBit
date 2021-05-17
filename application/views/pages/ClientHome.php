@@ -49,7 +49,7 @@
 
 <section>
 
-    <div class="container-fluid margetop">
+    <div class="container-fluid margetop h-100">
         <div class="row d-flex justify-content-center">
             <?php foreach ($incidencies as $incidencies_item) : ?>
                 <div class="card text-center">
