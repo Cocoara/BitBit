@@ -23,6 +23,7 @@ class Admin_controller extends CI_Controller {
         if ($this->ion_auth->in_group('admin')) {
         $crud = new grocery_CRUD();
 		$crud->set_table('users');
+		// $crud->set_theme('tablestrap');
 		$crud->columns('id','ip_address','username','email','last_login','active','first_name','last_name','phone');
         $crud->change_field_type('password','password');
 

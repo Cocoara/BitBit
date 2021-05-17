@@ -1,64 +1,61 @@
-<!DOCTYPE html>
-<html>
-
 <head>
     <title>Iniciar sesión</title>
-    <link rel="stylesheet" href="<?php echo base_url("assets/css/login.css"); ?>" />
-    <link rel="stylesheet" href="<?php echo base_url("assets/css/style.css"); ?>" />
+
 </head>
+<div class="container-fluid login-page">
+    <div class="login-box">
 
-<body>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body badge-dark">
 
-    <div class="wrapper">
-        <div class="containerLogin">
-            <div class="col-left">
-                <div class="login-text">
-                    <img style="width:60px;" class="mb-5" src="<?php echo base_url("assets/img/login.png") ?>" />
-                    <br>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget eros dapibus, ultricies tellus vitae, consectetur tortor. Etiam rutrum placerat
-                    </p>
-                    <a class="btn btn-outline-info" href="<?php echo site_url('register'); ?>">Regístrate</a>
+                <p class="login-box-msg"><img style="width:60px;" src="<?php echo base_url("assets/img/enter.png") ?>" /></p>
+                <p class="login-box-msg">Iniciar sesión para poder acceder a todas las funcionalidades</p>
 
+                <form method="POST" action="<?php echo base_url("login") ?>">
+                    <div class="input-group mb-3">
+                        <input name="username" type="text" class="form-control" placeholder="Usuario" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input name="password" type="password" class="form-control" placeholder="Contraseña" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+
+                        <!-- /.col -->
+                        <div class="col-6 text-center">
+                            <input type="submit" class="btn btn-primary" class="form-control" value="Iniciar Sessión "></input>
+                        </div>
+                        <!-- /.col -->
+                    </div>
                     <?php
                     if ($this->session->flashdata('error')) {
                     ?>
                         <div class="alert alert-danger mt-5">
                             <?php echo $this->session->flashdata('error'); ?>
                         </div>
-                    <?php } 
+                    <?php }
                     unset($_SESSION['error']);
                     ?>
-                </div>
-            </div>
-            <div class="col-right">
-                <div class="login-form">
-                    <h2 class="ml-4">Iniciar sesión</h2>
-                    <form method="POST" action="<?php echo base_url("login") ?>">
-                        <p>
-                            <input name="username" type="text" placeholder="Usuario" required>
-                        </p>
-                        <p>
-                            <input name="password" type="password" placeholder="Contraseña" required>
-                        </p>
-                        <p>
-                            <input class="btn" type="submit" value="Sing In" />
-                        </p>
+                </form>
 
-                    </form>
-                </div>
+                <p class="mb-0">
+                    <a href="<?php echo site_url('register'); ?>" class="text-center text-warning">Registrar-me</a>
+                </p>
             </div>
+
+            <!-- /.login-card-body -->
         </div>
-
     </div>
-
-</body>
+</div>
 
 </html>
-<script>
-    $().alert("close");
-
-    $(".alert").delay(2000).slideUp(200, function() {
-        $(this).alert('close');
-    });
-</script>

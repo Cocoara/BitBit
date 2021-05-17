@@ -36,6 +36,7 @@ class Home extends CI_Controller
 
 		if (!$this->ion_auth->logged_in()) {
 			$this->load->view('templates/header');
+			$this->load->view('templates/sidebar');
 			$this->load->view('pages/home');
 			$this->load->view('templates/footer');
 			return;
@@ -53,6 +54,7 @@ class Home extends CI_Controller
 		
 		if ($this->ion_auth->in_group($groupAdmin)) {
 			$this->load->view('templates/headerInisde', $data);
+			$this->load->view('templates/sidebar');
 			$this->load->view('pages/AdminHome');
 		}
 		else if($this->ion_auth->in_group($groupClient)) {
@@ -62,6 +64,7 @@ class Home extends CI_Controller
 			$data['incidencies'] = $this->incidencies_model->get_incidencies_by_id($id);
 
 			$this->load->view('templates/headerInisdeClient', $data);
+			$this->load->view('templates/sidebar');
 			$this->load->view('pages/ClientHome');
 		}
 		else if($this->ion_auth->in_group($groupTecnico)) {
@@ -72,6 +75,7 @@ class Home extends CI_Controller
 			$data['estados'] = $this->incidencies_model->get_estados_tecnico();
 
 			$this->load->view('templates/headerInisdeTecnico', $data);
+			$this->load->view('templates/sidebar');
 			$this->load->view('pages/TecnicHome');
 		}
 		else if($this->ion_auth->in_group($groupGestor)) {

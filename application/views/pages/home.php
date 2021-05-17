@@ -48,7 +48,12 @@
     </style>
 </head>
 
-<section class="onlyPc">
+<div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="<?php echo base_url("assets/img/favicon.ico") ?>" alt="BitBit cargando..." height="60" width="60">
+</div>
+
+
+<!-- <section class="onlyPc">
     <div class="home-slider owl-carousel js-fullheight">
         <div class="slider-item js-fullheight" style="background-image:url(<?php echo base_url("assets/img/car1.png"); ?>);">
             <div class="overlay"></div>
@@ -90,7 +95,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 
 
@@ -114,7 +119,7 @@
                         </p>
 
                     </div>
-                    
+
                 </div>
 
 
@@ -149,4 +154,6 @@
     </div>
 
     </div>
+    <!-- <script src="<?php echo base_url("assets/js/owl.carousel.min.js"); ?>"></script>
+    <script src="<?php echo base_url("assets/js/main.js"); ?>"></script> -->
 </section>

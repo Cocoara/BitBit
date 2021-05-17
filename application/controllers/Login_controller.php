@@ -24,6 +24,7 @@ class Login_controller  extends CI_Controller
 
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('templates/header');
+            $this->load->view('templates/sidebar');
             $this->load->view('login/index');
             $this->load->view('templates/footer');
             return;
@@ -34,6 +35,7 @@ class Login_controller  extends CI_Controller
 
             $this->session->set_flashdata('error', "Algo ha ido mal, revisa las credenciales");
             $this->load->view('templates/header');
+            $this->load->view('templates/sidebar');
             $this->load->view('login/index');
             $this->load->view('templates/footer');
             return;
