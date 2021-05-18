@@ -138,6 +138,6 @@ $(function(){
 		});
 
 		$('.chosen-multiple-select, .chosen-select, .ajax-chosen-select').each(function(){
-			$(this).trigger("chosen:updated");
+			$(this).trigger("liszt:updated");
 		});
 	}

@@ -7,9 +7,9 @@
 
         <!-- /.login-logo -->
         <div class="card">
-            <div class="card-body login-card-body badge-dark">
+            <div class="card-body login-card-body">
 
-                <p class="login-box-msg"><img style="width:60px;" src="<?php echo base_url("assets/img/enter.png") ?>" /></p>
+                <!-- <p class="login-box-msg"><img style="width:60px;" src="<?php echo base_url("assets/img/enter.png") ?>" /></p> -->
                 <p class="login-box-msg">Iniciar sesión para poder acceder a todas las funcionalidades</p>
 
                 <form method="POST" action="<?php echo base_url("login") ?>">
@@ -49,7 +49,7 @@
                 </form>
 
                 <p class="mb-0">
-                    <a href="<?php echo site_url('register'); ?>" class="text-center text-warning">Registrar-me</a>
+                    <a href="<?php echo site_url('register'); ?>" class="text-center ">Registrar-me</a>
                 </p>
             </div>
 

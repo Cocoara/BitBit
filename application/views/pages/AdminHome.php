@@ -5,7 +5,7 @@
    
     </style>
 </head>
-<section >
+<!-- <section >
     <div class="home-slider owl-carousel js-fullheight ">
         <div class="slider-item js-fullheight" style="background-image:url(<?php echo base_url("assets/img/car1.png"); ?>);">
             <div class="overlay"></div>
@@ -47,7 +47,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 
 

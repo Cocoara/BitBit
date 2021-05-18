@@ -1,12 +1,4 @@
-<?php
-                    if ($this->session->flashdata('success')) {
-                    ?>
-                        <div class="alert alert-success" style="margin-top:78px">
-                            <?php echo $this->session->flashdata('success'); ?>
-                        </div>
-                    <?php }
-                    unset($_SESSION['success']);
-                    ?>
+
 <head>
     <title>Inicio</title>
 </head>
@@ -52,15 +44,19 @@
     }
 
     .margetop {
-        margin-top: 150px;
+        margin-top: 20px;
+    }
+
+    .card{
+        margin: 20px;
     }
 </style>
 <section>
 
-    <div class="container-fluid margetop h-100">
+    <div class="container-fluid margetop">
         <div class="row d-flex justify-content-center">
             <?php foreach ($incidencies as $incidencies_item) : ?>
-                <div class="card text-center">
+                <div class="card text-center shadow">
                     <div class="card-header"><?php echo $incidencies_item['desc_averia'] ?></div>
                     <div class="card-body">
                         <!-- <h5 class="card-title"><?php echo $incidencies_item[''] ?></h5> -->
@@ -82,15 +78,6 @@
                     </div>
                     <div class="card-footer text-muted">Fecha de entrada: <?php echo $incidencies_item['Fecha_entrada'] ?></div>
 
-                    <?php
-                    if ($this->session->flashdata('error')) {
-                    ?>
-                        <div class="alert alert-danger">
-                            <?php echo $this->session->flashdata('error'); ?>
-                        </div>
-                    <?php }
-                    unset($_SESSION['error']);
-                    ?>
                 </div>
                 &nbsp;
 
@@ -148,7 +135,7 @@
                                 </button>
                             </div>
                            
-                            <form action="<?php echo base_url("editarReparacion") ?>" method="POST">
+                            <form action="<?php echo base_url("editarReparacion") ?>" class="ml-5 mr-5" method="POST">
 
                             <label for="estado">Estado: </label>
                                 <select class="form-control mb-2" name="estado" id="estado" >
@@ -207,12 +194,3 @@
         </div>
     </div>
 </section>
-
-<!-- Modal -->
-<script>
-    $().alert("close");
-
-    $(".alert").delay(2000).slideUp(200, function() {
-        $(this).alert('close');
-    });
-</script>

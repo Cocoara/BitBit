@@ -19,7 +19,7 @@ class EditarReparacion_controller  extends CI_Controller
 	{
 		unset($_SESSION['error']);
 		$this->load->view('templates/header');
-		$this->load->view('/index');
+		$this->load->view('pages/home');
 		$this->load->view('templates/footer');
 	}
 

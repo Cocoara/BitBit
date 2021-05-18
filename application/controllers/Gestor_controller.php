@@ -29,9 +29,7 @@ class Gestor_controller extends CI_Controller
 
           
             // $crud->callback_after_update(array($this, 'notification'));
-
-
-            $crud->set_theme('incidencies');
+            
             $crud->set_relation('id_user', 'users', 'username');
             $crud->set_relation('id_tecnico', 'users', 'username');
             $crud->field_type('uuid', 'invisible');
@@ -56,11 +54,13 @@ class Gestor_controller extends CI_Controller
         $data['user'] = $this->ion_auth->user()->row();
 
         $this->load->view('templates/headerInisdeGestor', $data);
+        $this->load->view('templates/sidebarInisdeGestor', $data);
         $this->load->view('pages/changePassword.php');
+        $this->load->view('templates/footer');
     }
 
 
-    function uuid_callback($post_array)
+    function uuid_callback()
     {   
         $this->load->library('uuid');
 
@@ -68,11 +68,11 @@ class Gestor_controller extends CI_Controller
         $id = $this->uuid->v4();
         $id = str_replace('-', '', $id);
 
-        $post_array['uuid'] = $id;
-        $this->db->set('uuid', $post_array['uuid']);
+       
+        $this->db->set('uuid', $id);
         $this->db->where('uuid', null);
-        $this->db->update('incidencia');
-        return $post_array;
+        $this->db->insert('incidencia');
+        return $id;
         
     }
 
@@ -97,6 +97,8 @@ class Gestor_controller extends CI_Controller
     {
         $data['user'] = $this->ion_auth->user()->row();
         $this->load->view('templates/headerInisdeGestor', $data);
+        $this->load->view('templates/sidebarInisdeGestor', $data);
         $this->load->view('grocery/index.php', $output);
+        $this->load->view('templates/footer', $output);
     }
 }

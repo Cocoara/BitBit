@@ -35,14 +35,17 @@ class UpdatePassword_controller  extends CI_Controller
 
 		if($this->ion_auth->in_group($groupClient)) {
 			$this->load->view('templates/headerInisdeClient', $data);
+			$this->load->view('templates/sidebarInisdeClient', $data);
 			$this->load->view('pages/changePassword');
 		}
 		else if($this->ion_auth->in_group($groupTecnico)) {
 			$this->load->view('templates/headerInisdeTecnico', $data);
+			$this->load->view('templates/sidebarInsideTecnico',$data);
 			$this->load->view('pages/changePassword');
 		}
 		else if($this->ion_auth->in_group($groupGestor)) {
 			$this->load->view('templates/headerInisdeGestor', $data);
+			$this->load->view('templates/sidebarInisdeGestor', $data);
 			$this->load->view('pages/changePassword');
 		}
 	
