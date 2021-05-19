@@ -57,7 +57,7 @@
 
             
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo site_url('login') ?>"><img src="<?php echo base_url("assets/img/enter.png") ?>" style="width: 40px" /> Iniciar sessión</a>
+              <a class="nav-link" href="<?php echo site_url('login') ?>"><img src="<?php echo base_url("assets/img/enter.png") ?>" style="width: 30px" /> Iniciar sessión</a>
             </li>
           </ul>
 

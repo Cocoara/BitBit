@@ -24,18 +24,16 @@ class Gestor_controller extends CI_Controller
         if ($this->ion_auth->in_group('gestor')) {
             $crud = new grocery_CRUD();
             $crud->set_table('incidencia');
-            $crud->callback_after_insert(array($this,'uuid_callback'));
-            $crud->callback_after_insert(array($this,'estado_to_zero'));
+            $crud->callback_before_insert(array($this,'uuid_callback'));
 
-          
-            // $crud->callback_after_update(array($this, 'notification'));
+        
             
             $crud->set_relation('id_user', 'users', 'username');
             $crud->set_relation('id_tecnico', 'users', 'username');
             $crud->field_type('uuid', 'invisible');
             $crud->field_type('id_Estado', 'invisible');
             $crud->columns('id_incidencia', 'id_user', 'id_Estado', 'desc_averia', 'Fecha_entrada', 'Diagnostico_prev');
-            $crud->add_fields('id_user','desc_averia','Fecha_entrada','Marca','Modelo','Numero_serie','Diagnostico_prev','Telf','tiempo_reparcion');
+            $crud->add_fields('id_user','desc_averia','id_Estado','Fecha_entrada','Marca','Modelo','Numero_serie','Diagnostico_prev','Telf','tiempo_reparcion','uuid');
             $crud->edit_fields('id_tecnico','descripcion_gestor');
 
 
@@ -60,32 +58,21 @@ class Gestor_controller extends CI_Controller
     }
 
 
-    function uuid_callback()
+    function uuid_callback($post_array)
     {   
         $this->load->library('uuid');
 
-        //Output a v4 UUID 
         $id = $this->uuid->v4();
         $id = str_replace('-', '', $id);
-
-       
-        $this->db->set('uuid', $id);
-        $this->db->where('uuid', null);
-        $this->db->insert('incidencia');
-        return $id;
-        
-    }
-
-    function estado_to_zero()
-    {   
-       
         $estado = 1;
-        $this->db->set('id_Estado', $estado);
-        $this->db->where('id_Estado', null);
-        $this->db->update('incidencia');
-        return $estado;
+
+        $post_array['uuid'] = $id;
+        $post_array['id_Estado']= $estado;
+        return  $post_array;
         
     }
+
+   
 
     
 

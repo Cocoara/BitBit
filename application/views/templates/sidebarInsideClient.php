@@ -32,22 +32,22 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?php echo site_url('adminUsuarios')?>" class="nav-link">
+              <a href="<?php echo site_url('adminUsuarios') ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Mis incidencias</p>
               </a>
             </li>
-        
+          </ul>
 
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img src="<?php echo base_url("assets/img/config.png") ?>" style="width:30px">
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <img src="<?php echo base_url("assets/img/config.png") ?>" style="width:30px">
+            </div>
+            <div class="info text-white">
+              <a href="<?php echo site_url("passwdchange") ?>">Opciones</a>
+            </div>
           </div>
-          <div class="info text-white">
-            <a href="<?php echo site_url("passwdchange") ?>">Opciones</a>
-          </div>
-        </div>
-      </ul>
+
     </nav>
     <!-- /.sidebar-menu -->
   </div>

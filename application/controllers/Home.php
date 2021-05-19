@@ -62,7 +62,7 @@ class Home extends CI_Controller
 			$id= $user->id;
 			$data['incidencies'] = $this->incidencies_model->get_incidencies_by_id($id);
 
-			$this->load->view('templates/headerInisdeClient', $data);
+			$this->load->view('templates/headerInsideClient', $data);
 			$this->load->view('templates/sidebarInsideClient');
 			$this->load->view('pages/ClientHome');
 		}
