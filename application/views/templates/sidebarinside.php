@@ -101,7 +101,13 @@
             <li class="nav-item">
               <a href="<?php echo site_url('user_groups') ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Notificaciones</p>
+                <p>Noticias</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo site_url('mensajes') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Mensajería</p>
               </a>
             </li>
           </ul>

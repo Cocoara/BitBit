@@ -39,9 +39,10 @@ class EditarReparacion_controller  extends CI_Controller
             $Telf = $this->input->post('Telf');
             $tiempo_reparcion = $this->input->post('tiempo_reparcion');
             $descripcion_gestor = $this->input->post('descripcion_gestor');
+			$canvasImage = $this->input->post('canvasImage');
 	
 
-		if ($this->incidencies_model->set_incidencies_by_tecnico($id_incidencia,$estado,$Fecha_entrada,$desc_averia,$uuid,$Marca,$Modelo,$Numero_serie,$Diagnostico_prev,$Telf,$tiempo_reparcion,$descripcion_gestor )) {
+		if ($this->incidencies_model->set_incidencies_by_tecnico($id_incidencia,$estado,$Fecha_entrada,$desc_averia,$uuid,$Marca,$Modelo,$Numero_serie,$Diagnostico_prev,$Telf,$tiempo_reparcion,$descripcion_gestor,$canvasImage )) {
 			$this->session->set_flashdata('success', "Incidencia actualizada correctamente");
 			redirect('');
 		}

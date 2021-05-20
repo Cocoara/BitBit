@@ -78,6 +78,8 @@ $route['nuevareparacion'] = 'Nuevareparacion_controller/index';
 $route['editarReparacion'] = 'EditarReparacion_controller/editar_reparacion'; 
 $route['editarReparacionGestor'] = 'EditarReparacionGestor_controller/index'; 
 
+
+
 $route['anadirnuevareparacion'] = 'Reparaciones_controller/anadirnuevareparacion'; 
 
 $route['misreparaciones'] = 'Reparaciones_controller/index'; 
@@ -156,3 +158,10 @@ $route['(:any)/ajax_list_info'] = 'Admin_controller/$1/ajax_list_info';
 $route['(:any)/ajax_list'] = 'Admin_controller/$1/ajax_list';
 $route['(:any)/read/:num'] = 'Admin_controller/$1/read';
 $route['(:any)/export'] = 'Admin_controller/$1/export';
+$route['(:any)/print'] = 'Admin_controller/$1/print';
+
+
+
+/* ################### MENSAJERIA ##################*/ 
+
+$route['contactanosPeticion'] = "Mensajes_controller/contactanosPeticion";

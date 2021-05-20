@@ -25,11 +25,15 @@ class Gestor_controller extends CI_Controller
             $crud = new grocery_CRUD();
             $crud->set_table('incidencia');
             $crud->callback_before_insert(array($this,'uuid_callback'));
-
         
             
             $crud->set_relation('id_user', 'users', 'username');
+            // $crud->set_relation('id_tecnico', 'users_groups', 'user_id', array('group_id' => '3'));
             $crud->set_relation('id_tecnico', 'users', 'username');
+        
+            // $crud->set_relation_n_n('id_tecnico','users_groups', 'users','user_id','user_id','username');
+            
+
             $crud->field_type('uuid', 'invisible');
             $crud->field_type('id_Estado', 'invisible');
             $crud->columns('id_incidencia', 'id_user', 'id_Estado', 'desc_averia', 'Fecha_entrada', 'Diagnostico_prev');

@@ -29,7 +29,7 @@ class Incidencies_model  extends CI_Model
         return $query->result_array();
     }
 
-    public function set_incidencies_by_tecnico($id_incidencia,$estado,$Fecha_entrada,$desc_averia,$uuid,$Marca,$Modelo,$Numero_serie,$Diagnostico_prev,$Telf,$tiempo_reparcion,$descripcion_gestor ){
+    public function set_incidencies_by_tecnico($id_incidencia,$estado,$Fecha_entrada,$desc_averia,$uuid,$Marca,$Modelo,$Numero_serie,$Diagnostico_prev,$Telf,$tiempo_reparcion,$descripcion_gestor,$canvasImage ){
         $data = array(
             'id_Estado' => $estado,
             'Fecha_entrada' => $Fecha_entrada,
@@ -41,14 +41,14 @@ class Incidencies_model  extends CI_Model
             'Diagnostico_prev' => $Diagnostico_prev,
             'Telf' => $Telf,
             'tiempo_reparcion' => $tiempo_reparcion,
-            'descripcion_gestor' => $descripcion_gestor
+            'descripcion_gestor' => $descripcion_gestor,
+            'canvasImage' => $canvasImage
         );
         $this->db->where('id_incidencia', $id_incidencia);
         return $this->db->update('incidencia', $data);
 
 
     }
-
 
 
 
