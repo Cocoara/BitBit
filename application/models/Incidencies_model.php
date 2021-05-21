@@ -50,6 +50,12 @@ class Incidencies_model  extends CI_Model
 
     }
 
+    public function get_last_incidencia_id(){
+        $query =  $this->db->query("SELECT id_incidencia FROM incidencia ORDER BY id_incidencia DESC LIMIT 1");
+        $id_incidencia = $query->result_array();
+        return  $id_incidencia[0]['id_incidencia'];
+    }
+
 
 
 
