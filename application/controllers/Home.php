@@ -72,7 +72,7 @@ class Home extends CI_Controller
 			$id= $user->id;
 			$data['incidencies'] = $this->incidencies_model->get_incidencies_by_id_tecnico($id);
 			$data['estados'] = $this->incidencies_model->get_estados_tecnico();
-			$data['lastIncidencia'] = $this->incidencies_model->get_last_incidencia_id();
+			// $data['lastIncidencia'] = $this->incidencies_model->get_last_incidencia_id();
 
 			$this->load->view('templates/headerInisdeTecnico', $data);
 			$this->load->view('templates/sidebarInsideTecnico');

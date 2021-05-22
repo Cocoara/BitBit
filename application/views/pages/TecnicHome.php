@@ -124,14 +124,17 @@
 </style>
 <section>
 
-    <div class="container-fluid margetop">
+    <div class="container-fluid margetop worker-container">
         <div class="row d-flex justify-content-center">
+        <pre><?php print_r($incidencies) ?></pre>
+
             <?php foreach ($incidencies as $incidencies_item) : ?>
 
-                <div class="card text-center shadow">
+
+                <div class="card text-center shadow" data-issue-id="<?php echo $incidencies_item['id_incidencia'] ?>">
                     <div class="card-header"><?php echo $incidencies_item['desc_averia'] ?></div>
                     <div class="card-body">
-                        <img id="actualImage<?php echo $incidencies_item['id_incidencia'] ?>" style="width:150px" src="<?php echo $incidencies_item['canvasImage'] ?>" />
+                        <img id="actualImage" style="width:150px" src="<?php echo $incidencies_item['canvasImage'] ?>" />
                         <p class="card-text">
                             <?php echo $incidencies_item['Diagnostico_prev'] ?>
                         </p>
@@ -150,333 +153,312 @@
                     </div>
                     <div class="card-footer text-muted">Fecha de entrada: <?php echo $incidencies_item['Fecha_entrada'] ?></div>
 
-                </div>
-                &nbsp;
-
-
-                <div class="modal fade" id="detalles<?php echo $incidencies_item['id_incidencia'] ?>" tabindex="-1" aria-labelledby="detallesLabel" aria-hidden="true">
-                    <div class=" modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="detallesLabel"><?php echo $incidencies_item['Diagnostico_prev'] ?></h5>
-
-
-
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                    <div class="card-modals">
+                        <!-- Details -->
+                        <div class="modal fade modal-detail" id="detalles<?php echo $incidencies_item['id_incidencia'] ?>" tabindex="-1" aria-labelledby="detallesLabel" aria-hidden="true">
+                            <div class=" modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="detallesLabel"><?php echo $incidencies_item['Diagnostico_prev'] ?></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="card-text">
+                                            UUID: <?php echo $incidencies_item['uuid'] ?>
+                                        </p>
+                                        <p class="card-text">
+                                            MARCA: <?php echo $incidencies_item['Marca'] ?>
+                                        </p>
+                                        <p class="card-text">
+                                            MODELO: <?php echo $incidencies_item['Modelo'] ?>
+                                        </p>
+                                        <p class="card-text">
+                                            NUMERO DE SERIE: <?php echo $incidencies_item['Numero_serie'] ?>
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                                <p class="card-text">
-                                    UUID: <?php echo $incidencies_item['uuid'] ?>
-                                </p>
+                        </div>
 
-                                <p class="card-text">
-                                    MARCA: <?php echo $incidencies_item['Marca'] ?>
-                                </p>
+                        <!-- Edit -->
+                        <div class="modal fade modal-edit" id="editar<?php echo $incidencies_item['id_incidencia'] ?>" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editarLabel"><?php echo $incidencies_item['Diagnostico_prev'] ?></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
 
-                                <p class="card-text">
-                                    MODELO: <?php echo $incidencies_item['Modelo'] ?>
-                                </p>
+                                    <form action="<?php echo base_url("editarReparacion") ?>" class="ml-5 mr-5" id="form<?php echo $incidencies_item['id_incidencia'] ?>" method="POST" onsubmit="event.preventDefault(); saveForm(this);">
+                                        <div class="flex-container">
+                                            <div class="flex-item-left">
+                                                <label for="estado">Estado: </label>
+                                                <select class="form-control mb-2" name="estado" id="estado">
+                                                
+                                                    <?php $selected_option = ''; ?>
 
-                                <p class="card-text">
-                                    NUMERO DE SERIE: <?php echo $incidencies_item['Numero_serie'] ?>
-                                </p>
+                                                    <?php foreach ($estados as $estados_item) : ?>
+                                                        <?php $selected_option = $estados_item['id_Estado'] == $incidencies_item['id_Estado'] ? 'selected' : ''; ?>
 
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <option value="<?php echo $estados_item['id_Estado'] ?>" <?php echo $selected_option; ?>>
+                                                            <?php echo $estados_item['Descrip'] ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+
+                                                </select>
+
+
+                                                <input name="id_incidencia" value="<?php echo $incidencies_item['id_incidencia'] ?>" hidden />
+                                                <label for="fecha_entrada">Fecha de entrada de la incidencia: </label>
+                                                <input name="fecha_entrada" id="fecha_entrada" readonly class="form-control mb-2" value="<?php echo $incidencies_item['Fecha_entrada'] ?>" placeholder="Fecha de entrada de la incidencia" />
+                                                <label for="desc_averia">Descripción de la avería: </label>
+                                                <textarea name="desc_averia" id="desc_averia" class="form-control mb-2" placeholder="Descripción de la avería"><?php echo $incidencies_item['desc_averia'] ?></textarea>
+
+                                                <label for="uuid">UUID: </label>
+                                                <input name="uuid" id="uuid" readonly class="form-control mb-2" value="<?php echo $incidencies_item['uuid'] ?>" placeholder="UUID" />
+
+                                                <label for="Marca">Marca: </label>
+                                                <input name="Marca" id="Marca" class="form-control mb-2" value="<?php echo $incidencies_item['Marca'] ?>" placeholder="Marca" />
+
+                                                <label for="Modelo">Modelo: </label>
+                                                <input name="Modelo" id="Modelo" class="form-control mb-2" value="<?php echo $incidencies_item['Modelo'] ?>" placeholder="Modelo" />
+
+                                                <label for="Numero_serie">Número de serie: </label>
+                                                <input name="Numero_serie" id="Numero_serie" class="form-control mb-2" value="<?php echo $incidencies_item['Numero_serie'] ?>" placeholder="Número de serie" />
+
+                                                <label for="Diagnostico_prev">Diagnóstico previo: </label>
+                                                <input name="Diagnostico_prev" id="Diagnostico_prev" class="form-control mb-2" value="<?php echo $incidencies_item['Diagnostico_prev'] ?>" placeholder="Diagnóstico previo" />
+
+                                                <label for="Telf">Teléfono: </label>
+                                                <input name="Telf" id="Telf" class="form-control mb-2" value="<?php echo $incidencies_item['Telf'] ?>" placeholder="Teléfono" />
+
+                                                <label for="tiempo_reparcionrca">Tiempo de reparación: </label>
+                                                <input name="tiempo_reparcion" id="tiempo_reparcion" class="form-control mb-2" value="<?php echo $incidencies_item['tiempo_reparcion'] ?>" placeholder="Tiempo de reparación" />
+
+                                                <label for="descripcion_gestor">Descripción del Gestor: </label>
+                                                <input name="descripcion_gestor" id="descripcion_gestor" class="form-control mb-2" value="<?php echo $incidencies_item['descripcion_gestor'] ?>" placeholder="Descripción del Gestor" />
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-success save-form">Guardar</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                            <?php //if ($lastIncidencia == $incidencies_item['id_incidencia']) { 
+                                            ?>
+                                            <div class="flex-item-right">
+                                                <div id="sidebar">
+                                                    <div class="colorButtons">
+                                                        <h3>Color</h3>
+                                                        <input type="color" id="colorpicker<?php echo $incidencies_item['id_incidencia'] ?>" value="#000000" class="colorpicker">
+                                                    </div>
+                                                    <div class="buttonSize">
+                                                        <h3>Size (<span class="size-value" id="showSize<?php echo $incidencies_item['id_incidencia'] ?>">5</span>)</h3>
+                                                        <input type="range" min="1" max="50" value="5" step="1" id="controlSize<?php echo $incidencies_item['id_incidencia'] ?>">
+                                                    </div>
+                                                    <div class="Clear">
+                                                        <input type="button" value="Clear" class="btn btn-danger mt-2" id="clear<?php echo $incidencies_item['id_incidencia'] ?>">
+
+                                                    </div>
+
+                                                    <div class="canvas-container" id="canvas<?php echo $incidencies_item['id_incidencia'] ?>"></div>
+                                                    <input type="hidden" name="canvasImage" class="canvas-image"/>
+                                                </div>
+                                                <?php echo form_open_multipart('editarReparacion/do_upload'); ?>
+                                                <input type="file" class="form-control" style="margin-top:200px" name="userfile" size="20" />
+                                            </div>
+                                            <?php // } else {
+                                            ?>
+                                            <!-- <img id="actualImage<?php echo $incidencies_item['id_incidencia'] ?>" style="width:600px" src="<?php echo $incidencies_item['canvasImage'] ?>" /> -->
+                                            <?php // }
+                                            ?>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+
+
                 </div>
+
+
+
 
                 <!--  -->
 
 
-                <div class="modal fade" id="editar<?php echo $incidencies_item['id_incidencia'] ?>" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editarLabel"><?php echo $incidencies_item['Diagnostico_prev'] ?></h5>
 
-
-
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-                            <form action="<?php echo base_url("editarReparacion") ?>" class="ml-5 mr-5" id="form<?php echo $incidencies_item['id_incidencia'] ?>" method="POST">
-
-                                <div class="flex-container">
-                                    <div class="flex-item-left">
-
-                                        <label for="estado">Estado: </label>
-                                        <select class="form-control mb-2" name="estado" id="estado">
-
-                                            <option disabled <?php if ($incidencies_item['id_Estado'] == $incidencies_item['id_Estado']) { ?>selected="true" <?php }; ?> value="<?php echo $incidencies_item['id_Estado'] ?>">
-                                                <?php if ($incidencies_item['id_Estado'] != null) {
-                                                    echo $estados[$incidencies_item['id_Estado'] - 1]['Descrip'];
-                                                }
-                                                if ($incidencies_item['id_Estado'] == null) {
-                                                    echo $estados[0]['Descrip'];
-                                                } ?> </option>
-
-
-                                            <?php foreach ($estados as $estados_item) : ?>
-                                                <option value="<?php echo $estados_item['id_Estado'] ?>"><?php echo $estados_item['Descrip'] ?></option>
-                                            <?php endforeach; ?>
-
-                                        </select>
-
-
-                                        <input name="id_incidencia" value="<?php echo $incidencies_item['id_incidencia'] ?>" hidden />
-
-                                        <label for="fecha_entrada">Fecha de entrada de la incidencia: </label>
-                                        <input name="fecha_entrada" id="fecha_entrada" readonly class="form-control mb-2" value="<?php echo $incidencies_item['Fecha_entrada'] ?>" placeholder="Fecha de entrada de la incidencia" />
-
-                                        <label for="desc_averia">Descripción de la avería: </label>
-                                        <textarea name="desc_averia" id="desc_averia" class="form-control mb-2" placeholder="Descripción de la avería"><?php echo $incidencies_item['desc_averia'] ?></textarea>
-
-                                        <label for="uuid">UUID: </label>
-                                        <input name="uuid" id="uuid" readonly class="form-control mb-2" value="<?php echo $incidencies_item['uuid'] ?>" placeholder="UUID" />
-
-                                        <label for="Marca">Marca: </label>
-                                        <input name="Marca" id="Marca" class="form-control mb-2" value="<?php echo $incidencies_item['Marca'] ?>" placeholder="Marca" />
-
-                                        <label for="Modelo">Modelo: </label>
-                                        <input name="Modelo" id="Modelo" class="form-control mb-2" value="<?php echo $incidencies_item['Modelo'] ?>" placeholder="Modelo" />
-
-                                        <label for="Numero_serie">Número de serie: </label>
-                                        <input name="Numero_serie" id="Numero_serie" class="form-control mb-2" value="<?php echo $incidencies_item['Numero_serie'] ?>" placeholder="Número de serie" />
-
-                                        <label for="Diagnostico_prev">Diagnóstico previo: </label>
-                                        <input name="Diagnostico_prev" id="Diagnostico_prev" class="form-control mb-2" value="<?php echo $incidencies_item['Diagnostico_prev'] ?>" placeholder="Diagnóstico previo" />
-
-                                        <label for="Telf">Teléfono: </label>
-                                        <input name="Telf" id="Telf" class="form-control mb-2" value="<?php echo $incidencies_item['Telf'] ?>" placeholder="Teléfono" />
-
-                                        <label for="tiempo_reparcionrca">Tiempo de reparación: </label>
-                                        <input name="tiempo_reparcion" id="tiempo_reparcion" class="form-control mb-2" value="<?php echo $incidencies_item['tiempo_reparcion'] ?>" placeholder="Tiempo de reparación" />
-
-                                        <label for="descripcion_gestor">Descripción del Gestor: </label>
-                                        <input name="descripcion_gestor" id="descripcion_gestor" class="form-control mb-2" value="<?php echo $incidencies_item['descripcion_gestor'] ?>" placeholder="Descripción del Gestor" />
-
-                                        <div class="modal-footer">
-                                            <input class="btn btn-success" type="submit" id="guardar<?php echo $incidencies_item['id_incidencia'] ?>" value="Guardar" />
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div>
-
-                                    </div>
-
-
-
-                                    <?php
-
-                                    if ($lastIncidencia == $incidencies_item['id_incidencia']) { ?>
-                                        <div class="flex-item-right">
-
-                                            <div id="sidebar">
-                                                <div class="colorButtons">
-                                                    <h3>Color</h3>
-                                                    <input type="color" id="colorpicker<?php echo $incidencies_item['id_incidencia'] ?>" value="#000000" class="colorpicker">
-                                                </div>
-
-
-
-
-                                                <div class="buttonSize">
-                                                    <h3>Size (<span id="showSize<?php echo $incidencies_item['id_incidencia'] ?>">5</span>)</h3>
-                                                    <input type="range" min="1" max="50" value="5" step="1" id="controlSize<?php echo $incidencies_item['id_incidencia'] ?>">
-                                                </div>
-
-
-
-
-                                                <div class="Clear">
-                                                    <input type="button" value="Clear" class="btn btn-danger mt-2" id="clear<?php echo $incidencies_item['id_incidencia'] ?>">
-
-                                                </div>
-
-                                                <div id="canvas<?php echo $incidencies_item['id_incidencia'] ?>">&nbsp;</div>
-
-                                            </div>
-
-
-                                            <script>
-                                                // SETTING ALL VARIABLES
-
-                                                var actualImage = document.getElementById("actualImage<?php echo $incidencies_item['id_incidencia'] ?>").src;
-
-                                                var isMouseDown = false;
-                                                var canvas = document.createElement('canvas');
-                                                var form = document.getElementById("form<?php echo $incidencies_item['id_incidencia'] ?>");
-                                                var body = document.getElementsByTagName("body")[0];
-                                                var where = document.getElementById("canvas<?php echo $incidencies_item['id_incidencia'] ?>");
-                                                var ctx = canvas.getContext('2d');
-
-                                                var image = new Image();
-                                                image.onload = function() {
-                                                    ctx.drawImage(image, 0, 0);
-                                                };
-                                                image.src = actualImage;
-
-                                                var linesArray = [];
-                                                currentSize = 5;
-                                                var currentColor = "rgb(0,0,0)";
-                                                var currentBg = "white";
-
-
-
-
-                                                // INITIAL LAUNCH
-
-                                                createCanvas();
-
-                                                // BUTTON EVENT HANDLERS
-
-
-
-                                                document.getElementById('clear<?php echo $incidencies_item['id_incidencia'] ?>').addEventListener('click', function() {
-                                                    clearCanvas();
-                                                });
-
-                                                document.getElementById('colorpicker<?php echo $incidencies_item['id_incidencia'] ?>').addEventListener('change', function() {
-                                                    currentColor = this.value;
-                                                });
-
-                                                document.getElementById('controlSize<?php echo $incidencies_item['id_incidencia'] ?>').addEventListener('change', function() {
-                                                    currentSize = this.value;
-                                                    document.getElementById("showSize<?php echo $incidencies_item['id_incidencia'] ?>").innerHTML = this.value;
-                                                });
-
-
-                                                document.getElementById('guardar<?php echo $incidencies_item['id_incidencia'] ?>').addEventListener('click', save);
-
-
-                                                // REDRAW 
-
-                                                function clearCanvas() {
-                                                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                                }
-
-                                                function redraw() {
-                                                    for (var i = 1; i < linesArray.length; i++) {
-                                                        ctx.beginPath();
-                                                        ctx.moveTo(linesArray[i - 1].x, linesArray[i - 1].y);
-                                                        ctx.lineWidth = linesArray[i].size;
-                                                        ctx.lineCap = "round";
-                                                        ctx.strokeStyle = linesArray[i].color;
-                                                        ctx.lineTo(linesArray[i].x, linesArray[i].y);
-                                                        ctx.stroke();
-                                                    }
-                                                }
-
-                                                // DRAWING EVENT HANDLERS
-
-                                                canvas.addEventListener('mousedown', function() {
-                                                    mousedown(canvas, event);
-                                                });
-                                                canvas.addEventListener('mousemove', function() {
-                                                    mousemove(canvas, event);
-                                                });
-                                                canvas.addEventListener('mouseup', mouseup);
-
-                                                // CREATE CANVAS
-
-                                                function createCanvas() {
-                                                    canvas.id = "canvas";
-                                                    canvas.width = '500';
-                                                    canvas.height = "400";
-                                                    canvas.style.zIndex = 8;
-                                                    canvas.style.position = "absolute";
-                                                    canvas.style.border = "1px solid";
-                                                    canvas.style.margin = "30px";
-                                                    ctx.fillStyle = currentBg;
-                                                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                                                    where.appendChild(canvas);
-                                                }
-
-
-
-                                                // SAVE FUNCTION
-
-                                                function save() {
-
-                                                    var canvasImage = canvas.toDataURL("image/png");
-                                                    console.log(canvasImage);
-                                                    var blobImage = document.createElement('input');
-                                                    blobImage.type = 'text';
-                                                    blobImage.id = 'image<?php echo $incidencies_item['id_incidencia'] ?>';
-                                                    blobImage.name = 'canvasImage';
-                                                    blobImage.style.visibility = "hidden";
-                                                    blobImage.value = canvasImage;
-                                                    form.appendChild(blobImage);
-
-                                                }
-
-
-
-                                                // GET MOUSE POSITION
-
-                                                function getMousePos(canvas, evt) {
-                                                    var rect = canvas.getBoundingClientRect();
-                                                    return {
-                                                        x: evt.clientX - rect.left,
-                                                        y: evt.clientY - rect.top
-                                                    };
-                                                }
-
-                                                // ON MOUSE DOWN
-
-                                                function mousedown(canvas, evt) {
-                                                    var mousePos = getMousePos(canvas, evt);
-                                                    isMouseDown = true
-                                                    var currentPosition = getMousePos(canvas, evt);
-                                                    ctx.moveTo(currentPosition.x, currentPosition.y)
-                                                    ctx.beginPath();
-                                                    ctx.lineWidth = currentSize;
-                                                    ctx.lineCap = "round";
-                                                    ctx.strokeStyle = currentColor;
-
-                                                }
-
-                                                // ON MOUSE MOVE
-
-                                                function mousemove(canvas, evt) {
-
-                                                    if (isMouseDown) {
-                                                        var currentPosition = getMousePos(canvas, evt);
-                                                        ctx.lineTo(currentPosition.x, currentPosition.y)
-                                                        ctx.stroke();
-                                                        // store(currentPosition.x, currentPosition.y, currentSize, currentColor);
-                                                    }
-                                                }
-
-                                                // ON MOUSE UP
-
-                                                function mouseup() {
-                                                    isMouseDown = false
-                                                    // store()
-                                                }
-                                            </script>
-
-
-                                        </div>
-                                    <?php } else {
-                                    ?>
-                                        <img id="actualImage<?php echo $incidencies_item['id_incidencia'] ?>" style="width:600px" src="<?php echo $incidencies_item['canvasImage'] ?>" />
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
+
+<script>
+    window.onload = function() {
+        console.log('page loaded');
+        createCanvas();
+        // DRAWING EVENT HANDLERS
+    };
+
+    function createCanvas() {
+        var cards = document.querySelectorAll('.worker-container .card');
+        // console.log('cards', cards);
+        for (var i = 0; i < cards.length; i++) {
+            // Current card & issue id
+            const card = cards[i];
+            const issueId = card.dataset.issueId;
+
+            // Edit modal
+            const editModalElem = card.querySelector('.card-modals .modal-edit');
+            // Image element
+            const imageElem = card.querySelector('.card-body img');
+            const imageData = imageElem.src;
+
+            // Get canvas container & form
+            const canvasContainer = editModalElem.querySelector('.canvas-container');
+            const formElem = editModalElem.querySelector('form');
+            // console.log(formElem);
+
+            // Create canvas
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Add image to canvas
+            let canvasImage = new Image();
+            canvasImage.onload = function() {
+                ctx.drawImage(canvasImage, 0, 0);
+            };
+            canvasImage.src = imageData;
+
+            // Append canvas to canvas container
+
+            canvas.id = `canvas-image-${issueId}`;
+            // canvas.id = 'canvas-image-' + issueId;
+            canvas.width = '500';
+            canvas.height = "400";
+            canvas.style.zIndex = 8;
+            canvas.style.position = "absolute";
+            canvas.style.border = "1px solid";
+            canvas.style.margin = "30px";
+            ctx.fillStyle = currentBg;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            canvasContainer.appendChild(canvas);
+
+
+            // Add listeners
+            canvas.addEventListener('mousedown', function() {
+                onMouseDown(canvas, ctx, event);
+            });
+            canvas.addEventListener('mousemove', function() {
+                mousemove(canvas, ctx, event);
+            });
+            canvas.addEventListener('mouseup', mouseup);
+
+
+            const clearBtn = editModalElem.querySelector('.Clear');
+            const colorPicker = editModalElem.querySelector('.colorButtons input');
+            const controlSize = editModalElem.querySelector('.buttonSize input');
+            const sizeValue = editModalElem.querySelector('.size-value');
+            // const saveBtn = editModalElem.querySelector('.save-form');
+            // saveBtn.addEventListener('click', save(canvas, formElem, event));
+            
+
+            clearBtn.addEventListener('click', function() {
+                clearCanvas(canvas, ctx);
+            });
+
+            colorPicker.addEventListener('change', function() {
+                currentColor = this.value;
+            });
+
+            controlSize.addEventListener('change', function() {
+                currentSize = this.value;
+                sizeValue.innerHTML = this.value;
+                console.log('controlsize');
+            });
+
+            
+        }
+    }
+
+
+
+
+
+    let isMouseDown = false;
+    let currentSize = 5;
+    let currentColor = 'rgb(0, 0, 0)';
+    let currentBg = 'white';
+
+
+    function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+        };
+    }
+
+    // ON MOUSE DOWN
+    function onMouseDown(canvas, ctx, evt) {
+        var mousePos = getMousePos(canvas, evt);
+        isMouseDown = true;
+        var currentPosition = getMousePos(canvas, evt);
+        ctx.moveTo(currentPosition.x, currentPosition.y)
+        ctx.beginPath();
+        ctx.lineWidth = currentSize;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = currentColor;
+        console.log('onMouseDown is fired');
+
+    }
+
+    // ON MOUSE MOVE
+    function mousemove(canvas, ctx, evt) {
+        console.log('mousemove is fired');
+        if (isMouseDown) {
+            var currentPosition = getMousePos(canvas, evt);
+            ctx.lineTo(currentPosition.x, currentPosition.y)
+            ctx.stroke();
+            console.log('mousemove is fired when mouse is down');
+            // store(currentPosition.x, currentPosition.y, currentSize, currentColor);
+        }
+    }
+
+    // ON MOUSE UP
+    function mouseup() {
+        isMouseDown = false;
+        console.log('mouseup is fired');
+    }
+
+    function clearCanvas(canvas, ctx) {
+        console.log('clearCanvas is fired');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function getMousePos(canvas, evt) {
+        console.log('getMousePos is fired');
+        var rect = canvas.getBoundingClientRect();
+        return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+        };
+    }
+
+    
+    function saveForm(formElem) {
+        const canvas = formElem.querySelector('.canvas-container canvas');
+        const canvasInputImage = formElem.querySelector('.canvas-image');
+        var canvasImage = canvas.toDataURL("image/png");
+        canvasInputImage.value = canvasImage;
+        formElem.submit();
+    }
+</script>

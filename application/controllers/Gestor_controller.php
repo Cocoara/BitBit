@@ -28,6 +28,7 @@ class Gestor_controller extends CI_Controller
         
             
             $crud->set_relation('id_user', 'users', 'username');
+            // $crud->join('users');
             // $crud->set_relation('id_tecnico', 'users_groups', 'user_id', array('group_id' => '3'));
             $crud->set_relation('id_tecnico', 'users', 'username');
         
