@@ -106,6 +106,23 @@
         flex: 70%;
     }
 
+    .flex-container2 {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+    }
+
+    .flex-item-left2 {
+        padding: 10px;
+        flex: 30%;
+    }
+
+    .flex-item-right2 {
+        height:600px;
+        padding: 10px;
+        flex: 70%;
+    }
+
     /* Responsive layout - makes a one column-layout instead of two-column layout */
     @media (max-width: 800px) {
         .flex-container {
@@ -126,7 +143,7 @@
 
     <div class="container-fluid margetop worker-container">
         <div class="row d-flex justify-content-center">
-        <pre><?php print_r($incidencies) ?></pre>
+            <!-- <pre><?php print_r($incidencies) ?></pre> -->
 
             <?php foreach ($incidencies as $incidencies_item) : ?>
 
@@ -201,7 +218,7 @@
                                             <div class="flex-item-left">
                                                 <label for="estado">Estado: </label>
                                                 <select class="form-control mb-2" name="estado" id="estado">
-                                                
+
                                                     <?php $selected_option = ''; ?>
 
                                                     <?php foreach ($estados as $estados_item) : ?>
@@ -250,34 +267,37 @@
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
-                                            <?php //if ($lastIncidencia == $incidencies_item['id_incidencia']) { 
-                                            ?>
+
                                             <div class="flex-item-right">
                                                 <div id="sidebar">
-                                                    <div class="colorButtons">
-                                                        <h3>Color</h3>
-                                                        <input type="color" id="colorpicker<?php echo $incidencies_item['id_incidencia'] ?>" value="#000000" class="colorpicker">
-                                                    </div>
-                                                    <div class="buttonSize">
-                                                        <h3>Size (<span class="size-value" id="showSize<?php echo $incidencies_item['id_incidencia'] ?>">5</span>)</h3>
-                                                        <input type="range" min="1" max="50" value="5" step="1" id="controlSize<?php echo $incidencies_item['id_incidencia'] ?>">
-                                                    </div>
-                                                    <div class="Clear">
-                                                        <input type="button" value="Clear" class="btn btn-danger mt-2" id="clear<?php echo $incidencies_item['id_incidencia'] ?>">
+                                                    <div class="flex-container2">
+                                                        <div class="flex-item-left2">
+                                                            <div class="colorButtons">
+                                                                <h3>Color</h3>
+                                                                <input type="color" id="colorpicker<?php echo $incidencies_item['id_incidencia'] ?>" value="#000000" class="colorpicker">
+                                                            </div>
+                                                            <div class="buttonSize">
+                                                                <h3>Size (<span class="size-value" id="showSize<?php echo $incidencies_item['id_incidencia'] ?>">5</span>)</h3>
+                                                                <input type="range" min="1" max="50" value="5" step="1" id="controlSize<?php echo $incidencies_item['id_incidencia'] ?>">
+                                                            </div>
+                                                            <div class="Clear">
+                                                                <input type="button" value="Clear" class="btn btn-danger mt-2" id="clear<?php echo $incidencies_item['id_incidencia'] ?>">
 
-                                                    </div>
+                                                            </div>
+                                                        </div>
 
-                                                    <div class="canvas-container" id="canvas<?php echo $incidencies_item['id_incidencia'] ?>"></div>
-                                                    <input type="hidden" name="canvasImage" class="canvas-image"/>
+                                                        <div class="flex-item-right2">
+                                                            <div class="canvas-container" id="canvas"></div>
+                                                            <input type="hidden" name="canvasImage" class="canvas-image" />
+
+                                                            <?php echo form_open_multipart('editarReparacion/do_upload'); ?>
+                                                            <input type="file"  name="userfile" size="20" />
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <?php echo form_open_multipart('editarReparacion/do_upload'); ?>
-                                                <input type="file" class="form-control" style="margin-top:200px" name="userfile" size="20" />
+
                                             </div>
-                                            <?php // } else {
-                                            ?>
-                                            <!-- <img id="actualImage<?php echo $incidencies_item['id_incidencia'] ?>" style="width:600px" src="<?php echo $incidencies_item['canvasImage'] ?>" /> -->
-                                            <?php // }
-                                            ?>
+
                                         </div>
                                     </form>
                                 </div>
@@ -345,7 +365,7 @@
             canvas.width = '500';
             canvas.height = "400";
             canvas.style.zIndex = 8;
-            canvas.style.position = "absolute";
+            canvas.style.position = "sticky";
             canvas.style.border = "1px solid";
             canvas.style.margin = "30px";
             ctx.fillStyle = currentBg;
@@ -369,7 +389,7 @@
             const sizeValue = editModalElem.querySelector('.size-value');
             // const saveBtn = editModalElem.querySelector('.save-form');
             // saveBtn.addEventListener('click', save(canvas, formElem, event));
-            
+
 
             clearBtn.addEventListener('click', function() {
                 clearCanvas(canvas, ctx);
@@ -382,10 +402,10 @@
             controlSize.addEventListener('change', function() {
                 currentSize = this.value;
                 sizeValue.innerHTML = this.value;
-                console.log('controlsize');
+                // console.log('controlsize');
             });
 
-            
+
         }
     }
 
@@ -417,35 +437,35 @@
         ctx.lineWidth = currentSize;
         ctx.lineCap = "round";
         ctx.strokeStyle = currentColor;
-        console.log('onMouseDown is fired');
+        // console.log('onMouseDown is fired');
 
     }
 
     // ON MOUSE MOVE
     function mousemove(canvas, ctx, evt) {
-        console.log('mousemove is fired');
+        // console.log('mousemove is fired');
         if (isMouseDown) {
             var currentPosition = getMousePos(canvas, evt);
             ctx.lineTo(currentPosition.x, currentPosition.y)
             ctx.stroke();
-            console.log('mousemove is fired when mouse is down');
-            // store(currentPosition.x, currentPosition.y, currentSize, currentColor);
+            // console.log('mousemove is fired when mouse is down');
+
         }
     }
 
     // ON MOUSE UP
     function mouseup() {
         isMouseDown = false;
-        console.log('mouseup is fired');
+        // console.log('mouseup is fired');
     }
 
     function clearCanvas(canvas, ctx) {
-        console.log('clearCanvas is fired');
+        // console.log('clearCanvas is fired');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
     function getMousePos(canvas, evt) {
-        console.log('getMousePos is fired');
+        // console.log('getMousePos is fired');
         var rect = canvas.getBoundingClientRect();
         return {
             x: evt.clientX - rect.left,
@@ -453,7 +473,7 @@
         };
     }
 
-    
+
     function saveForm(formElem) {
         const canvas = formElem.querySelector('.canvas-container canvas');
         const canvasInputImage = formElem.querySelector('.canvas-image');
