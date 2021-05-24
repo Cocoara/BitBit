@@ -118,7 +118,7 @@
     }
 
     .flex-item-right2 {
-        height:600px;
+        height: 600px;
         padding: 10px;
         flex: 70%;
     }
@@ -138,9 +138,38 @@
         }
 
     }
+
+    .alert-success {
+    color: #155724!important;
+    background-color: #d4edda!important;;
+    border-color: #c3e6cb!important;;
+}
 </style>
 <section>
-
+    <?php
+    if ($this->session->flashdata('success')) {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo $this->session->flashdata('success'); ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php }
+    unset($_SESSION['success']);
+    ?>
+    <?php
+    if ($this->session->flashdata('error')) {
+    ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo $this->session->flashdata('error'); ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php }
+    unset($_SESSION['error']);
+    ?>
     <div class="container-fluid margetop worker-container">
         <div class="row d-flex justify-content-center">
             <!-- <pre><?php print_r($incidencies) ?></pre> -->
@@ -290,8 +319,6 @@
                                                             <div class="canvas-container" id="canvas"></div>
                                                             <input type="hidden" name="canvasImage" class="canvas-image" />
 
-                                                            <?php echo form_open_multipart('editarReparacion/do_upload'); ?>
-                                                            <input type="file"  name="userfile" size="20" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -300,22 +327,24 @@
 
                                         </div>
                                     </form>
+
+                                    <div class="flex-container">
+                                        <div class="flex-item-left">
+                                        </div>
+                                        <div class="flex-item-right">
+                                            <form method="post" action="<?php echo base_url('do_upload') ?>" enctype="multipart/form-data">
+                                                <input type='file' name='archivo' size='20' />
+
+                                                <input type='submit' name='submit' value='Subir' />
+                                            </form>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
-
-
-
-
-                <!--  -->
-
-
-
             <?php endforeach; ?>
         </div>
     </div>

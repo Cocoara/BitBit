@@ -69,13 +69,13 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <div class="icheck-primary">
-                                    <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                                    <label for="agreeTerms">
-                                        He leído los <a data-toggle="modal" data-target="#exampleModal" href="#">términos</a>
-                                    </label>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" name="terms" id="switch1">
+                                    <label class="custom-control-label" for="switch1"> He leído los <a data-toggle="modal" data-target="#exampleModal" href="#">términos</a></label>
                                 </div>
                             </div>
+
+
                             <!-- /.col -->
                             <div class="col-12 text-center mt-3">
                                 <input class="btn btn-primary " type="submit" class="form-control" value="Registrar-se" />

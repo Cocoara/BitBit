@@ -53,10 +53,13 @@
 
                         <div class="input-group mb-3">
 
-                            <label for="tipo" class="form-control">Choose a car:</label>
+                            <label for="tipo" class="form-control">Tema:</label>
 
                             <select name="tipo" class="form-control" id="tipo">
-                                <option value="volvo">Volvo</option>
+                                <option value="pantalla">Pantalla</option>
+                                <option value="software">Software</option>
+                                <option value="hardware">Hardware</option>
+                                <option value="otros">otros</option>
                             </select>
 
                             <div class="input-group-append">

@@ -78,12 +78,12 @@
 <script src="<?php echo base_url('assets/plugins/dist/js/adminlte.js')?>"></script>
         </body>
 
-<!--         
+        
 <script>
-    $().alert("close");
-
-    $(".alert").delay(2000).slideUp(200, function() {
-        $(this).alert('close');
+  window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
     });
-</script> -->
+}, 2000);
+</script>
 </html>
