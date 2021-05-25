@@ -140,11 +140,14 @@
     }
 
     .alert-success {
-    color: #155724!important;
-    background-color: #d4edda!important;;
-    border-color: #c3e6cb!important;;
-}
+        color: #155724 !important;
+        background-color: #d4edda !important;
+        ;
+        border-color: #c3e6cb !important;
+        ;
+    }
 </style>
+<script src="<?php echo base_url('assets/js/multipleFiles.js') ?>"></script>
 <section>
     <?php
     if ($this->session->flashdata('success')) {
@@ -333,10 +336,22 @@
                                         </div>
                                         <div class="flex-item-right">
                                             <form method="post" action="<?php echo base_url('do_upload') ?>" enctype="multipart/form-data">
-                                                <input type='file' name='archivo' size='20' />
+                                                <input name="id_incidencia_file" value="<?php echo $incidencies_item['id_incidencia'] ?>" hidden />
 
-                                                <input type='submit' name='submit' value='Subir' />
+                                                <input type='file' name='files[]' multiple> <br /><br />
+                                                <input type='submit' value='Upload' name='upload' />
                                             </form>
+
+
+                                            <?php
+
+                                            $myfiles = array_diff(scandir($rutaFichero[2]["rutaFicheros"]), array('.', '..'));
+
+                                            foreach ($myfiles as $file) {
+                                                var_dump($myfiles);
+                                               
+                                            }
+                                            ?>
                                         </div>
                                     </div>
 
@@ -350,9 +365,10 @@
     </div>
 </section>
 
+
+
 <script>
     window.onload = function() {
-        console.log('page loaded');
         createCanvas();
         // DRAWING EVENT HANDLERS
     };

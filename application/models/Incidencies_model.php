@@ -29,6 +29,14 @@ class Incidencies_model  extends CI_Model
         return $query->result_array();
     }
 
+    public function get_rutaIncidenciesFile_by_tecnico($id)
+    {
+        $query = $this->db->query("SELECT rutaFicheros From incidencia where id_tecnico='" . $id . "'");
+        return $query->result_array();
+    }
+
+    
+
     public function set_incidencies_by_tecnico($id_incidencia,$estado,$Fecha_entrada,$desc_averia,$uuid,$Marca,$Modelo,$Numero_serie,$Diagnostico_prev,$Telf,$tiempo_reparcion,$descripcion_gestor,$canvasImage ){
         $data = array(
             'id_Estado' => $estado,
@@ -43,6 +51,17 @@ class Incidencies_model  extends CI_Model
             'tiempo_reparcion' => $tiempo_reparcion,
             'descripcion_gestor' => $descripcion_gestor,
             'canvasImage' => $canvasImage
+        );
+        $this->db->where('id_incidencia', $id_incidencia);
+        return $this->db->update('incidencia', $data);
+
+
+    }
+
+    public function set_incidenciesFile_by_tecnico($id_incidencia, $directoryName){
+        $data = array(
+            'id_incidencia' => $id_incidencia,
+            'rutaFicheros' => $directoryName,
         );
         $this->db->where('id_incidencia', $id_incidencia);
         return $this->db->update('incidencia', $data);

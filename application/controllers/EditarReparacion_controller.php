@@ -26,6 +26,14 @@ class EditarReparacion_controller  extends CI_Controller
 
 	public function editar_reparacion()
 	{
+
+		if (!$this->ion_auth->logged_in()) {
+			$this->load->view('templates/header');
+			$this->load->view('pages/home');
+			$this->load->view('templates/footer');
+			return;
+		}
+
 		$id_incidencia = $this->input->post('id_incidencia');
 		$estado = $this->input->post('estado');
 		$Fecha_entrada = $this->input->post('fecha_entrada');
@@ -50,25 +58,86 @@ class EditarReparacion_controller  extends CI_Controller
 		}
 	}
 
+
 	public function do_upload()
 	{
 
-		$config['upload_path']          = './uploads/';
-		$config['allowed_types']        = 'gif|jpg|jpeg|png|iso|dmg|zip|rar|doc|docx|xls|xlsx|ppt|pptx|csv|ods|odt|odp|pdf|rtf|sxc|sxi|txt|exe|avi|mpeg|mp3|mp4|3gp';
-		$config['max_size']             = 100;
-		$config['max_width']            = 1024;
-		$config['max_height']           = 768;
+		if (!$this->ion_auth->logged_in()) {
+			$this->load->view('templates/header');
+			$this->load->view('pages/home');
+			$this->load->view('templates/footer');
+			return;
+		}
 
-		$this->load->library('upload', $config);
-	
-		// var_dump($this->upload->do_upload('archivo'));die();
-		if (!$this->upload->do_upload('archivo')) {
-			$error = array('error' => $this->upload->display_errors());
-			// var_dump($error);die();
-			$this->session->set_flashdata('error', $error['error']);
+		// Check form submit or not
+		if ($this->input->post('upload') != NULL) {
+
+			$data = array();
+
+			// Count total files
+			$countfiles = count($_FILES['files']['name']);
+
+			// Looping all files
+			for ($i = 0; $i < $countfiles; $i++) {
+
+				if (!empty($_FILES['files']['name'][$i])) {
+
+					// Define new $_FILES array - $_FILES['file']
+					$_FILES['file']['name'] = $_FILES['files']['name'][$i];
+					$_FILES['file']['type'] = $_FILES['files']['type'][$i];
+					$_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+					$_FILES['file']['error'] = $_FILES['files']['error'][$i];
+					$_FILES['file']['size'] = $_FILES['files']['size'][$i];
+
+					$id_incidencia = $this->input->post('id_incidencia_file');
+
+					$directoryName = 'C:\xampp\uploads/' . $id_incidencia;
+
+					//Check if the directory already exists.
+					if (!is_dir($directoryName)) {
+						//Directory does not exist, so lets create it.
+						mkdir($directoryName, 0755);
+					}
+
+					$filename = $_FILES['files']['name'][$i];
+					$filenameWithoutExt = explode(".", $filename);
+
+					$filenameWithId = $filenameWithoutExt[0] . $id_incidencia;
+					$encryption = hash('ripemd160', $filenameWithId);
+
+					$filenameWithIdAndHash = $encryption . "_" . $id_incidencia . "." . $filenameWithoutExt[1];
+					// Set preference
+					$config['upload_path']          = $directoryName;
+					$config['allowed_types']        = 'gif|jpg|jpeg|png|iso|dmg|zip|rar|doc|docx|xls|xlsx|ppt|pptx|csv|ods|odt|odp|pdf|rtf|sxc|sxi|txt|exe|avi|mpeg|mp3|mp4|3gp';
+					$config['max_size']             = 5000;
+					$config['max_width']            = 1024;
+					$config['max_height']           = 768;
+					$config['file_name'] = $filenameWithIdAndHash;
+
+					//Load upload library
+					$this->load->library('upload', $config);
+
+
+					// File upload
+					if ($this->upload->do_upload('file')) {
+
+						$this->incidencies_model->set_incidenciesFile_by_tecnico($id_incidencia, $directoryName);
+
+						
+						// Get data about the file
+						// $uploadData = $this->upload->data();
+						// Initialize array
+						$data['filenames'][] = $filenameWithId;
+					}
+				}
+			}
+
+			// load view
+			$this->session->set_flashdata('success', "Archivo subido!");
 			redirect('');
 		} else {
-			$this->session->set_flashdata('success', "Archivo subido!");
+			$error = array('error' => $this->upload->display_errors());
+			$this->session->set_flashdata('error', $error['error']);
 			redirect('');
 		}
 	}

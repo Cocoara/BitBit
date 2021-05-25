@@ -80,7 +80,6 @@ $route['do_upload'] = 'EditarReparacion_controller/do_upload';
 $route['editarReparacionGestor'] = 'EditarReparacionGestor_controller/index'; 
 
 
-
 $route['anadirnuevareparacion'] = 'Reparaciones_controller/anadirnuevareparacion'; 
 
 $route['misreparaciones'] = 'Reparaciones_controller/index'; 
