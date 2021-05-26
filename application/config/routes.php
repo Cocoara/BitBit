@@ -53,6 +53,7 @@ $route['default_controller'] = 'Home';
 $route['translate_uri_dashes'] = FALSE;
 $route['404_override'] = '';
 
+$route['imagen/(:any)/(:any)'] = 'EditarReparacion_controller/imagen/$1/$2';
 
 $route['noticies'] = 'noticies_controller/index';
 $route[''] = 'Home/index';

@@ -106,22 +106,6 @@
         flex: 70%;
     }
 
-    .flex-container2 {
-        display: flex;
-        flex-direction: row;
-        text-align: center;
-    }
-
-    .flex-item-left2 {
-        padding: 10px;
-        flex: 30%;
-    }
-
-    .flex-item-right2 {
-        height: 600px;
-        padding: 10px;
-        flex: 70%;
-    }
 
     /* Responsive layout - makes a one column-layout instead of two-column layout */
     @media (max-width: 800px) {
@@ -146,8 +130,18 @@
         border-color: #c3e6cb !important;
         ;
     }
+
+    .tarjeta {
+        border-radius: 5px;
+        margin: 10px;
+    }
+
+    .deleteFile:hover {
+        background-image: url('<?php echo base_url('assets/img/delete.png'); ?>');
+        background-repeat: no-repeat;
+        background-size: 20px;
+    }
 </style>
-<script src="<?php echo base_url('assets/js/multipleFiles.js') ?>"></script>
 <section>
     <?php
     if ($this->session->flashdata('success')) {
@@ -302,8 +296,8 @@
 
                                             <div class="flex-item-right">
                                                 <div id="sidebar">
-                                                    <div class="flex-container2">
-                                                        <div class="flex-item-left2">
+                                                    <div class="flex-container">
+                                                        <div class="flex-item-left">
                                                             <div class="colorButtons">
                                                                 <h3>Color</h3>
                                                                 <input type="color" id="colorpicker<?php echo $incidencies_item['id_incidencia'] ?>" value="#000000" class="colorpicker">
@@ -318,14 +312,55 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="flex-item-right2">
+                                                        <div class="flex-item-right">
                                                             <div class="canvas-container" id="canvas"></div>
                                                             <input type="hidden" name="canvasImage" class="canvas-image" />
 
+
+
+
                                                         </div>
                                                     </div>
+
+
+
                                                 </div>
 
+                                                <div class="flex-container">
+                                                    <div class="flex-item-left">
+
+
+                                                    </div>
+
+                                                    <div class="flex-item-right">
+                                                        <?php
+                                                        // var_dump($ficheros);die();
+                                                        if (isset($ficheros)) {
+                                                        ?><div class="row d-flex justify-content-center"><?php
+                                                            foreach ($ficheros as $fichero) :
+                                                                if ($fichero['id_incidencia'] == $incidencies_item['id_incidencia']) {
+
+                                                                    if ($fichero['extension'] == 'png' || $fichero['extension'] == 'jpg') { ?>
+                                                                            <a href="#" onclick="delete_contato('<?php echo $fichero['id_incidencia']?>')">
+                                                                                <div class="tarjeta text-center shadow deleteFile" style="width:100px">
+
+                                                                                    <img width="50px" src="http://localhost/BitBit/imagen/<?php echo  $fichero['id_incidencia'] . '/' . $fichero['id_fichero'] ?>" />
+
+                                                                                </div>
+                                                                            </a>
+                                                                        <?php } else if ($fichero['extension'] == 'txt') { ?>
+                                                                            <div class="tarjeta text-center shadow deleteFile" style="width:100px">
+                                                                                <img width="48px" height="48px" src="<?php echo base_url('assets/img/archivo.png'); ?>" />
+                                                                            </div>
+                                                                <?php
+                                                                    }
+                                                                }
+                                                            endforeach;
+                                                                ?>
+                                                            </div><?php
+                                                                } ?>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -338,20 +373,13 @@
                                             <form method="post" action="<?php echo base_url('do_upload') ?>" enctype="multipart/form-data">
                                                 <input name="id_incidencia_file" value="<?php echo $incidencies_item['id_incidencia'] ?>" hidden />
 
-                                                <input type='file' name='files[]' multiple> <br /><br />
+                                                <input type='file' name='files[]'> <br /><br />
                                                 <input type='submit' value='Upload' name='upload' />
                                             </form>
 
 
-                                            <?php
 
-                                            $myfiles = array_diff(scandir($rutaFichero[2]["rutaFicheros"]), array('.', '..'));
 
-                                            foreach ($myfiles as $file) {
-                                                var_dump($myfiles);
-                                               
-                                            }
-                                            ?>
                                         </div>
                                     </div>
 
@@ -365,7 +393,26 @@
     </div>
 </section>
 
-
+<script>
+    function delete_contato(id) {
+        if (confirm('¿Quieres eliminar el archivo?')) {
+            $.ajax({
+                url: "<?php echo site_url('EditarReparacion_controller/delete_fichero') ?>"+id,
+                data: {
+                    id: id,
+                },
+                type: "POST",
+                dataType: "JSON",
+                success: function(data) {
+                    location.reload();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('Error deleting data');
+                }
+            });
+        }
+    }
+</script>
 
 <script>
     window.onload = function() {

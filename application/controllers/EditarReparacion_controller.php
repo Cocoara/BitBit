@@ -100,37 +100,43 @@ class EditarReparacion_controller  extends CI_Controller
 					}
 
 					$filename = $_FILES['files']['name'][$i];
+					// var_dump($filename);
 					$filenameWithoutExt = explode(".", $filename);
-
+					// var_dump($filenameWithoutExt);
+					$extension = strtolower($filenameWithoutExt[1]);
+					// var_dump($extension);
 					$filenameWithId = $filenameWithoutExt[0] . $id_incidencia;
+					// var_dump($filenameWithId);
 					$encryption = hash('ripemd160', $filenameWithId);
+					// var_dump($encryption);
 
 					$filenameWithIdAndHash = $encryption . "_" . $id_incidencia . "." . $filenameWithoutExt[1];
+					// var_dump($filenameWithIdAndHash);
 					// Set preference
 					$config['upload_path']          = $directoryName;
 					$config['allowed_types']        = 'gif|jpg|jpeg|png|iso|dmg|zip|rar|doc|docx|xls|xlsx|ppt|pptx|csv|ods|odt|odp|pdf|rtf|sxc|sxi|txt|exe|avi|mpeg|mp3|mp4|3gp';
 					$config['max_size']             = 5000;
-					$config['max_width']            = 1024;
-					$config['max_height']           = 768;
+					// $config['max_width']            = 1024;
+					// $config['max_height']           = 768;
 					$config['file_name'] = $filenameWithIdAndHash;
 
 					//Load upload library
 					$this->load->library('upload', $config);
 
-
-					// File upload
 					if ($this->upload->do_upload('file')) {
 
 						$this->incidencies_model->set_incidenciesFile_by_tecnico($id_incidencia, $directoryName);
+						$this->incidencies_model->set_rutaIncidenciesFile($id_incidencia, $filenameWithIdAndHash, $extension, $directoryName);
 
-						
 						// Get data about the file
-						// $uploadData = $this->upload->data();
+						$uploadData = $this->upload->data();
+						// var_dump($uploadData);die();
 						// Initialize array
-						$data['filenames'][] = $filenameWithId;
+						$data['filenames'][] = $filenameWithIdAndHash;
 					}
 				}
 			}
+
 
 			// load view
 			$this->session->set_flashdata('success', "Archivo subido!");
@@ -140,5 +146,20 @@ class EditarReparacion_controller  extends CI_Controller
 			$this->session->set_flashdata('error', $error['error']);
 			redirect('');
 		}
+	}
+
+	public function imagen($id_incidencia, $nom_arxiu)
+	{
+		// podria gestionar QUIEN PUEDE ACCEDER
+		$this->load->helper('download');
+
+		force_download('C:\xampp\uploads/' . $id_incidencia . '/' . $nom_arxiu, NULL, TRUE);
+	}
+
+	public function delete_fichero()
+	{
+		$id    = $this->input->post('id');
+		$this->incidencies_model->delete_fichero_by_id($id);
+		echo json_encode(array("status" => TRUE));
 	}
 }

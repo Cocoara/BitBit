@@ -29,15 +29,32 @@ class Incidencies_model  extends CI_Model
         return $query->result_array();
     }
 
-    public function get_rutaIncidenciesFile_by_tecnico($id)
+    public function set_rutaIncidenciesFile($id_incidencia, $filenameWithIdAndHash, $extension, $directoryName)
     {
-        $query = $this->db->query("SELECT rutaFicheros From incidencia where id_tecnico='" . $id . "'");
+        $data = array(
+            'id_incidencia' => $id_incidencia,
+            'id_fichero' => $filenameWithIdAndHash,
+            'extension' => $extension,
+            'directoryName' => $directoryName
+        );
+
+        $this->db->insert('ficheros', $data);
+    }
+
+    public function get_ficheros()
+    {
+        $query = $this->db->query("SELECT * From ficheros");
         return $query->result_array();
     }
 
-    
+    public function delete_fichero_by_id($id)
+    {
+        $this->db->where('id_fichero', $id);
+        $this->db->delete('ficheros');
+    }
 
-    public function set_incidencies_by_tecnico($id_incidencia,$estado,$Fecha_entrada,$desc_averia,$uuid,$Marca,$Modelo,$Numero_serie,$Diagnostico_prev,$Telf,$tiempo_reparcion,$descripcion_gestor,$canvasImage ){
+    public function set_incidencies_by_tecnico($id_incidencia, $estado, $Fecha_entrada, $desc_averia, $uuid, $Marca, $Modelo, $Numero_serie, $Diagnostico_prev, $Telf, $tiempo_reparcion, $descripcion_gestor, $canvasImage)
+    {
         $data = array(
             'id_Estado' => $estado,
             'Fecha_entrada' => $Fecha_entrada,
@@ -54,19 +71,16 @@ class Incidencies_model  extends CI_Model
         );
         $this->db->where('id_incidencia', $id_incidencia);
         return $this->db->update('incidencia', $data);
-
-
     }
 
-    public function set_incidenciesFile_by_tecnico($id_incidencia, $directoryName){
+    public function set_incidenciesFile_by_tecnico($id_incidencia, $directoryName)
+    {
         $data = array(
             'id_incidencia' => $id_incidencia,
             'rutaFicheros' => $directoryName,
         );
         $this->db->where('id_incidencia', $id_incidencia);
         return $this->db->update('incidencia', $data);
-
-
     }
 
     // public function get_last_incidencia_id(){
