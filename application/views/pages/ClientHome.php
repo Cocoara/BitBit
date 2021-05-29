@@ -41,18 +41,16 @@
         }
     }
 
-    .margetop {
-        margin-top: 100px;
-    }
+   
 </style>
 
 
 <section>
 
-    <div class="container-fluid margetop h-100">
+    <div class="container-fluid margetop ">
         <div class="row d-flex justify-content-center">
             <?php foreach ($incidencies as $incidencies_item) : ?>
-                <div class="card text-center">
+                <div id="cardColor" class="card  text-center mt-5">
                     <div class="card-header"><?php echo $incidencies_item['desc_averia'] ?></div>
                     <div class="card-body">
                         <!-- <h5 class="card-title"><?php echo $incidencies_item[''] ?></h5> -->
@@ -65,22 +63,27 @@
                             <hr>
                         <?php if ($incidencies_item['id_Estado'] == '') { ?>
                             <span><img src="<?php echo base_url("assets/img/Notstarted.png") ?>" /> No asignado</span>
+                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-danger');</script>
                         <?php } ?>
 
                         <?php if ($incidencies_item['id_Estado'] == 1) { ?>
                             <span><img src="<?php echo base_url("assets/img/Notstarted.png") ?>" /> No empezado</span>
+                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-light');</script>
                         <?php } ?>
 
                         <?php if ($incidencies_item['id_Estado'] == 2) { ?>
                             <span><img src="<?php echo base_url("assets/img/Working.png") ?>" /> En curso</span>
+                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-warning');</script>
                         <?php } ?>
 
                         <?php if ($incidencies_item['id_Estado'] == 3) { ?>
                             <span><img src="<?php echo base_url("assets/img/Completado.png") ?>" /> Completado</span>
+                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-info');</script>
                         <?php } ?>
 
                         <?php if ($incidencies_item['id_Estado'] == 4) { ?>
                             <span><img src="<?php echo base_url("assets/img/Enviado.png") ?>" /> Entregado</span>
+                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-success');</script>
                         <?php } ?>
 
                         

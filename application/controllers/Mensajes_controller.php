@@ -24,10 +24,10 @@ class Mensajes_controller  extends CI_Controller
             $email = $this->input->post('email');
             $tipo = $this->input->post('tipo');
             $mensaje = $this->input->post('mensaje');
+			$data = date('Y-m-d');
 	
-
-		if ($this->mensajes_model->set_incidencies_by_tecnico($first_name,$last_name,$phone,$email,$tipo,$mensaje)) {
-			$this->session->set_flashdata('success', "Incidencia actualizada correctamente");
+		if ($this->mensajes_model->set_consulta($first_name,$last_name,$phone,$email,$tipo,$mensaje,$data)) {
+			$this->session->set_flashdata('success', "Consulta enviada correctamente");
 			redirect('');
 		}
 		else{

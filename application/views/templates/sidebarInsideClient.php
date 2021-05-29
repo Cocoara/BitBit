@@ -37,16 +37,23 @@
                 <p>Mis incidencias</p>
               </a>
             </li>
-          </ul>
 
-          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-              <img src="<?php echo base_url("assets/img/config.png") ?>" style="width:30px">
-            </div>
-            <div class="info text-white">
-              <a href="<?php echo site_url("passwdchange") ?>">Opciones</a>
-            </div>
+            <li class="nav-item">
+              <a href="<?php echo site_url('generateForUuid') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Estado de averia</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="<?php echo base_url("assets/img/config.png") ?>" style="width:30px">
           </div>
+          <div class="info text-white">
+            <a href="<?php echo site_url("passwdchange") ?>">Opciones</a>
+          </div>
+        </div>
 
     </nav>
     <!-- /.sidebar-menu -->

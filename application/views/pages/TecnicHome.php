@@ -42,9 +42,6 @@
         }
     }
 
-    .margetop {
-        margin-top: 20px;
-    }
 
     .card {
         margin: 20px;
@@ -134,12 +131,23 @@
     .tarjeta {
         border-radius: 5px;
         margin: 10px;
+        min-height: 87px;
     }
 
     .deleteFile:hover {
         background-image: url('<?php echo base_url('assets/img/delete.png'); ?>');
         background-repeat: no-repeat;
         background-size: 20px;
+    }
+
+    .labelFiles {
+        background-color: indigo;
+        color: white;
+        padding: 0.5rem;
+        font-family: sans-serif;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        margin-top: 1rem;
     }
 </style>
 <section>
@@ -174,8 +182,8 @@
             <?php foreach ($incidencies as $incidencies_item) : ?>
 
 
-                <div class="card text-center shadow" data-issue-id="<?php echo $incidencies_item['id_incidencia'] ?>">
-                    <div class="card-header"><?php echo $incidencies_item['desc_averia'] ?></div>
+                <div class="card text-center shadow" id="cardColor"  data-issue-id="<?php echo $incidencies_item['id_incidencia'] ?>">
+                    <div class="card-header" ><?php echo $incidencies_item['desc_averia'] ?></div>
                     <div class="card-body">
                         <img id="actualImage" style="width:150px" src="<?php echo $incidencies_item['canvasImage'] ?>" />
                         <p class="card-text">
@@ -254,6 +262,41 @@
                                                             <?php echo $estados_item['Descrip'] ?>
                                                         </option>
                                                     <?php endforeach; ?>
+
+                                                    <?php if ($incidencies_item['id_Estado'] == '') { ?>
+                                                        
+                                                        <script type="text/javascript">
+                                                            document.getElementById("cardColor").classList.add('card-danger');
+                                                        </script>
+                                                    <?php } ?>
+
+                                                    <?php if ($incidencies_item['id_Estado'] == 1) { ?>
+                                                        
+                                                        <script type="text/javascript">
+                                                            document.getElementById("cardColor").classList.add('card-light');
+                                                        </script>
+                                                    <?php } ?>
+
+                                                    <?php if ($incidencies_item['id_Estado'] == 2) { ?>
+                                                        
+                                                        <script type="text/javascript">
+                                                            document.getElementById("cardColor").classList.add('card-warning');
+                                                        </script>
+                                                    <?php } ?>
+
+                                                    <?php if ($incidencies_item['id_Estado'] == 3) { ?>
+                                                        
+                                                        <script type="text/javascript">
+                                                            document.getElementById("cardColor").classList.add('card-info');
+                                                        </script>
+                                                    <?php } ?>
+
+                                                    <?php if ($incidencies_item['id_Estado'] == 4) { ?>
+                                                        
+                                                        <script type="text/javascript">
+                                                            document.getElementById("cardColor").classList.add('card-success');
+                                                        </script>
+                                                    <?php } ?>
 
                                                 </select>
 
@@ -337,11 +380,11 @@
                                                         // var_dump($ficheros);die();
                                                         if (isset($ficheros)) {
                                                         ?><div class="row d-flex justify-content-center"><?php
-                                                            foreach ($ficheros as $fichero) :
-                                                                if ($fichero['id_incidencia'] == $incidencies_item['id_incidencia']) {
+                                                                                                            foreach ($ficheros as $fichero) :
+                                                                                                                if ($fichero['id_incidencia'] == $incidencies_item['id_incidencia']) {
 
-                                                                    if ($fichero['extension'] == 'png' || $fichero['extension'] == 'jpg') { ?>
-                                                                            <a href="#" onclick="delete_contato('<?php echo $fichero['id_incidencia']?>')">
+                                                                                                                    if ($fichero['extension'] == 'png' || $fichero['extension'] == 'jpg') { ?>
+                                                                            <a href="#" onclick="delete_contato('<?php echo $fichero['id_incidencia'] ?>')">
                                                                                 <div class="tarjeta text-center shadow deleteFile" style="width:100px">
 
                                                                                     <img width="50px" src="http://localhost/BitBit/imagen/<?php echo  $fichero['id_incidencia'] . '/' . $fichero['id_fichero'] ?>" />
@@ -350,12 +393,12 @@
                                                                             </a>
                                                                         <?php } else if ($fichero['extension'] == 'txt') { ?>
                                                                             <div class="tarjeta text-center shadow deleteFile" style="width:100px">
-                                                                                <img width="48px" height="48px" src="<?php echo base_url('assets/img/archivo.png'); ?>" />
+                                                                                <img width="48px" src="<?php echo base_url('assets/img/archivo.png'); ?>" />
                                                                             </div>
                                                                 <?php
-                                                                    }
-                                                                }
-                                                            endforeach;
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            endforeach;
                                                                 ?>
                                                             </div><?php
                                                                 } ?>
@@ -373,13 +416,20 @@
                                             <form method="post" action="<?php echo base_url('do_upload') ?>" enctype="multipart/form-data">
                                                 <input name="id_incidencia_file" value="<?php echo $incidencies_item['id_incidencia'] ?>" hidden />
 
-                                                <input type='file' name='files[]'> <br /><br />
-                                                <input type='submit' value='Upload' name='upload' />
+                                                <!-- <input id="upload" type='file' name='files[]'> <br /><br /> -->
+
+                                                <div class="form-group" id="grpFiles">
+                                                    <div>
+                                                        <label for="iduserfile">Arxiu a publicar:</label>
+                                                        <a href="javascript:void(0);" onclick="addFileToUpload()" title="Add file" id="addFile" class="btn btn-primary btn-xs">
+                                                            <i class="fa  fa-plus-square fa-2x"></i> Add file
+                                                        </a>
+                                                        <input type="file" id="files" name="files[]" size="20" required="required" />
+                                                    </div>
+
+                                                </div>
+                                                <input class="btn btn-primary" type='submit' value='Upload' name='upload' />
                                             </form>
-
-
-
-
                                         </div>
                                     </div>
 
@@ -393,11 +443,37 @@
     </div>
 </section>
 
+<script type="text/javascript">
+    var maxField = 5; //Input files increment limitation
+    var x = 1; //Initial file counter is 1
+
+    var fieldFile =
+        '<a href="javascript:void(0);" onclick="removeFileToUpload(this)" id="remove_button" ' +
+        'class="btn btn-primary btn-xs" title="Remove file">' +
+        '<i class="fa fa-times "/>' +
+        '</a>' + //New input file and remove icon 
+        '<input type="file" name="files[]" size="20" value=""/>';
+
+    function removeFileToUpload(obj) {
+        event.preventDefault();
+        $(obj).parent('div').remove(); //Remove file html
+        x--; //Decrement file counter
+    }
+
+    function addFileToUpload() {
+        if (x <= maxField) { //Check maximum number of input files
+            var fieldHTML = '<div>Arxiu ' + x + ':' + fieldFile + '</div>';
+            x++; //Increment file counter
+            $('#grpFiles').append(fieldHTML); // Add input file 
+        }
+    }
+</script>
+
 <script>
     function delete_contato(id) {
         if (confirm('¿Quieres eliminar el archivo?')) {
             $.ajax({
-                url: "<?php echo site_url('EditarReparacion_controller/delete_fichero') ?>"+id,
+                url: "<?php echo site_url('EditarReparacion_controller/delete_fichero') ?>" + id,
                 data: {
                     id: id,
                 },

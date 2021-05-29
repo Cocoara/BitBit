@@ -47,6 +47,48 @@ class Incidencies_model  extends CI_Model
         return $query->result_array();
     }
 
+    public function get_incidencias_by_uuid($uuid)
+    {
+        $query = $this->db->query("SELECT * From incidencia where uuid='" . $uuid . "'");
+        return $query->result_array();
+    }
+
+    public function get_ficheros_by_incidencia($id_incidencia){
+        $query = $this->db->query("SELECT * From ficheros where id_incidencia='" . $id_incidencia . "'");
+        return $query->result_array();
+    }
+
+    public function get_nombre_tecnicos_incidencia($id_incidencia){
+
+        $this->db->select('*');
+        $this->db->from('incidencia');
+        $this->db->join('users', 'incidencia.id_tecnico = users.id');
+        $this->db->where('id_incidencia', $id_incidencia);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function get_estado_incidencia($id_incidencia){
+
+        $this->db->select('*');
+        $this->db->from('incidencia');
+        $this->db->join('tipo_estado', 'incidencia.id_Estado = tipo_estado.id_Estado');
+        $this->db->where('id_incidencia', $id_incidencia);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function get_cliente_incidencia($id_incidencia){
+
+        $this->db->select('*');
+        $this->db->from('incidencia');
+        $this->db->join('users', 'incidencia.id_user = users.id');
+        $this->db->where('id_incidencia', $id_incidencia);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+
     public function delete_fichero_by_id($id)
     {
         $this->db->where('id_fichero', $id);
@@ -80,6 +122,17 @@ class Incidencies_model  extends CI_Model
             'rutaFicheros' => $directoryName,
         );
         $this->db->where('id_incidencia', $id_incidencia);
+        return $this->db->update('incidencia', $data);
+    }
+
+    
+    public function set_incidencies_by_client($uuid, $id_client)
+    {
+        $data = array(
+            'id_user' => $id_client,
+        );
+        
+        $this->db->where('uuid', $uuid);
         return $this->db->update('incidencia', $data);
     }
 

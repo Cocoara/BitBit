@@ -99,22 +99,22 @@ define ('PDF_PAGE_ORIENTATION', 'P');
 /**
  * Document creator.
  */
-define ('PDF_CREATOR', 'Darius Cocoara');
+define ('PDF_CREATOR', 'BitBit');
 
 /**
  * Document author.
  */
-define ('PDF_AUTHOR', 'Darius Cocoara');
+define ('PDF_AUTHOR', 'BitBit');
 
 /**
  * Header title.
  */
-define ('PDF_HEADER_TITLE', 'Noticia Nº');
+define ('PDF_HEADER_TITLE', 'BitBit');
 
 /**
  * Header description string.
  */
-define ('PDF_HEADER_STRING', "by Darius Cocoara");
+define ('PDF_HEADER_STRING', "Ficha de averia");
 
 /**
  * Document unit of measure [pt=point, mm=millimeter, cm=centimeter, in=inch].

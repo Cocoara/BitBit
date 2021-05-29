@@ -70,6 +70,8 @@ $route['incidencia'] = 'Admin_controller/incidencia';
 $route['infocontacto'] = 'Admin_controller/infocontacto'; 
 $route['mail'] = 'Admin_controller/mail'; 
 $route['material'] = 'Admin_controller/material'; 
+$route['tipoConsulta'] = 'Admin_controller/tipoConsulta'; 
+$route['consulta'] = 'Admin_controller/consulta'; 
 
 $route['passwdchange'] = 'UpdatePassword_controller/index'; 
 $route['updatePassword'] = 'UpdatePassword_controller/updatePassword'; 
@@ -166,3 +168,10 @@ $route['(:any)/print'] = 'Admin_controller/$1/print';
 /* ################### MENSAJERIA ##################*/ 
 
 $route['contactanosPeticion'] = "Mensajes_controller/contactanosPeticion";
+
+
+
+/* ################### CLIENT ##################*/ 
+
+$route['generateForUuid'] = "Client_Controller/generateForUuid";
+$route['fichaUUID'] = "Client_Controller/fichaUUID";

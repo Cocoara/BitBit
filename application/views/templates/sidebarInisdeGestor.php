@@ -40,7 +40,13 @@
             <li class="nav-item">
               <a href="<?php echo site_url('editarReparacionGestor')?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Reparaciones</p>
+                <p>Mis reparaciones</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo site_url('consulta')?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Consultas</p>
               </a>
             </li>
           </ul>

@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Incidencies_model  extends CI_Model
+class Mensajes_model  extends CI_Model
 {
 
     public function __construct()
@@ -48,6 +48,25 @@ class Incidencies_model  extends CI_Model
 
 
     }
+
+    public function get_tipo_consulta(){
+        $query = $this->db->query("SELECT * From temaconsulta");
+        return $query->result_array();
+    }
+
+    public function set_consulta($first_name, $last_name, $phone, $email, $tipo, $mensaje, $data){
+        $data = array(
+            'nombre' => $first_name,
+            'apellido' => $last_name,
+            'telefono' => $phone,
+            'correo' => $email,
+            'tema' => $tipo,
+            'mensaje' => $mensaje,
+            'fecha' => $data
+        );
+        return $this->db->insert('consulta', $data);
+    }
+    
 
 
 }

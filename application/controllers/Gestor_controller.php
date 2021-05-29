@@ -34,7 +34,7 @@ class Gestor_controller extends CI_Controller
         
             // $crud->set_relation_n_n('id_tecnico','users_groups', 'users','user_id','user_id','username');
             
-
+            $crud->required_fields('id_user');
             $crud->field_type('uuid', 'invisible');
             $crud->field_type('id_Estado', 'invisible');
             $crud->columns('id_incidencia', 'id_user', 'id_Estado', 'desc_averia', 'Fecha_entrada', 'Diagnostico_prev');

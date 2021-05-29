@@ -110,6 +110,41 @@ class Admin_controller extends CI_Controller
         $this->output($output);
     }
 
+    public function tipoConsulta()
+    {
+        $crud = new grocery_CRUD();
+        $crud->set_table('temaconsulta');
+        $crud->fields('tipoConsulta');
+        $output = $crud->render();
+
+        $this->output($output);
+    }
+
+    public function consulta()
+    {
+        if ($this->ion_auth->in_group('gestor')) {
+            $crud = new grocery_CRUD();
+            $crud->set_table('consulta');
+            $crud->unset_delete();
+            $crud->unset_add();
+            $crud->unset_edit();
+            $crud->unset_clone();
+            $output = $crud->render();
+
+            $this->outputGestor($output);
+            return;
+        }
+        if ($this->ion_auth->in_group('admin')) {
+            $crud = new grocery_CRUD();
+            $crud->set_table('consulta');
+            $output = $crud->render();
+
+            $this->output($output);
+            return;
+        }
+    }
+
+
     public function changePassword()
     {
 
@@ -120,13 +155,20 @@ class Admin_controller extends CI_Controller
     }
 
 
-
+    function outputGestor($output = null)
+    {
+        $data['user'] = $this->ion_auth->user()->row();
+        $this->load->view('templates/headerInisdeGestor', $data);
+        $this->load->view('templates/sidebarInisdeGestor', $data);
+        $this->load->view('grocery/index.php', $output);
+        $this->load->view('templates/footer');
+    }
 
     function output($output = null)
     {
         $data['user'] = $this->ion_auth->user()->row();
         $this->load->view('templates/headerInisde', $data);
-        $this->load->view('templates/sidebarInside', $data );
+        $this->load->view('templates/sidebarInside', $data);
         $this->load->view('grocery/index.php', $output);
         $this->load->view('templates/footer');
     }

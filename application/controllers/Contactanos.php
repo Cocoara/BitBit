@@ -24,7 +24,7 @@ class Contactanos extends CI_Controller
 	{
 		parent::__construct();
 
-		$this->load->model('users_model');
+		$this->load->model('mensajes_model');
 		$this->load->helper('url_helper');
 		$this->load->helper(array('form', 'url'));
 		$this->load->library("session");
@@ -34,17 +34,12 @@ class Contactanos extends CI_Controller
 
 	public function index()
 	{
-		
-		if (!$this->ion_auth->logged_in()) {
-			$this->load->view('templates/header');
-			$this->load->view('pages/contactanos');
-			$this->load->view('templates/footer');
-			return;
-		} 
+
+		$data['tipoConsulta'] = $this->mensajes_model->get_tipo_consulta();
 
 		$data['user']= $this->ion_auth->user()->row();
-		$this->load->view('templates/headerInisde',$data);
-		$this->load->view('pages/contactanos');
+		$this->load->view('templates/header');
+		$this->load->view('pages/contactanos', $data);
 		$this->load->view('templates/footer');
 		
 	}

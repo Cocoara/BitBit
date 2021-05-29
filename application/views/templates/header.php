@@ -72,30 +72,5 @@
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
+        <section class="content-header" style="padding:0px">
 
-          <!-- <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="<?php echo site_url('') ?>"><img src="<?php echo base_url("assets/img/favicon.png") ?>" /> </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item ">
-            <a type="button" href="<?php echo site_url('') ?>" class="btn btn-outline-secondary mr-3">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a type="button" href="<?php echo site_url('Contactanos') ?>" class="btn btn-outline-success mr-3">Contáctanos</a>
-          </li>
-          <li class="nav-item">
-            <a type="button" href="<?php echo site_url('Nosotros') ?>" class="btn btn-outline-warning mr-3">Sobre nosotros</a>
-          </li>
-          
-        </ul>
-       
-            <a type="button" href="<?php echo site_url('login') ?>" class="btn btn-outline-info mr-3 ">Inicar sesión</a>
-       
-      </div>
-    </nav>
-  </header> -->

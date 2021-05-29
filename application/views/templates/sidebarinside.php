@@ -61,6 +61,18 @@
                 <p>Material</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="<?php echo site_url('consulta') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Consultas</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo site_url('tipoConsulta') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tipo de consulta (Contáctanos)</p>
+              </a>
+            </li>
           </ul>
         </li>
 

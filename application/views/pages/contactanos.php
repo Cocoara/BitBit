@@ -16,7 +16,7 @@
                     <form method="post" action="<?php echo base_url('contactanosPeticion'); ?>">
 
                         <div class="input-group mb-3">
-                            <input type="text" name="first_name" class="form-control" placeholder="Primer nombre">
+                            <input type="text" name="first_name" class="form-control" required placeholder="Primer nombre">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-user"></span>
@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="input-group mb-3">
-                            <input type="text" name="last_name" class="form-control" placeholder="Apellido">
+                            <input type="text" name="last_name" class="form-control" required placeholder="Apellido">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-user"></span>
@@ -34,7 +34,7 @@
                         </div>
 
                         <div class="input-group mb-3">
-                            <input type="number" maxlength="9" class="form-control" name="phone" placeholder="Teléfono">
+                            <input type="number" maxlength="9" class="form-control" required name="phone" placeholder="Teléfono">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-phone"></span>
@@ -43,7 +43,7 @@
                         </div>
 
                         <div class="input-group mb-3">
-                            <input type="email" name="email" class="form-control" placeholder="email">
+                            <input type="email" name="email" class="form-control" required placeholder="email">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-envelope"></span>
@@ -56,10 +56,10 @@
                             <label for="tipo" class="form-control">Tema:</label>
 
                             <select name="tipo" class="form-control" id="tipo">
-                                <option value="pantalla">Pantalla</option>
-                                <option value="software">Software</option>
-                                <option value="hardware">Hardware</option>
-                                <option value="otros">otros</option>
+                                <?php foreach($tipoConsulta as $estado){?>
+                                    <option value="<?php echo $estado['id']?>"><?php echo $estado['tipoConsulta'] ?></option>
+                                <?php }?>
+                                
                             </select>
 
                             <div class="input-group-append">
@@ -71,7 +71,7 @@
 
 
                         <div class="input-group mb-3">
-                            <textarea name="mensaje" rows="6" class="form-control" placeholder="Mensaje"></textarea>
+                            <textarea name="mensaje" rows="6" class="form-control" required placeholder="Mensaje"></textarea>
                         </div>
 
 
@@ -88,6 +88,16 @@
 
                 </div>
             </div>
+            
+            <?php
+                    if ($this->session->flashdata('success')) {
+                    ?>
+                        <div class="alert alert-danger">
+                            <?php echo $this->session->flashdata('success'); ?>
+                        </div>
+                    <?php }
+                    unset($_SESSION['success']);
+                    ?>
         </div>
     </div>
 </div>
