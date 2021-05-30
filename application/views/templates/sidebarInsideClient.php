@@ -44,7 +44,24 @@
                 <p>Estado de averia</p>
               </a>
             </li>
+            <!-- <li class="nav-item">
+              <a href="<?php echo site_url('mensajeriaClient') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Mensajeria</p>
+              </a>
+            </li> -->
           </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+     
+            <li class="nav-item">
+              <a href="<?php echo site_url('mensajeriaClient') ?>" class="nav-link">
+                <i class="far fa-envelope nav-icon"></i>
+                <p>Mensajeria&nbsp;&nbsp;<span class="badge badge-light"><?php echo $badgeMail ?></span></p>
+              </a>
+            </li>
+       
         </li>
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">

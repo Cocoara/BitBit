@@ -62,21 +62,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo site_url('consulta') ?>" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Consultas</p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="<?php echo site_url('tipoConsulta') ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Tipo de consulta (Contáctanos)</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<?php echo site_url('noticias') ?>" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Noticias</p>
               </a>
             </li>
           </ul>
@@ -91,7 +79,7 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-         
+
             <li class="nav-item">
               <a href="<?php echo site_url('todasLasIncidencias') ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
@@ -111,19 +99,19 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?php echo site_url('adminUsuarios') ?>" class="nav-link">
+              <a href="<?php echo site_url('consulta') ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Mensajes de contacto</p>
+                <p>Consultas</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo site_url('user_groups') ?>" class="nav-link">
+              <a href="<?php echo site_url('noticias') ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Noticias</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo site_url('mensajes') ?>" class="nav-link">
+              <a href="<?php echo site_url('mensajeriaAdmin') ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Mensajería</p>
               </a>

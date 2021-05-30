@@ -6,7 +6,7 @@ class Client_Controller  extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-
+        $this->load->model('mensajes_model');
         $this->load->model('incidencies_model');
         $this->load->helper(array('form', 'url'));
         $this->load->library("session");
@@ -33,6 +33,10 @@ class Client_Controller  extends CI_Controller
             $this->load->view('templates/footer');
             return;
         } else {
+            
+			$user = $this->ion_auth->user()->row();
+			$id= $user->id;
+            $data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
             $data['user'] = $this->ion_auth->user()->row();
             $this->load->view('templates/headerInsideClient', $data);
             $this->load->view('templates/sidebarInsideClient');

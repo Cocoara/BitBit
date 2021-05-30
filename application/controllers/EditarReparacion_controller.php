@@ -51,10 +51,10 @@ class EditarReparacion_controller  extends CI_Controller
 
 		if ($this->incidencies_model->set_incidencies_by_tecnico($id_incidencia, $estado, $Fecha_entrada, $desc_averia, $uuid, $Marca, $Modelo, $Numero_serie, $Diagnostico_prev, $Telf, $tiempo_reparcion, $descripcion_gestor, $canvasImage)) {
 			$this->session->set_flashdata('success', "Incidencia actualizada correctamente");
-			redirect('');
+			redirect('incidenciasTecnico');
 		} else {
 			$this->session->set_flashdata('error', "Hubo un error en la edición de los datos de la incidencia");
-			redirect('');
+			redirect('incidenciasTecnico');
 		}
 	}
 

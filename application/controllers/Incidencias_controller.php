@@ -23,6 +23,7 @@ class Incidencias_controller extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('mensajes_model');
 		$this->load->model('incidencies_model');
 		$this->load->helper('url_helper');
 		$this->load->helper(array('form', 'url'));
@@ -61,7 +62,7 @@ class Incidencias_controller extends CI_Controller
 			$user = $this->ion_auth->user()->row();
 			$id= $user->id;
 			$data['incidencies'] = $this->incidencies_model->get_incidencies_by_id($id);
-
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
 			$this->load->view('templates/headerInsideClient', $data);
 			$this->load->view('templates/sidebarInsideClient');
 			$this->load->view('pages/IncidenciasClient');
@@ -78,7 +79,7 @@ class Incidencias_controller extends CI_Controller
 
 			$this->load->view('templates/headerInisdeTecnico', $data);
 			$this->load->view('templates/sidebarInsideTecnico');
-			$this->load->view('pages/TecnicHome');
+			$this->load->view('pages/IncidenciasTecnico');
 		}
 		else if($this->ion_auth->in_group($groupGestor)) {
 			redirect('todasLasIncidencias');

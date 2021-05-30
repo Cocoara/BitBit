@@ -169,11 +169,22 @@ $route['(:any)/print'] = 'Admin_controller/$1/print';
 /* ################### MENSAJERIA ##################*/ 
 
 $route['contactanosPeticion'] = "Mensajes_controller/contactanosPeticion";
+$route['mensajeriaClient'] = "Mensajes_controller/mensajeria";
+$route['setMensajeByClient'] = "Mensajes_controller/setMensaje";
+$route['mensajeriaAdmin'] = "Mensajes_controller/mensajeria";
+$route['setMensajeByAdmin'] = "Mensajes_controller/setMensaje";
 
 
+
+/* ################### tecnic ##################*/ 
+
+$route['incidenciasTecnico'] = "Incidencias_controller/index";
 
 /* ################### CLIENT ##################*/ 
 
 $route['generateForUuid'] = "Client_Controller/generateForUuid";
 $route['fichaUUID'] = "Client_Controller/fichaUUID";
 $route['incidenciasCliente'] = "Incidencias_controller/index";
+
+
+

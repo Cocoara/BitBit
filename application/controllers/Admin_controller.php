@@ -105,6 +105,8 @@ class Admin_controller extends CI_Controller
     {
         $crud = new grocery_CRUD();
         $crud->set_table('noticias');
+        $crud->set_relation('id_grupo', 'groups', 'name');
+        $crud->callback_before_insert(array($this, 'date_callback'));
         $output = $crud->render();
 
         $this->output($output);
@@ -131,6 +133,14 @@ class Admin_controller extends CI_Controller
 
     public function consulta()
     {
+        if ($this->ion_auth->in_group('admin')) {
+            $crud = new grocery_CRUD();
+            $crud->set_table('consulta');
+            $output = $crud->render();
+
+            $this->output($output);
+            return;
+        }
         if ($this->ion_auth->in_group('gestor')) {
             $crud = new grocery_CRUD();
             $crud->set_table('consulta');
@@ -141,14 +151,6 @@ class Admin_controller extends CI_Controller
             $output = $crud->render();
 
             $this->outputGestor($output);
-            return;
-        }
-        if ($this->ion_auth->in_group('admin')) {
-            $crud = new grocery_CRUD();
-            $crud->set_table('consulta');
-            $output = $crud->render();
-
-            $this->output($output);
             return;
         }
     }
@@ -180,5 +182,13 @@ class Admin_controller extends CI_Controller
         $this->load->view('templates/sidebarInside', $data);
         $this->load->view('grocery/index.php', $output);
         $this->load->view('templates/footer');
+    }
+
+    function date_callback($post_array)
+    {
+        $data = date('d-m-y');
+
+        $post_array['data'] = $data;
+        return  $post_array;
     }
 }

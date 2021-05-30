@@ -49,93 +49,23 @@
 
     <div class="container-fluid margetop ">
         <div class="row d-flex justify-content-center">
-            <?php foreach ($incidencies as $incidencies_item) : ?>
+            <?php foreach ($noticias as $noticia) : ?>
+                
                 <div id="cardColor" class="card  text-center mt-5">
-                    <div class="card-header"><?php echo $incidencies_item['desc_averia'] ?></div>
+                    <div class="card-header"><?php echo $noticia['titulo'] ?></div>
                     <div class="card-body">
-                        <!-- <h5 class="card-title"><?php echo $incidencies_item[''] ?></h5> -->
+                        
                         <p class="card-text">
-                        <?php echo $incidencies_item['Diagnostico_prev'] ?> 
+                        <?php echo $noticia['contenido'] ?>
                         </p>
 
-               
-        
-                            <hr>
-                        <?php if ($incidencies_item['id_Estado'] == '') { ?>
-                            <span><img src="<?php echo base_url("assets/img/Notstarted.png") ?>" /> No asignado</span>
-                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-danger');</script>
-                        <?php } ?>
-
-                        <?php if ($incidencies_item['id_Estado'] == 1) { ?>
-                            <span><img src="<?php echo base_url("assets/img/Notstarted.png") ?>" /> No empezado</span>
-                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-light');</script>
-                        <?php } ?>
-
-                        <?php if ($incidencies_item['id_Estado'] == 2) { ?>
-                            <span><img src="<?php echo base_url("assets/img/Working.png") ?>" /> En curso</span>
-                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-warning');</script>
-                        <?php } ?>
-
-                        <?php if ($incidencies_item['id_Estado'] == 3) { ?>
-                            <span><img src="<?php echo base_url("assets/img/Completado.png") ?>" /> Completado</span>
-                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-info');</script>
-                        <?php } ?>
-
-                        <?php if ($incidencies_item['id_Estado'] == 4) { ?>
-                            <span><img src="<?php echo base_url("assets/img/Enviado.png") ?>" /> Entregado</span>
-                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-success');</script>
-                        <?php } ?>
-
-                        
-                            <br>
-                            <hr>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $incidencies_item['id_incidencia'] ?>">
-                            Detalles
-                        </button>
-
                     </div>
-                    <div class="card-footer text-muted">Fecha de entrada: <?php echo $incidencies_item['Fecha_entrada'] ?></div>
+                    <div class="card-footer text-muted">Fecha: <?php echo $noticia['data'] ?></div>
                 </div>
                 &nbsp;
 
-
-                <div class="modal fade" id="exampleModal<?php echo $incidencies_item['id_incidencia'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel"><?php echo $incidencies_item['Diagnostico_prev'] ?></h5>
-
-
-
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="card-text">
-                                    UUID: <?php echo $incidencies_item['uuid'] ?>
-                                </p>
-
-                                <p class="card-text">
-                                    MARCA: <?php echo $incidencies_item['Marca'] ?>
-                                </p>
-
-                                <p class="card-text">
-                                    MODELO: <?php echo $incidencies_item['Modelo'] ?>
-                                </p>
-
-                                <p class="card-text">
-                                    NUMERO DE SERIE: <?php echo $incidencies_item['Numero_serie'] ?>
-                                </p>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+            <?php 
+        endforeach; ?>
         </div>
     </div>
 </section>

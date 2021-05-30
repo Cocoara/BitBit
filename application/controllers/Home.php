@@ -23,7 +23,9 @@ class Home extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('mensajes_model');
 		$this->load->model('incidencies_model');
+		$this->load->model('noticias_model');
 		$this->load->helper('url_helper');
 		$this->load->helper(array('form', 'url'));
 		$this->load->library("session");
@@ -61,15 +63,20 @@ class Home extends CI_Controller
 			$user = $this->ion_auth->user()->row();
 			$id= $user->id;
 			$data['incidencies'] = $this->incidencies_model->get_incidencies_by_id($id);
+			$group_id = $this->noticias_model->get_group_id($id);
+			$data['noticias'] = $this->noticias_model->get_noticies_by_group_id($group_id[0]['group_id']);
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
 
 			$this->load->view('templates/headerInsideClient', $data);
-			$this->load->view('templates/sidebarInsideClient');
+			$this->load->view('templates/sidebarInsideClient',$data);
 			$this->load->view('pages/ClientHome');
 		}
 		else if($this->ion_auth->in_group($groupTecnico)) {
 
 			$user = $this->ion_auth->user()->row();
 			$id= $user->id;
+			$group_id = $this->noticias_model->get_group_id($id);
+			$data['noticias'] = $this->noticias_model->get_noticies_by_group_id($group_id[0]['group_id']);
 			$data['incidencies'] = $this->incidencies_model->get_incidencies_by_id_tecnico($id);
 			$data['estados'] = $this->incidencies_model->get_estados_tecnico();
 			$data['ficheros'] = $this->incidencies_model->get_ficheros();

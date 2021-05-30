@@ -11,63 +11,59 @@ class Mensajes_model  extends CI_Model
     }
 
 
-    public function get_mensajes_usuario($email)
+    public function get_mensajes_by_user_id($id)
     {
-        $query = $this->db->query("SELECT * From mensajes where para='" . $email . "'");
+        $query = $this->db->get_where('mensajes', array('to' => $id));
         return $query->result_array();
     }
 
-    public function get_incidencies_by_id_tecnico($id)
+    
+    public function get_cout_of_messages($id)
     {
-        $query = $this->db->query("SELECT * From incidencia where id_tecnico='" . $id . "'");
+        $query = $this->db->get_where('mensajes', array('to' => $id));
+        return $query->num_rows();
+    }
+
+
+
+    public function get_admin_users(){
+        $this->db->distinct();
+        $this->db->select('username');
+        $this->db->select('users.id');
+        $this->db->from('users');
+        $this->db->join('users_groups', 'users_groups.user_id = users.id');
+        $this->db->where('group_id !=',2);
+        $query = $this->db->get();
         return $query->result_array();
     }
 
-    public function get_estados_tecnico()
-    {
-        $query = $this->db->query("SELECT * From tipo_estado");
+    public function get_all_users(){
+        $this->db->distinct();
+        $this->db->select('username');
+        $this->db->select('users.id');
+        $this->db->from('users');
+        $this->db->join('users_groups', 'users_groups.user_id = users.id');
+        $query = $this->db->get();
         return $query->result_array();
     }
 
-    public function set_incidencies_by_tecnico($id_incidencia,$estado,$Fecha_entrada,$desc_averia,$uuid,$Marca,$Modelo,$Numero_serie,$Diagnostico_prev,$Telf,$tiempo_reparcion,$descripcion_gestor ){
+
+    public function set_MensajeByClient($to,$from, $asunto, $mensaje,$data){
         $data = array(
-            'id_Estado' => $estado,
-            'Fecha_entrada' => $Fecha_entrada,
-            'desc_averia' => $desc_averia,
-            'uuid' => $uuid,
-            'Marca' => $Marca,
-            'Modelo' => $Modelo,
-            'Numero_serie' => $Numero_serie,
-            'Diagnostico_prev' => $Diagnostico_prev,
-            'Telf' => $Telf,
-            'tiempo_reparcion' => $tiempo_reparcion,
-            'descripcion_gestor' => $descripcion_gestor
-        );
-        $this->db->where('id_incidencia', $id_incidencia);
-        return $this->db->update('incidencia', $data);
-
-
-    }
-
-    public function get_tipo_consulta(){
-        $query = $this->db->query("SELECT * From temaconsulta");
-        return $query->result_array();
-    }
-
-    public function set_consulta($first_name, $last_name, $phone, $email, $tipo, $mensaje, $data){
-        $data = array(
-            'nombre' => $first_name,
-            'apellido' => $last_name,
-            'telefono' => $phone,
-            'correo' => $email,
-            'tema' => $tipo,
+            'to' => $to,
+            'from' => $from,
+            'asunto' => $asunto,
             'mensaje' => $mensaje,
-            'fecha' => $data
+            'data' => $data
         );
-        return $this->db->insert('consulta', $data);
+        return $this->db->insert('mensajes', $data);
     }
     
-
+    public function delete_mensaje_by_id($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('mensajes');
+    }
 
 }
 

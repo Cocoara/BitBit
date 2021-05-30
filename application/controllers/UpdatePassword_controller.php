@@ -6,7 +6,7 @@ class UpdatePassword_controller  extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
+		$this->load->model('mensajes_model');
 		$this->load->model('users_model');
 		$this->load->helper('url_helper');
 		$this->load->helper(array('form', 'url'));
@@ -35,6 +35,10 @@ class UpdatePassword_controller  extends CI_Controller
 		$groupGestor = 'gestor';
 
 		if($this->ion_auth->in_group($groupClient)) {
+			
+			$user = $this->ion_auth->user()->row();
+			$id= $user->id;
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
 			$this->load->view('templates/headerInsideClient', $data);
 			$this->load->view('templates/sidebarInsideClient', $data);
 			$this->load->view('pages/changePassword');
