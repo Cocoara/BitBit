@@ -107,11 +107,11 @@ class EditarReparacion_controller  extends CI_Controller
 					// var_dump($extension);
 					$filenameWithId = $filenameWithoutExt[0] . $id_incidencia;
 					// var_dump($filenameWithId);
-					$encryption = hash('ripemd160', $filenameWithId);
+					// $encryption = hash('ripemd160', $filenameWithId);
 					// var_dump($encryption);
 
-					$filenameWithIdAndHash = $encryption . "_" . $id_incidencia . "." . $filenameWithoutExt[1];
-					// var_dump($filenameWithIdAndHash);
+					$filenameWithIdAndHash = $filenameWithId ."." . $filenameWithoutExt[1];
+					
 					// Set preference
 					$config['upload_path']          = $directoryName;
 					$config['allowed_types']        = 'gif|jpg|jpeg|png|iso|dmg|zip|rar|doc|docx|xls|xlsx|ppt|pptx|csv|ods|odt|odp|pdf|rtf|sxc|sxi|txt|exe|avi|mpeg|mp3|mp4|3gp';
@@ -120,8 +120,11 @@ class EditarReparacion_controller  extends CI_Controller
 					// $config['max_height']           = 768;
 					$config['file_name'] = $filenameWithIdAndHash;
 
+					var_dump('Name:'.$filenameWithIdAndHash);
+
 					//Load upload library
 					$this->load->library('upload', $config);
+					$this->upload->initialize($config); 
 
 					if ($this->upload->do_upload('file')) {
 
@@ -156,9 +159,9 @@ class EditarReparacion_controller  extends CI_Controller
 		force_download('C:\xampp\uploads/' . $id_incidencia . '/' . $nom_arxiu, NULL, TRUE);
 	}
 
-	public function delete_fichero()
+	public function delete_fichero($id)
 	{
-		$id    = $this->input->post('id');
+		$id= $this->input->post('id');
 		$this->incidencies_model->delete_fichero_by_id($id);
 		echo json_encode(array("status" => TRUE));
 	}

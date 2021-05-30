@@ -32,7 +32,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?php echo site_url('adminUsuarios') ?>" class="nav-link">
+              <a href="<?php echo site_url('incidenciasCliente') ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Mis incidencias</p>
               </a>

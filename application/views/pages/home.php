@@ -45,6 +45,11 @@
                 width: 40%;
             }
         }
+
+        .row{
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
     </style>
 </head>
 

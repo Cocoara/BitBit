@@ -72,6 +72,7 @@ $route['mail'] = 'Admin_controller/mail';
 $route['material'] = 'Admin_controller/material'; 
 $route['tipoConsulta'] = 'Admin_controller/tipoConsulta'; 
 $route['consulta'] = 'Admin_controller/consulta'; 
+$route['noticias'] = 'Admin_controller/noticias'; 
 
 $route['passwdchange'] = 'UpdatePassword_controller/index'; 
 $route['updatePassword'] = 'UpdatePassword_controller/updatePassword'; 
@@ -175,3 +176,4 @@ $route['contactanosPeticion'] = "Mensajes_controller/contactanosPeticion";
 
 $route['generateForUuid'] = "Client_Controller/generateForUuid";
 $route['fichaUUID'] = "Client_Controller/fichaUUID";
+$route['incidenciasCliente'] = "Incidencias_controller/index";

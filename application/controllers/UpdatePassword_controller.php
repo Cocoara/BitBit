@@ -25,9 +25,10 @@ class UpdatePassword_controller  extends CI_Controller
 		}
 
 
-
+		$user = $this->ion_auth->user()->row();
+		$id= $user->id;
 		$data['user'] = $this->ion_auth->user()->row();
-		
+		// var_dump($data['user']);die();
 		
 		$groupClient = 'client';
 		$groupTecnico = 'tecnico';

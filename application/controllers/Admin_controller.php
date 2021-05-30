@@ -101,6 +101,15 @@ class Admin_controller extends CI_Controller
         $this->output($output);
     }
 
+    public function noticias()
+    {
+        $crud = new grocery_CRUD();
+        $crud->set_table('noticias');
+        $output = $crud->render();
+
+        $this->output($output);
+    }
+
     public function material()
     {
         $crud = new grocery_CRUD();
