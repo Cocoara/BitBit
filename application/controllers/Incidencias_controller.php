@@ -74,6 +74,7 @@ class Incidencias_controller extends CI_Controller
 			$data['incidencies'] = $this->incidencies_model->get_incidencies_by_id_tecnico($id);
 			$data['estados'] = $this->incidencies_model->get_estados_tecnico();
 			$data['ficheros'] = $this->incidencies_model->get_ficheros();
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
 			// $data['rutaFichero'] = $this->incidencies_model->get_rutaIncidenciesFile_by_tecnico($id);
 			
 

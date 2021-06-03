@@ -1,5 +1,5 @@
 <head>
-    <title>Inicio</title>
+    <title>Incidencias</title>
 </head>
 
 <style>
@@ -179,13 +179,23 @@
     unset($_SESSION['error']);
     ?>
     <div class="container-fluid margetop worker-container">
-        <div class="row d-flex justify-content-center">
+
+        <div class="container container-flex w-100" style="padding-top:30px">
+
+                <div class="card-body">
+                    <label for="buscador">Buscar incidencias:</label>
+                    <input onkeyup="buscar()" class="form-control" type='text' id="search" placeholder='Buscar por título'>
+                </div>
+
+        </div>
+
+        <div class="row d-flex justify-content-center" id="incidencias">
             <!-- <pre><?php print_r($incidencies) ?></pre> -->
 
             <?php foreach ($incidencies as $incidencies_item) : ?>
 
 
-                <div class="card text-center shadow" id="cardColor" data-issue-id="<?php echo $incidencies_item['id_incidencia'] ?>">
+                <div class="card text-center shadow" id="cardColor<?php echo $incidencies_item['id_incidencia'] ?>" data-issue-id="<?php echo $incidencies_item['id_incidencia'] ?>">
                     <div class="card-header"><?php echo $incidencies_item['desc_averia'] ?></div>
                     <div class="card-body">
                         <img id="actualImage" style="width:150px" src="<?php echo $incidencies_item['canvasImage'] ?>" />
@@ -269,35 +279,35 @@
                                                     <?php if ($incidencies_item['id_Estado'] == '') { ?>
 
                                                         <script type="text/javascript">
-                                                            document.getElementById("cardColor").classList.add('card-danger');
+                                                            document.getElementById("cardColor<?php echo $incidencies_item['id_incidencia'] ?>").classList.add('card-danger');
                                                         </script>
                                                     <?php } ?>
 
                                                     <?php if ($incidencies_item['id_Estado'] == 1) { ?>
 
                                                         <script type="text/javascript">
-                                                            document.getElementById("cardColor").classList.add('card-light');
+                                                            document.getElementById("cardColor<?php echo $incidencies_item['id_incidencia'] ?>").classList.add('card-light');
                                                         </script>
                                                     <?php } ?>
 
                                                     <?php if ($incidencies_item['id_Estado'] == 2) { ?>
 
                                                         <script type="text/javascript">
-                                                            document.getElementById("cardColor").classList.add('card-warning');
+                                                            document.getElementById("cardColor<?php echo $incidencies_item['id_incidencia'] ?>").classList.add('card-warning');
                                                         </script>
                                                     <?php } ?>
 
                                                     <?php if ($incidencies_item['id_Estado'] == 3) { ?>
 
                                                         <script type="text/javascript">
-                                                            document.getElementById("cardColor").classList.add('card-info');
+                                                            document.getElementById("cardColor<?php echo $incidencies_item['id_incidencia'] ?>").classList.add('card-info');
                                                         </script>
                                                     <?php } ?>
 
                                                     <?php if ($incidencies_item['id_Estado'] == 4) { ?>
 
                                                         <script type="text/javascript">
-                                                            document.getElementById("cardColor").classList.add('card-success');
+                                                            document.getElementById("cardColor<?php echo $incidencies_item['id_incidencia'] ?>").classList.add('card-success');
                                                         </script>
                                                     <?php } ?>
 
@@ -333,6 +343,10 @@
 
                                                 <label for="descripcion_gestor">Descripción del Gestor: </label>
                                                 <input name="descripcion_gestor" id="descripcion_gestor" class="form-control mb-2" value="<?php echo $incidencies_item['descripcion_gestor'] ?>" placeholder="Descripción del Gestor" />
+
+                                                <label for="material">Material incidencia: </label>
+                                                <textarea name="material" id="material" class="form-control mb-2" placeholder="Material incidencia"><?php echo $incidencies_item['material'] ?></textarea>
+
 
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-success save-form">Guardar</button>
@@ -661,5 +675,24 @@
         var canvasImage = canvas.toDataURL("image/png");
         canvasInputImage.value = canvasImage;
         formElem.submit();
+    }
+</script>
+
+
+<script>
+    function buscar() {
+        var input, filter, cards, cardContainer, title, i;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        cardContainer = document.getElementById("incidencias");
+        cards = cardContainer.getElementsByClassName("card");
+        for (i = 0; i < cards.length; i++) {
+            title = cards[i].querySelector(".card-header");
+            if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+                cards[i].style.display = "";
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
     }
 </script>

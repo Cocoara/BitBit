@@ -1,4 +1,4 @@
-<?php 
+<?php
 header("Access-Control-Allow-Origin: *");
 defined('BASEPATH') or exit('No direct script access allowed');
 class ApiJwt_controller extends JwtAPI_Controller
@@ -8,10 +8,11 @@ class ApiJwt_controller extends JwtAPI_Controller
     public function __construct()
     {
         parent::__construct();
-
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
         $this->load->database();
-        $this->load->model('noticies_model');
-        // $this->load->library('form_validation');
+        $this->load->model('api_model');
         $this->load->helper('url');
 
         $config = [
@@ -32,9 +33,35 @@ class ApiJwt_controller extends JwtAPI_Controller
         $this->login($user, $pass);
     }
 
-    public function noticies_get()
+    public function homeinfo_get()
     {
-        $noticies = $this->noticies_model->get_noticies();
+        $homeinfo = $this->api_model->get_homeinfo();
+        if ($homeinfo) {
+            $this->response($homeinfo, 200);
+        } else {
+            $this->response([
+                'status' => false,
+                'message' => 'No home information available'
+            ], 404);
+        }
+    }
+
+    public function temas_get()
+    {
+        $temas = $this->api_model->get_temasConsulta();
+        if ($temas) {
+            $this->response($temas, 200);
+        } else {
+            $this->response([
+                'status' => false,
+                'message' => 'No home information available'
+            ], 404);
+        }
+    }
+
+    public function noticias_get()
+    {
+        $noticies = $this->api_model->get_noticias();
         $id = $this->get('id');
 
         if ($id === null) {
@@ -100,7 +127,7 @@ class ApiJwt_controller extends JwtAPI_Controller
 
             $jwt = $this->renewJWT();
 
-            if ($this->noticies_model->delete_noticies($this->delete('id'))){
+            if ($this->noticies_model->delete_noticies($this->delete('id'))) {
                 $message = [
                     'id' => $this->delete('id'),
                     'status' => RestController::HTTP_CREATED,
@@ -134,7 +161,7 @@ class ApiJwt_controller extends JwtAPI_Controller
 
             $jwt = $this->renewJWT();
 
-            if ($this->noticies_model->editNoticies_api($this->put('id'), $this->put('date'), $this->put('title'), $this->put('subtitle'), $this->put('content'))){
+            if ($this->noticies_model->editNoticies_api($this->put('id'), $this->put('date'), $this->put('title'), $this->put('subtitle'), $this->put('content'))) {
                 $message = [
                     'id' => $this->put('id'),
                     'title' => $this->put('title'),
@@ -169,14 +196,26 @@ class ApiJwt_controller extends JwtAPI_Controller
         }
     }
 
-    public function index_options() 
+
+    // OPTIONS OF API Models
+
+    public function homeinfo_options()
+    {
+        $this->output->set_header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        $this->output->set_header("Access-Control-Allow-Methods: GET, OPTIONS");
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+
+        $this->response(null, API_Controller::HTTP_OK);
+    }
+
+    public function index_options()
     {
         $this->output->set_header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
         $this->output->set_header("Access-Control-Allow-Methods: GET, DELETE, OPTIONS");
         $this->output->set_header("Access-Control-Allow-Origin: *");
-       
+
         $this->response(null, JwtAPI_Controller::HTTP_OK); // OK (200) being the HTTP response code
-     }
-
-
     }
+
+    
+}

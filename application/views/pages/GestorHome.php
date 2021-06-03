@@ -1,77 +1,118 @@
 <head>
-    <title>Asignación de reparaciones</title>
+    <title>Pagina principal</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .readmore {
+            margin: 0 5px;
+        }
+
+        .owl-theme .owl-nav {
+        margin-top: 10px!important;
+        font-size: 50px!important;
+        text-align: center!important;
+        -webkit-tap-highlight-color: transparent!important;
+    }
+    </style>
 </head>
-<style>
-    @media (max-width: 576px) {
-        .xs {
-            color: red;
-            font-weight: bold;
-        }
-    }
 
-    /* Small devices (landscape phones, 576px and up) */
-    @media (min-width: 576px) and (max-width:768px) {
-        .sm {
-            color: red;
-            font-weight: bold;
-        }
-    }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
 
-    /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
-    @media (min-width: 768px) and (max-width:992px) {
-        .md {
-            color: red;
-            font-weight: bold;
-        }
-    }
+<section class="blog_section" style="padding-top:30px">
+    <div class="container">
 
-    /* Large devices (desktops, 992px and up) */
-    @media (min-width: 992px) and (max-width:1200px) {
-        .lg {
-            color: red;
-            font-weight: bold;
-        }
-    }
+        <div class="blog_content">
+            <div class="owl-carousel owl-theme">
 
-    /* Extra large devices (large desktops, 1200px and up) */
-    @media (min-width: 1200px) {
-        .xl {
-            color: red;
-            font-weight: bold;
-        }
-    }
-
-    .margetop{
-        margin-top: 100px;
-    }
-</style>
-
-
-<section>
-
-    <!-- <div class="container-fluid margetop">
-        <div class="row d-flex justify-content-center">
-            <?php for ($i = 0; $i < 3; $i++) { ?>
-                <div class="card text-center">
-                    <div class="card-header">Featured</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">
-                            With supporting text below as a natural lead-in to additional content.
-                        </p>
-                        <label for="cars">Asignar reparación:</label>
-                        <select id="cars" name="cars">
-                        <?php for($j=0;$j<1;$j++) {?>
-                            <option value="volvo">Trabajador</option>
-                            <?php }?>
-                        </select>
+                <?php foreach ($noticias as $noticia) : ?>
+                    <div class="card p-5" width="300px">
+                        <div class="blog_item">
+                            <div class="blog_image">
+                                <?php if (!$noticia['file_url'] == NULL) { ?>
+                                    <img class="img-fluid" src="<?php echo base_url() . "assets/uploads/files/" . $noticia['file_url']; ?>" alt="Card image cap">
+                                <?php } else {
+                                } ?>
+                                <span><i class="icon ion-md-create"></i></span>
+                            </div>
+                            <div class="blog_details">
+                                <div style="max-width: 300px;width:300px" class="blog_title text-center">
+                                    <p style="max-width: 300px;width:300px"><?php echo $noticia['titulo'] ?></p>
+                                </div>
+                                <div class="blog_title text-center">
+                                    <p class="text-center"> <?php echo $noticia['data'] ?></p>
+                                </div>
+                                <div class="blog_title text-center">
+                                    <p class="text-center content">
+                                    <div class="content"> <?php echo $noticia['contenido'] ?></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-footer text-muted">2 days ago</div>
-                </div>
-                &nbsp;
-            <?php
-            }
-            ?>
+
+
+                <?php
+                endforeach; ?>
+            </div>
         </div>
-    </div> -->
+    </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"></script>
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 20,
+        dots: false,
+        nav: true,
+        autoplay: true,
+        smartSpeed: 3000,
+        autoplayTimeout: 7000,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 2
+            },
+            1000: {
+                items: 3
+            }
+        }
+    })
+
+    $(function() {
+
+        var maxL = 200;
+
+        $('.content').each(function() {
+
+            var text = $(this).text();
+            if (text.length > maxL) {
+
+                var begin = text.substr(0, maxL),
+                    end = text.substr(maxL);
+
+                $(this).html(begin)
+                    .append($('<a class="readmore"/>').attr('href', '#').html('read more...'))
+                    .append($('<div class="hidden" />').html(end));
+
+
+            }
+
+
+        });
+
+        $(document).on('click', '.readmore', function() {
+            // $(this).next('.readmore').fadeOut("400");
+            $(this).next('.hidden').slideToggle(400);
+        })
+
+
+    })
+</script>

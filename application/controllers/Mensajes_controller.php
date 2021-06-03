@@ -35,6 +35,70 @@ class Mensajes_controller  extends CI_Controller
 		}
 	}
 
+	public function myMessages(){
+		if (!$this->ion_auth->logged_in()) {
+			$this->load->view('templates/header');
+			$this->load->view('pages/home');
+			$this->load->view('templates/footer');
+			return;
+		}
+
+		$data['user'] = $this->ion_auth->user()->row();
+
+
+		$groupAdmin = 'admin';
+		$groupClient = 'client';
+		$groupTecnico = 'tecnico';
+		$groupGestor = 'gestor';
+
+		if ($this->ion_auth->in_group($groupAdmin)) {
+			$user = $this->ion_auth->user()->row();
+			$id = $user->id;
+
+			$data['users'] = $this->mensajes_model->get_all_users();
+			$data['mensajes'] = $this->mensajes_model->get_mensajes_by_user_id($id);
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
+
+			$this->load->view('templates/headerInisde', $data);
+			$this->load->view('templates/sidebarInside');
+			$this->load->view('Mensajeria/myMessages');
+		} else if ($this->ion_auth->in_group($groupClient)) {
+
+			$user = $this->ion_auth->user()->row();
+			$id = $user->id;
+
+			$data['users'] = $this->mensajes_model->get_admin_users();
+			$data['mensajes'] = $this->mensajes_model->get_mensajes_by_user_id($id);
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
+			
+			$this->load->view('templates/headerInsideClient', $data);
+			$this->load->view('templates/sidebarInsideClient');
+			$this->load->view('Mensajeria/myMessages');
+		} else if ($this->ion_auth->in_group($groupTecnico)) {
+
+			$user = $this->ion_auth->user()->row();
+			$id = $user->id;
+			$data['users'] = $this->mensajes_model->get_admin_users();
+			$data['mensajes'] = $this->mensajes_model->get_mensajes_by_user_id($id);
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
+
+			$this->load->view('templates/headerInisdeTecnico', $data);
+			$this->load->view('templates/sidebarInsideTecnico');
+			$this->load->view('Mensajeria/myMessages');
+		} else if ($this->ion_auth->in_group($groupGestor)) {
+			$user = $this->ion_auth->user()->row();
+			$id = $user->id;
+			$data['users'] = $this->mensajes_model->get_admin_users();
+			$data['mensajes'] = $this->mensajes_model->get_mensajes_by_user_id($id);
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
+
+			$this->load->view('templates/headerInisdeGestor', $data);
+			$this->load->view('templates/sidebarInisdeGestor');
+			$this->load->view('Mensajeria/myMessages');
+		}
+
+		$this->load->view('templates/footer');
+	}
 
 
 	public function mensajeria()
@@ -60,7 +124,7 @@ class Mensajes_controller  extends CI_Controller
 
 			$data['users'] = $this->mensajes_model->get_all_users();
 			$data['mensajes'] = $this->mensajes_model->get_mensajes_by_user_id($id);
-
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
 
 			$this->load->view('templates/headerInisde', $data);
 			$this->load->view('templates/sidebarInside');
@@ -81,20 +145,25 @@ class Mensajes_controller  extends CI_Controller
 
 			$user = $this->ion_auth->user()->row();
 			$id = $user->id;
+			
+			$data['users'] = $this->mensajes_model->get_all_users();
+			$data['mensajes'] = $this->mensajes_model->get_mensajes_by_user_id($id);
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
+
 
 			$this->load->view('templates/headerInisdeTecnico', $data);
 			$this->load->view('templates/sidebarInsideTecnico');
-			$this->load->view('Mensajeria/MensajeriaTecnico');
+			$this->load->view('Mensajeria/MensajeriaAdmin');
 		} else if ($this->ion_auth->in_group($groupGestor)) {
 			$user = $this->ion_auth->user()->row();
 			$id = $user->id;
-			$group_id = $this->noticias_model->get_group_id($id);
-
-			// $data['ficheros'] = $this->incidencies_model->get_ficheros();
-
-			$this->load->view('templates/headerInisdeTecnico', $data);
-			$this->load->view('templates/sidebarInsideTecnico');
-			$this->load->view('Mensajeria/MensajeriaGestor');
+			$data['users'] = $this->mensajes_model->get_all_users();
+			$data['mensajes'] = $this->mensajes_model->get_mensajes_by_user_id($id);
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
+		
+			$this->load->view('templates/headerInisdeGestor', $data);
+			$this->load->view('templates/sidebarInisdeGestor');
+			$this->load->view('Mensajeria/MensajeriaAdmin');
 		}
 
 		$this->load->view('templates/footer');

@@ -1,94 +1,75 @@
 <head>
-    <title>Mis reparaciones</title>
+    <title>Pagina principal</title>
 </head>
-<style>
-    @media (max-width: 576px) {
-        .xs {
-            color: red;
-            font-weight: bold;
-        }
-    }
-
-    /* Small devices (landscape phones, 576px and up) */
-    @media (min-width: 576px) and (max-width:768px) {
-        .sm {
-            color: red;
-            font-weight: bold;
-        }
-    }
-
-    /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
-    @media (min-width: 768px) and (max-width:992px) {
-        .md {
-            color: red;
-            font-weight: bold;
-        }
-    }
-
-    /* Large devices (desktops, 992px and up) */
-    @media (min-width: 992px) and (max-width:1200px) {
-        .lg {
-            color: red;
-            font-weight: bold;
-        }
-    }
-
-    /* Extra large devices (large desktops, 1200px and up) */
-    @media (min-width: 1200px) {
-        .xl {
-            color: red;
-            font-weight: bold;
-        }
-    }
-
-   
-</style>
-
 
 <section>
 
-    <div class="container-fluid margetop ">
-        <div class="row d-flex justify-content-center">
+
+    <div class="container-fluid">
+
+
+        <div class="container container-flex w-100" style="padding-top:30px">
+
+                <div class="card-body">
+                    <label for="buscador">Buscar incidencias:</label>
+                    <input onkeyup="buscar()" class="form-control" type='text' id="search" placeholder='Buscar por título'>
+                </div>
+        </div>
+
+
+        <div class="row d-flex justify-content-center" id="incidencias">
+
             <?php foreach ($incidencies as $incidencies_item) : ?>
-                <div id="cardColor" class="card  text-center mt-5">
+                <div id="cardColor<?php echo $incidencies_item['id_incidencia'] ?>" class="text-center mt-5 mr-5 card">
                     <div class="card-header"><?php echo $incidencies_item['desc_averia'] ?></div>
                     <div class="card-body">
-                        <!-- <h5 class="card-title"><?php echo $incidencies_item[''] ?></h5> -->
+                        <div style="display:none;"><?php echo $incidencies_item['uuid'] ?></div>
                         <p class="card-text">
-                        <?php echo $incidencies_item['Diagnostico_prev'] ?> 
+                            <?php echo $incidencies_item['Diagnostico_prev'] ?>
                         </p>
 
-               
-        
-                            <hr>
-                        <?php if ($incidencies_item['id_Estado'] == '') { ?>
+
+                        <hr>
+
+                        <?php
+                        if ($incidencies_item['id_Estado'] == '') { ?>
                             <span><img src="<?php echo base_url("assets/img/Notstarted.png") ?>" /> No asignado</span>
-                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-danger');</script>
+                            <script type="text/javascript">
+                                document.getElementById("cardColor<?php echo $incidencies_item['id_incidencia'] ?>").classList.add('card-danger');
+                            </script>
                         <?php } ?>
 
                         <?php if ($incidencies_item['id_Estado'] == 1) { ?>
                             <span><img src="<?php echo base_url("assets/img/Notstarted.png") ?>" /> No empezado</span>
-                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-light');</script>
+                            <script type="text/javascript">
+                                document.getElementById("cardColor<?php echo $incidencies_item['id_incidencia'] ?>").classList.add('card-light');
+                            </script>
                         <?php } ?>
 
                         <?php if ($incidencies_item['id_Estado'] == 2) { ?>
                             <span><img src="<?php echo base_url("assets/img/Working.png") ?>" /> En curso</span>
-                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-warning');</script>
+                            <script type="text/javascript">
+                                document.getElementById("cardColor<?php echo $incidencies_item['id_incidencia'] ?>").classList.add('card-warning');
+                            </script>
                         <?php } ?>
 
                         <?php if ($incidencies_item['id_Estado'] == 3) { ?>
                             <span><img src="<?php echo base_url("assets/img/Completado.png") ?>" /> Completado</span>
-                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-info');</script>
+                            <script type="text/javascript">
+                                document.getElementById("cardColor<?php echo $incidencies_item['id_incidencia'] ?>").classList.add('card-info');
+                            </script>
                         <?php } ?>
 
                         <?php if ($incidencies_item['id_Estado'] == 4) { ?>
                             <span><img src="<?php echo base_url("assets/img/Enviado.png") ?>" /> Entregado</span>
-                            <script type="text/javascript">document.getElementById("cardColor").classList.add('card-success');</script>
+                            <script type="text/javascript">
+                                document.getElementById("cardColor<?php echo $incidencies_item['id_incidencia'] ?>").classList.add('card-success');
+                            </script>
                         <?php } ?>
 
-                        
-                            <br>
-                            <hr>
+
+                        <br>
+                        <hr>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $incidencies_item['id_incidencia'] ?>">
                             Detalles
                         </button>
@@ -140,4 +121,20 @@
     </div>
 </section>
 
-<!-- Modal -->
+<script>
+    function buscar() {
+        var input, filter, cards, cardContainer, title, i;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        cardContainer = document.getElementById("incidencias");
+        cards = cardContainer.getElementsByClassName("card");
+        for (i = 0; i < cards.length; i++) {
+            title = cards[i].querySelector(".card-header");
+            if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+                cards[i].style.display = "";
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
+    }
+</script>

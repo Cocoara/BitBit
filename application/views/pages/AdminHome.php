@@ -1,164 +1,118 @@
 <head>
-    <title>Inicio</title>
+    <title>Pagina principal</title>
     <style>
-        .card {
-            flex-direction: row;
-            align-items: center;
-            margin-top: 100px;
-            margin-bottom: 100px;
+        .hidden {
+            display: none;
         }
 
-        .card-title {
-            font-weight: bold;
+        .readmore {
+            margin: 0 5px;
         }
 
-        .card img {
-            width: 30%;
-            border-top-right-radius: 0;
-            border-bottom-left-radius: calc(0.25rem - 1px);
-        }
-
-        @media only screen and (max-width: 768px) {
-            a {
-                display: none;
-            }
-
-            .card-body {
-                padding: 0.5em 1.2em;
-            }
-
-            .card-body .card-text {
-                margin: 0;
-            }
-
-            .card img {
-                width: 50%;
-            }
-
-            .onlyPc {
-                display: none;
-            }
-        }
-
-        @media only screen and (max-width: 1200px) {
-            .card img {
-                width: 40%;
-            }
-        }
-
-        .row{
-            margin-left: 0px !important;
-            margin-right: 0px !important;
-        }
+        .owl-theme .owl-nav {
+        margin-top: 10px!important;
+        font-size: 50px!important;
+        text-align: center!important;
+        -webkit-tap-highlight-color: transparent!important;
+    }
     </style>
 </head>
 
-<div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="<?php echo base_url("assets/img/favicon.ico") ?>" alt="BitBit cargando..." height="60" width="60">
-</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
+
+<section class="blog_section" style="padding-top:30px">
+    <div class="container">
+
+        <div class="blog_content">
+            <div class="owl-carousel owl-theme">
+
+                <?php foreach ($noticias as $noticia) : ?>
+                    <div class="card p-5" width="300px">
+                        <div class="blog_item">
+                            <div class="blog_image">
+                                <?php if (!$noticia['file_url'] == NULL) { ?>
+                                    <img class="img-fluid" src="<?php echo base_url() . "assets/uploads/files/" . $noticia['file_url']; ?>" alt="Card image cap">
+                                <?php } else {
+                                } ?>
+                                <span><i class="icon ion-md-create"></i></span>
+                            </div>
+                            <div class="blog_details">
+                                <div style="max-width: 300px;width:300px" class="blog_title text-center">
+                                    <p style="max-width: 300px;width:300px"><?php echo $noticia['titulo'] ?></p>
+                                </div>
+                                <div class="blog_title text-center">
+                                    <p class="text-center"> <?php echo $noticia['data'] ?></p>
+                                </div>
+                                <div class="blog_title text-center">
+                                    <p class="text-center content">
+                                    <div class="content"> <?php echo $noticia['contenido'] ?></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
-<!-- <section class="onlyPc">
-    <div class="home-slider owl-carousel js-fullheight">
-        <div class="slider-item js-fullheight" style="background-image:url(<?php echo base_url("assets/img/car1.png"); ?>);">
-            <div class="overlay"></div>
-            <div class="container justify-content-center ">
-                <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
-                    <div class="col-md-12 ftco-animate text-center justify-content-center align-items-center ">
-                        <div class="text w-100">
-                            <h1 class="mb-3">Reparación</h1>
-                            <h2>De equipos y dispositivos</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="slider-item js-fullheight" style="background-image:url(<?php echo base_url("assets/img/car2.jpg"); ?>);">
-            <div class="overlay"></div>
-            <div class="container justify-content-center">
-                <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
-                    <div class="col-md-12 ftco-animate ">
-                        <div class="text w-100 text-center">
-                            <h1 class="mb-3">A tu Alcance</h1>
-                            <h2>Cerca de ti</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="slider-item js-fullheight" style="background-image:url(<?php echo base_url("assets/img/car3.jpg"); ?>);">
-            <div class="overlay"></div>
-            <div class="container justify-content-center">
-                <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
-                    <div class="col-md-12 ftco-animate">
-                        <div class="text w-100 text-center">
-                            <h1 class="mb-3">Confianza</h1>
-                            <h2>Y respaldo</h2>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                endforeach; ?>
             </div>
         </div>
     </div>
-</section> -->
-
-
-
-
-<section>
-    <div class="flex-container">
-
-        <div class="row">
-            <div class="col-2 ">
-
-            </div>
-            <div class="col-8 ">
-
-
-                <div class="card">
-                    <img src="<?php echo base_url("assets/img/monito.gif"); ?>" style="width: 80px;margin:30px" class="card-img-top" />
-                    <div class="card-body">
-                        <h5 class="card-title">Reparación de equipos, dispositivos, y otros sistemas informáticos </h5>
-                        <p class="card-text">
-                            BitBit le ofrece un servicio de diagnóstico y reparación de ordenadores y sistemas, solucionando de forma inmediata cualquier duda o incidencia que le pueda surgir . Asistencia informática personalizada en nuestras instalaciones
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="card">
-                    <img src="<?php echo base_url("assets/img/ubication.gif"); ?>" style="width: 80px;margin:30px" class="card-img-top" />
-                    <div class="card-body">
-                        <h5 class="card-title">¡A tu alcance!</h5>
-                        <p class="card-text">
-                            ¡La reparación de un equipo informático en tu ciudad!
-                        </p>
-
-                    </div>
-                </div>
-
-                <div class="card">
-                    <img src="<?php echo base_url("assets/img/trust.gif"); ?>" style="width: 80px;margin:30px" class="card-img-top" />
-                    <div class="card-body">
-                        <h5 class="card-title">Reparación de equipos, dispositivos, y otros sistemas informáticos </h5>
-                        <p class="card-text">
-                            BitBit le ofrece un servicio de diagnóstico y reparación de ordenadores y sistemas, solucionando de forma inmediata cualquier duda o incidencia que le pueda surgir . Asistencia informática personalizada en nuestras instalaciones
-                        </p>
-
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="col-2 ">
-
-            </div>
-        </div>
-    </div>
-
-    </div>
-    <!-- <script src="<?php echo base_url("assets/js/owl.carousel.min.js"); ?>"></script>
-    <script src="<?php echo base_url("assets/js/main.js"); ?>"></script> -->
 </section>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"></script>
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 20,
+        dots: false,
+        nav: true,
+        autoplay: true,
+        smartSpeed: 3000,
+        autoplayTimeout: 7000,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 2
+            },
+            1000: {
+                items: 3
+            }
+        }
+    })
+
+    $(function() {
+
+        var maxL = 200;
+
+        $('.content').each(function() {
+
+            var text = $(this).text();
+            if (text.length > maxL) {
+
+                var begin = text.substr(0, maxL),
+                    end = text.substr(maxL);
+
+                $(this).html(begin)
+                    .append($('<a class="readmore"/>').attr('href', '#').html('read more...'))
+                    .append($('<div class="hidden" />').html(end));
+
+
+            }
+
+
+        });
+
+        $(document).on('click', '.readmore', function() {
+            // $(this).next('.readmore').fadeOut("400");
+            $(this).next('.hidden').slideToggle(400);
+        })
+
+
+    })
+</script>

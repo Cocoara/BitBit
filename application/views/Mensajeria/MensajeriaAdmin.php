@@ -1,5 +1,10 @@
 <head>
     <title>Cambio de contraseña</title>
+    <style>
+        .content-wrapper {
+            background-color: #E9ECEF !important;
+        }
+    </style>
 </head>
 <div class="container-fluid register-page">
     <div class="register-box">
@@ -11,18 +16,18 @@
             <div class="card-body register-card-body">
                 <h3>Mensajería</h3>
                 <div class="col-right">
-                    <form method="post" action="<?php echo base_url('setMensajeByAdmin'); ?>">
+                    <form method="post" action="<?php echo base_url('setMensajeByClient'); ?>">
 
-                    <input type="text" hidden value="<?php echo $user->username; ?>" name="from" >
+                        <input type="text" hidden value="<?php echo $user->username; ?>" name="from">
                         <div class="input-group mb-3">
 
                             <label for="to" class="form-control">Para:</label>
 
                             <select name="to" class="form-control" id="to">
-                                <?php foreach($users as $user){?>
-                                    <option value="<?php echo $user['id']?>"><?php echo $user['username'] ?></option>
-                                <?php }?>
-                                
+                                <?php foreach ($users as $user) { ?>
+                                    <option value="<?php echo $user['id'] ?>"><?php echo $user['username'] ?></option>
+                                <?php } ?>
+
                             </select>
 
                             <div class="input-group-append">
@@ -61,15 +66,14 @@
             </div>
         </div>
         <?php
-                    if ($this->session->flashdata('success')) {
-                    ?>
-                        <div class="alert alert-success">
-                            <?php echo $this->session->flashdata('success'); ?>
-                        </div>
-                    <?php }
-                    unset($_SESSION['success']);
-                    ?>
+        if ($this->session->flashdata('success')) {
+        ?>
+            <div class="alert alert-success">
+                <?php echo $this->session->flashdata('success'); ?>
+            </div>
+        <?php }
+        unset($_SESSION['success']);
+        ?>
     </div>
-    <?php foreach($mensajes as $mensaje){  echo $mensaje;?>
-    <?php } ?>
+
 </div>

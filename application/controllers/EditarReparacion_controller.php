@@ -47,9 +47,10 @@ class EditarReparacion_controller  extends CI_Controller
 		$tiempo_reparcion = $this->input->post('tiempo_reparcion');
 		$descripcion_gestor = $this->input->post('descripcion_gestor');
 		$canvasImage = $this->input->post('canvasImage');
+		$material = $this->input->post('material');
 
 
-		if ($this->incidencies_model->set_incidencies_by_tecnico($id_incidencia, $estado, $Fecha_entrada, $desc_averia, $uuid, $Marca, $Modelo, $Numero_serie, $Diagnostico_prev, $Telf, $tiempo_reparcion, $descripcion_gestor, $canvasImage)) {
+		if ($this->incidencies_model->set_incidencies_by_tecnico($id_incidencia, $estado, $Fecha_entrada, $desc_averia, $uuid, $Marca, $Modelo, $Numero_serie, $Diagnostico_prev, $Telf, $tiempo_reparcion, $descripcion_gestor, $canvasImage, $material)) {
 			$this->session->set_flashdata('success', "Incidencia actualizada correctamente");
 			redirect('incidenciasTecnico');
 		} else {
@@ -110,8 +111,8 @@ class EditarReparacion_controller  extends CI_Controller
 					// $encryption = hash('ripemd160', $filenameWithId);
 					// var_dump($encryption);
 
-					$filenameWithIdAndHash = $filenameWithId ."." . $filenameWithoutExt[1];
-					
+					$filenameWithIdAndHash = $filenameWithId . "." . $filenameWithoutExt[1];
+
 					// Set preference
 					$config['upload_path']          = $directoryName;
 					$config['allowed_types']        = 'gif|jpg|jpeg|png|iso|dmg|zip|rar|doc|docx|xls|xlsx|ppt|pptx|csv|ods|odt|odp|pdf|rtf|sxc|sxi|txt|exe|avi|mpeg|mp3|mp4|3gp';
@@ -120,11 +121,11 @@ class EditarReparacion_controller  extends CI_Controller
 					// $config['max_height']           = 768;
 					$config['file_name'] = $filenameWithIdAndHash;
 
-					var_dump('Name:'.$filenameWithIdAndHash);
+					var_dump('Name:' . $filenameWithIdAndHash);
 
 					//Load upload library
 					$this->load->library('upload', $config);
-					$this->upload->initialize($config); 
+					$this->upload->initialize($config);
 
 					if ($this->upload->do_upload('file')) {
 
@@ -153,15 +154,18 @@ class EditarReparacion_controller  extends CI_Controller
 
 	public function imagen($id_incidencia, $nom_arxiu)
 	{
-		// podria gestionar QUIEN PUEDE ACCEDER
 		$this->load->helper('download');
 
-		force_download('C:\xampp\uploads/' . $id_incidencia . '/' . $nom_arxiu, NULL, TRUE);
+		if (!$this->ion_auth->logged_in()) {
+			return;
+		} else {
+			force_download('C:\xampp\uploads/' . $id_incidencia . '/' . $nom_arxiu, NULL, TRUE);
+		}
 	}
 
 	public function delete_fichero($id)
 	{
-		$id= $this->input->post('id');
+		$id = $this->input->post('id');
 		$this->incidencies_model->delete_fichero_by_id($id);
 		echo json_encode(array("status" => TRUE));
 	}

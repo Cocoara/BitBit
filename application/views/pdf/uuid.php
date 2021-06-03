@@ -77,6 +77,7 @@ $fecha_entrada = $incidencia[0]["Fecha_entrada"];
 $marca = $incidencia[0]["Marca"];
 $modelo = $incidencia[0]["Modelo"];
 $numero_serie = $incidencia[0]["Numero_serie"];
+$material = $incidencia[0]["material"];
 
 
 $tbl = <<<EOD
@@ -122,6 +123,10 @@ $tbl = <<<EOD
   <tr>
     <td>Numero de serie</td>
     <td>{$numero_serie}</td>
+  </tr>
+  <tr>
+    <td>Material utilizado</td>
+    <td>{$material}</td>
   </tr>
 </table>
 EOD;

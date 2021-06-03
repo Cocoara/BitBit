@@ -1,5 +1,5 @@
 <head>
-    <title>Cambio de contraseña</title>
+    <title>Contacta con nosotros</title>
 </head>
 
 <div class="container-fluid register-page">
@@ -56,10 +56,10 @@
                             <label for="tipo" class="form-control">Tema:</label>
 
                             <select name="tipo" class="form-control" id="tipo">
-                                <?php foreach($tipoConsulta as $estado){?>
-                                    <option value="<?php echo $estado['id']?>"><?php echo $estado['tipoConsulta'] ?></option>
-                                <?php }?>
-                                
+                                <?php foreach ($tipoConsulta as $estado) { ?>
+                                    <option value="<?php echo $estado['id'] ?>"><?php echo $estado['tipoConsulta'] ?></option>
+                                <?php } ?>
+
                             </select>
 
                             <div class="input-group-append">
@@ -88,16 +88,16 @@
 
                 </div>
             </div>
-            
+
             <?php
-                    if ($this->session->flashdata('success')) {
-                    ?>
-                        <div class="alert alert-danger">
-                            <?php echo $this->session->flashdata('success'); ?>
-                        </div>
-                    <?php }
-                    unset($_SESSION['success']);
-                    ?>
+            if ($this->session->flashdata('success')) {
+            ?>
+                <div class="alert alert-danger">
+                    <?php echo $this->session->flashdata('success'); ?>
+                </div>
+            <?php }
+            unset($_SESSION['success']);
+            ?>
         </div>
     </div>
 </div>

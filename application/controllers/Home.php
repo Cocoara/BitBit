@@ -35,10 +35,12 @@ class Home extends CI_Controller
 
 	public function index()
 	{
-
 		if (!$this->ion_auth->logged_in()) {
+
+			$data['infoCards'] = $this->mensajes_model->get_infoCards();
+
 			$this->load->view('templates/header');
-			$this->load->view('pages/home');
+			$this->load->view('pages/home',$data);
 			$this->load->view('templates/footer');
 			return;
 		}
@@ -46,54 +48,70 @@ class Home extends CI_Controller
 
 
 		$data['user'] = $this->ion_auth->user()->row();
-		
-		
+
+
 		$groupAdmin = 'admin';
 		$groupClient = 'client';
 		$groupTecnico = 'tecnico';
 		$groupGestor = 'gestor';
-		
+
 		if ($this->ion_auth->in_group($groupAdmin)) {
+			$user = $this->ion_auth->user()->row();
+			$id = $user->id;
+			$group_id = $this->noticias_model->get_group_id($id);
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
+			$data['noticias'] = $this->noticias_model->get_noticies_by_group_id($group_id[0]['group_id']);
 			$this->load->view('templates/headerInisde', $data);
 			$this->load->view('templates/sidebarInside');
 			$this->load->view('pages/AdminHome');
-		}
-		else if($this->ion_auth->in_group($groupClient)) {
+		} else if ($this->ion_auth->in_group($groupClient)) {
 
 			$user = $this->ion_auth->user()->row();
-			$id= $user->id;
+			$id = $user->id;
 			$data['incidencies'] = $this->incidencies_model->get_incidencies_by_id($id);
 			$group_id = $this->noticias_model->get_group_id($id);
 			$data['noticias'] = $this->noticias_model->get_noticies_by_group_id($group_id[0]['group_id']);
 			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
 
 			$this->load->view('templates/headerInsideClient', $data);
-			$this->load->view('templates/sidebarInsideClient',$data);
+			$this->load->view('templates/sidebarInsideClient', $data);
 			$this->load->view('pages/ClientHome');
-		}
-		else if($this->ion_auth->in_group($groupTecnico)) {
+		} else if ($this->ion_auth->in_group($groupTecnico)) {
 
 			$user = $this->ion_auth->user()->row();
-			$id= $user->id;
+			$id = $user->id;
 			$group_id = $this->noticias_model->get_group_id($id);
 			$data['noticias'] = $this->noticias_model->get_noticies_by_group_id($group_id[0]['group_id']);
 			$data['incidencies'] = $this->incidencies_model->get_incidencies_by_id_tecnico($id);
 			$data['estados'] = $this->incidencies_model->get_estados_tecnico();
 			$data['ficheros'] = $this->incidencies_model->get_ficheros();
-			// $data['rutaFichero'] = $this->incidencies_model->get_rutaIncidenciesFile_by_tecnico($id);
-			
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
+
 
 			$this->load->view('templates/headerInisdeTecnico', $data);
 			$this->load->view('templates/sidebarInsideTecnico');
 			$this->load->view('pages/TecnicHome');
 		}
-		else if($this->ion_auth->in_group($groupGestor)) {
-			redirect('todasLasIncidencias');
+		// else if($this->ion_auth->in_group($groupGestor)) {
+		// 	redirect('todasLasIncidencias');
+		// }
+		else if ($this->ion_auth->in_group($groupGestor)) {
+			$user = $this->ion_auth->user()->row();
+			$id = $user->id;
+			$group_id = $this->noticias_model->get_group_id($id);
+			$data['noticias'] = $this->noticias_model->get_noticies_by_group_id($group_id[0]['group_id']);
+			$data['incidencies'] = $this->incidencies_model->get_incidencies_by_id_tecnico($id);
+			$data['estados'] = $this->incidencies_model->get_estados_tecnico();
+			$data['ficheros'] = $this->incidencies_model->get_ficheros();
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
+
+
+			$this->load->view('templates/headerInisdeGestor', $data);
+			$this->load->view('templates/sidebarInisdeGestor');
+			$this->load->view('pages/GestorHome');
 		}
-	
+
 		$this->load->view('templates/footer');
-	
-		
 	}
 
 

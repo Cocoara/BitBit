@@ -1,5 +1,5 @@
 <head>
-    <title>Cambio de contraseña</title>
+    <title>Generar ficha </title>
 </head>
 
 <div class="container-fluid register-page">

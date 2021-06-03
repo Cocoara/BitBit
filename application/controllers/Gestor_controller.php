@@ -12,6 +12,7 @@ class Gestor_controller extends CI_Controller
         $this->load->library("session");
         $this->load->library('Grocery_CRUD');
         $this->load->model('users_model');
+        $this->load->model('mensajes_model');
         $this->load->helper('url_helper');
         $this->load->helper(array('form', 'url'));
         $this->load->library("form_validation");
@@ -77,20 +78,18 @@ class Gestor_controller extends CI_Controller
         
     }
 
-   
-
-    
-
-
-
-
-
     function output($output = null)
     {
+        $user = $this->ion_auth->user()->row();
+        $id = $user->id;
+
+        $data['users'] = $this->mensajes_model->get_all_users();
+        $data['mensajes'] = $this->mensajes_model->get_mensajes_by_user_id($id);
+        $data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
         $data['user'] = $this->ion_auth->user()->row();
         $this->load->view('templates/headerInisdeGestor', $data);
         $this->load->view('templates/sidebarInisdeGestor', $data);
         $this->load->view('grocery/index.php', $output);
-        $this->load->view('templates/footer', $output);
+        $this->load->view('templates/footer');
     }
 }

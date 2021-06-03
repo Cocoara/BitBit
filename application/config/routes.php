@@ -54,6 +54,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['404_override'] = '';
 
 $route['imagen/(:any)/(:any)'] = 'EditarReparacion_controller/imagen/$1/$2';
+$route['public_imagen/(:any)/(:any)'] = 'Admin_controller/public_imagen/$1/$2';
 
 $route['noticies'] = 'noticies_controller/index';
 $route[''] = 'Home/index';
@@ -73,6 +74,8 @@ $route['material'] = 'Admin_controller/material';
 $route['tipoConsulta'] = 'Admin_controller/tipoConsulta'; 
 $route['consulta'] = 'Admin_controller/consulta'; 
 $route['noticias'] = 'Admin_controller/noticias'; 
+$route['homeinfo'] = 'Admin_controller/homeinfo'; 
+
 
 $route['passwdchange'] = 'UpdatePassword_controller/index'; 
 $route['updatePassword'] = 'UpdatePassword_controller/updatePassword'; 
@@ -82,36 +85,13 @@ $route['nuevareparacion'] = 'Nuevareparacion_controller/index';
 $route['editarReparacion'] = 'EditarReparacion_controller/editar_reparacion'; 
 $route['do_upload'] = 'EditarReparacion_controller/do_upload'; 
 $route['editarReparacionGestor'] = 'EditarReparacionGestor_controller/index'; 
-
-
 $route['anadirnuevareparacion'] = 'Reparaciones_controller/anadirnuevareparacion'; 
-
 $route['misreparaciones'] = 'Reparaciones_controller/index'; 
 
 
-
-
 $route['todasLasIncidencias'] = 'Gestor_controller/todasLasIncidencias'; 
-$route['todasLasIncidencias/add'] = 'Gestor_controller/todasLasIncidencias/add';
-$route['todasLasIncidencias/insert'] = 'Gestor_controller/todasLasIncidencias/insert';
-$route['todasLasIncidencias/insert_validation'] = 'Gestor_controller/todasLasIncidencias/insert_validation';
-$route['todasLasIncidencias/success/:num'] = 'Gestor_controller/todasLasIncidencias/success';
-$route['todasLasIncidencias/delete/:num'] = 'Gestor_controller/todasLasIncidencias/delete';
-$route['todasLasIncidencias/edit/:num'] = 'Gestor_controller/todasLasIncidencias/edit';
-$route['todasLasIncidencias/clone/:num'] = 'Gestor_controller/todasLasIncidencias/clone';
-$route['todasLasIncidencias/update_validation/:num'] = 'Gestor_controller/todasLasIncidencias/update_validation';
-$route['todasLasIncidencias/update/:num'] = 'Gestor_controller/todasLasIncidencias/update';
-$route['todasLasIncidencias/ajax_list_info'] = 'Gestor_controller/todasLasIncidencias/ajax_list_info';
-$route['todasLasIncidencias/ajax_list'] = 'Gestor_controller/todasLasIncidencias/ajax_list';
-$route['todasLasIncidencias/read/:num'] = 'Gestor_controller/todasLasIncidencias/read';
-$route['todasLasIncidencias/export'] = 'Gestor_controller/todasLasIncidencias/export';
-
-
-
-
-
-
-
+$route['todasLasIncidencias/(:any)'] = 'Gestor_controller/todasLasIncidencias/$1'; 
+$route['todasLasIncidencias/(:any)/(:any)'] = 'Gestor_controller/todasLasIncidencias/$1/$2'; 
 
 
 
@@ -120,25 +100,47 @@ $route['todasLasIncidencias/export'] = 'Gestor_controller/todasLasIncidencias/ex
 $route['register'] = 'Register_controller/index'; 
 $route['create_user'] = 'Register_controller/create_user'; 
 $route['update_password'] = 'UpdatePassword_controller/update_password'; 
-
-
 $route['Nosotros'] = 'Nosotros/index'; 
 $route['Contactanos'] = 'Contactanos/index'; 
 
-$route['noticies/index'] = 'noticies_controller/index'; 
 
-$route['noticies/create'] = 'noticies_controller/create'; 
+// GROCERY 
+$route['noticias'] = 'Admin_controller/noticias'; 
+$route['noticias/(:any)'] = 'Admin_controller/noticias/$1'; 
+$route['noticias/(:any)/(:any)'] = 'Admin_controller/noticias/$1/$2'; 
 
-$route['noticies/edit/(:any)'] = 'noticies_controller/edit/$1'; 
-
-$route['noticies/delete/(:any)'] = 'noticies_controller/delete/$1'; 
-
-$route['noticies/(:any)'] = 'noticies_controller/view/$1'; 
+$route['homeinfo'] = 'Admin_controller/homeinfo'; 
+$route['homeinfo/(:any)'] = 'Admin_controller/homeinfo/$1'; 
+$route['homeinfo/(:any)/(:any)'] = 'Admin_controller/homeinfo/$1/$2'; 
 
 
-$route['pdf'] = "pdf_controller/index";
 
-$route['api/noticies'] = "Api_Noticies/noticies";
+
+
+// API BITBIT
+
+    // HOME INFO
+    $route['public/homeinfo'] = "ApiJwt_controller/homeinfo";
+    $route['public/temasConsulta'] = "ApiJwt_controller/temas";
+
+// $route['noticies/index'] = 'noticies_controller/index'; 
+
+// $route['noticies/create'] = 'noticies_controller/create'; 
+
+// $route['noticies/edit/(:any)'] = 'noticies_controller/edit/$1'; 
+
+// $route['noticies/delete/(:any)'] = 'noticies_controller/delete/$1'; 
+
+// $route['noticies/(:any)'] = 'noticies_controller/view/$1';
+
+
+// $route['pdf'] = "pdf_controller/index";
+
+// $route['api/noticies'] = "Api_Noticies/noticies";
+
+$route['public/noticias'] = "ApiJwt_controller/noticias";
+
+
 
 $route['private/noticies'] = "ApiJwt_controller/noticies";
 $route['private/login'] = "ApiJwt_controller/params";
@@ -166,6 +168,9 @@ $route['(:any)/print'] = 'Admin_controller/$1/print';
 
 
 
+
+
+
 /* ################### MENSAJERIA ##################*/ 
 
 $route['contactanosPeticion'] = "Mensajes_controller/contactanosPeticion";
@@ -173,6 +178,7 @@ $route['mensajeriaClient'] = "Mensajes_controller/mensajeria";
 $route['setMensajeByClient'] = "Mensajes_controller/setMensaje";
 $route['mensajeriaAdmin'] = "Mensajes_controller/mensajeria";
 $route['setMensajeByAdmin'] = "Mensajes_controller/setMensaje";
+$route['myMessages'] = "Mensajes_controller/myMessages";
 
 
 

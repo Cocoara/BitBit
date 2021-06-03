@@ -95,7 +95,7 @@ class Incidencies_model  extends CI_Model
         $this->db->delete('ficheros');
     }
 
-    public function set_incidencies_by_tecnico($id_incidencia, $estado, $Fecha_entrada, $desc_averia, $uuid, $Marca, $Modelo, $Numero_serie, $Diagnostico_prev, $Telf, $tiempo_reparcion, $descripcion_gestor, $canvasImage)
+    public function set_incidencies_by_tecnico($id_incidencia, $estado, $Fecha_entrada, $desc_averia, $uuid, $Marca, $Modelo, $Numero_serie, $Diagnostico_prev, $Telf, $tiempo_reparcion, $descripcion_gestor, $canvasImage, $material)
     {
         $data = array(
             'id_Estado' => $estado,
@@ -109,7 +109,8 @@ class Incidencies_model  extends CI_Model
             'Telf' => $Telf,
             'tiempo_reparcion' => $tiempo_reparcion,
             'descripcion_gestor' => $descripcion_gestor,
-            'canvasImage' => $canvasImage
+            'canvasImage' => $canvasImage,
+            'material' => $material
         );
         $this->db->where('id_incidencia', $id_incidencia);
         return $this->db->update('incidencia', $data);

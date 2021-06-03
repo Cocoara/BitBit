@@ -12,6 +12,7 @@ class Admin_controller extends CI_Controller
         $this->load->library("session");
         $this->load->library('Grocery_CRUD');
         $this->load->model('users_model');
+        $this->load->model('mensajes_model');
         $this->load->helper('url_helper');
         $this->load->helper(array('form', 'url'));
         $this->load->library("form_validation");
@@ -104,9 +105,24 @@ class Admin_controller extends CI_Controller
     public function noticias()
     {
         $crud = new grocery_CRUD();
+
         $crud->set_table('noticias');
         $crud->set_relation('id_grupo', 'groups', 'name');
+        $crud->set_field_upload('file_url', 'assets/uploads/files');
+
         $crud->callback_before_insert(array($this, 'date_callback'));
+        $output = $crud->render();
+
+        $this->output($output);
+    }
+
+    public function homeinfo()
+    {
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('homeinfo');
+        $crud->set_field_upload('image', '../../uploads/homeimages');
+        $crud->columns('title','content');
         $output = $crud->render();
 
         $this->output($output);
@@ -168,6 +184,12 @@ class Admin_controller extends CI_Controller
 
     function outputGestor($output = null)
     {
+        $user = $this->ion_auth->user()->row();
+        $id = $user->id;
+
+        $data['users'] = $this->mensajes_model->get_all_users();
+        $data['mensajes'] = $this->mensajes_model->get_mensajes_by_user_id($id);
+        $data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
         $data['user'] = $this->ion_auth->user()->row();
         $this->load->view('templates/headerInisdeGestor', $data);
         $this->load->view('templates/sidebarInisdeGestor', $data);
@@ -177,6 +199,12 @@ class Admin_controller extends CI_Controller
 
     function output($output = null)
     {
+        $user = $this->ion_auth->user()->row();
+        $id = $user->id;
+
+        $data['users'] = $this->mensajes_model->get_all_users();
+        $data['mensajes'] = $this->mensajes_model->get_mensajes_by_user_id($id);
+        $data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
         $data['user'] = $this->ion_auth->user()->row();
         $this->load->view('templates/headerInisde', $data);
         $this->load->view('templates/sidebarInside', $data);
@@ -191,4 +219,12 @@ class Admin_controller extends CI_Controller
         $post_array['data'] = $data;
         return  $post_array;
     }
+
+        // GET PUBLIC IMAGES CONTROLLERS
+
+        public function public_imagen($id_incidencia, $nom_arxiu)
+        {
+            $this->load->helper('download');
+            force_download('C:\xampp\uploads/' . $id_incidencia . '/' . $nom_arxiu, NULL, TRUE);
+        }
 }

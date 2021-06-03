@@ -44,11 +44,13 @@ class UpdatePassword_controller  extends CI_Controller
 			$this->load->view('pages/changePassword');
 		}
 		else if($this->ion_auth->in_group($groupTecnico)) {
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
 			$this->load->view('templates/headerInisdeTecnico', $data);
 			$this->load->view('templates/sidebarInsideTecnico',$data);
 			$this->load->view('pages/changePassword');
 		}
 		else if($this->ion_auth->in_group($groupGestor)) {
+			$data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
 			$this->load->view('templates/headerInisdeGestor', $data);
 			$this->load->view('templates/sidebarInisdeGestor', $data);
 			$this->load->view('pages/changePassword');

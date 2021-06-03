@@ -4,7 +4,7 @@
 
 
 <!-- Footer -->
-<footer class="bg-dark text-center text-white">
+<footer class="bg-dark text-center text-white" style="margin-top:200px">
   <!-- Grid container -->
   <div class="flex-container p-4">
     <!-- Section: Social media -->

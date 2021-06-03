@@ -24,7 +24,10 @@ class Mensajes_model  extends CI_Model
         return $query->num_rows();
     }
 
-
+    public function get_tipo_consulta(){
+        $query = $this->db->query("SELECT * From temaconsulta");
+        return $query->result_array();
+    }
 
     public function get_admin_users(){
         $this->db->distinct();
@@ -47,6 +50,10 @@ class Mensajes_model  extends CI_Model
         return $query->result_array();
     }
 
+    public function get_infoCards(){
+        $query = $this->db->query("SELECT * From homeinfo");
+        return $query->result_array();
+    }
 
     public function set_MensajeByClient($to,$from, $asunto, $mensaje,$data){
         $data = array(
