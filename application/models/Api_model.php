@@ -30,12 +30,37 @@ class Api_model  extends CI_Model
         return $query->result_array();
     }
 
+    public function get_userGroup($id)
+    {
+        $this->db->select('users_groups.group_id');
+        $this->db->from('users_groups');
+        $this->db->where('user_id', $id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function set_consulta($nombre, $apellido,$telefono,$correo,$tema,$mensaje)
+    {
+        $date = date('Y-m-d');
+        $data = array(
+            'nombre' => $nombre,
+            'apellido' => $apellido,
+            'telefono' => $telefono,
+            'correo' => $correo,
+            'tema' => $tema,
+            'mensaje' => $mensaje,
+            'fecha' => $date
+        );
+
+        return $this->db->insert('consulta', $data);
+    }
+
     public function get_temasConsulta()
     {
         $query =  $this->db->query("SELECT * from temaConsulta");
         return $query->result_array();
     }
-    
+
 
     public function get_noticies_by_id($noticia)
     {

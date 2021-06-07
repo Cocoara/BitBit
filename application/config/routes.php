@@ -113,37 +113,31 @@ $route['homeinfo'] = 'Admin_controller/homeinfo';
 $route['homeinfo/(:any)'] = 'Admin_controller/homeinfo/$1'; 
 $route['homeinfo/(:any)/(:any)'] = 'Admin_controller/homeinfo/$1/$2'; 
 
+$route['tipoConsulta'] = 'Admin_controller/tipoConsulta'; 
+$route['tipoConsulta/(:any)'] = 'Admin_controller/tipoConsulta/$1'; 
+$route['tipoConsulta/(:any)/(:any)'] = 'Admin_controller/tipoConsulta/$1/$2'; 
+
 
 
 
 
 // API BITBIT
 
-    // HOME INFO
+    // HOME INFO & PUBLIC INFORMATION
     $route['public/homeinfo'] = "ApiJwt_controller/homeinfo";
     $route['public/temasConsulta'] = "ApiJwt_controller/temas";
-
-// $route['noticies/index'] = 'noticies_controller/index'; 
-
-// $route['noticies/create'] = 'noticies_controller/create'; 
-
-// $route['noticies/edit/(:any)'] = 'noticies_controller/edit/$1'; 
-
-// $route['noticies/delete/(:any)'] = 'noticies_controller/delete/$1'; 
-
-// $route['noticies/(:any)'] = 'noticies_controller/view/$1';
+    $route['public/consulta'] = "ApiJwt_controller/consulta"; 
 
 
-// $route['pdf'] = "pdf_controller/index";
+    // LOGIN & LOGOUT
+    $route['private/login'] = "ApiJwt_controller/params";
+    $route['private/logout'] = "ApiJwt_controller/logout";
+    
+    
+    // PRIVATE INFO 
+    // $route['private/userGroup'] = "ApiJwt_controller/userGroup";
 
-// $route['api/noticies'] = "Api_Noticies/noticies";
-
-$route['public/noticias'] = "ApiJwt_controller/noticias";
-
-
-
-$route['private/noticies'] = "ApiJwt_controller/noticies";
-$route['private/login'] = "ApiJwt_controller/params";
+// $route['public/noticias'] = "ApiJwt_controller/noticias";
 
 
 

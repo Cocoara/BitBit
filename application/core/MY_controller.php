@@ -67,11 +67,12 @@ class JwtAPI_Controller extends API_Controller{
     }
 
     
-    protected function login ($usr,$pass)
+    protected function login($usr,$pass)
     {
         if ($this->ion_auth->login($usr,$pass))
         {
             $user = $this->ion_auth->user()->row();
+            $userGroup = $this->api_model->get_userGroup($user->id);
 
             $this->token_data->usr=$user->id;
 
@@ -80,6 +81,8 @@ class JwtAPI_Controller extends API_Controller{
             $message = [
                 'status' => RestController::HTTP_OK,
                 'token' => $jwt,
+                'user' => $user,
+                'userGroup' => $userGroup,
                 'message' => 'User logged'
             ];
             $this->set_response($message, RestController::HTTP_OK); // 200

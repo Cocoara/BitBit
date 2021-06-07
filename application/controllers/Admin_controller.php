@@ -30,6 +30,7 @@ class Admin_controller extends CI_Controller
 
             $crud->callback_after_insert(array($this, 'pass_hash'));
             $crud->callback_after_update(array($this, 'pass_hash'));
+            $crud->callback_before_delete(array($this, 'prevent_delete_admin'));
 
             $output = $crud->render();
             $this->output($output);
@@ -50,6 +51,15 @@ class Admin_controller extends CI_Controller
         return true;
     }
 
+
+    public function prevent_delete_admin($primary_key)
+    {
+        if ($primary_key == 33) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 
 
@@ -122,7 +132,7 @@ class Admin_controller extends CI_Controller
 
         $crud->set_table('homeinfo');
         $crud->set_field_upload('image', '../../uploads/homeimages');
-        $crud->columns('title','content');
+        $crud->columns('title', 'content');
         $output = $crud->render();
 
         $this->output($output);
@@ -220,11 +230,11 @@ class Admin_controller extends CI_Controller
         return  $post_array;
     }
 
-        // GET PUBLIC IMAGES CONTROLLERS
+    // GET PUBLIC IMAGES CONTROLLERS
 
-        public function public_imagen($id_incidencia, $nom_arxiu)
-        {
-            $this->load->helper('download');
-            force_download('C:\xampp\uploads/' . $id_incidencia . '/' . $nom_arxiu, NULL, TRUE);
-        }
+    public function public_imagen($id_incidencia, $nom_arxiu)
+    {
+        $this->load->helper('download');
+        force_download('C:\xampp\uploads/' . $id_incidencia . '/' . $nom_arxiu, NULL, TRUE);
+    }
 }
