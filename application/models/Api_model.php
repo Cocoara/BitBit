@@ -39,6 +39,12 @@ class Api_model  extends CI_Model
         return $query->result_array();
     }
 
+
+    public function get_incidencias_by_id($id){
+        $query = $this->db->query("SELECT * From incidencia where id_user='" . $id . "'");
+        return $query->result_array();
+    }
+
     public function set_consulta($nombre, $apellido,$telefono,$correo,$tema,$mensaje)
     {
         $date = date('Y-m-d');
@@ -75,6 +81,17 @@ class Api_model  extends CI_Model
     }
 
 
+    public function get_tomessagesAdmin(){
+        $this->db->distinct();
+        $this->db->select('username');
+        $this->db->select('users.id');
+        $this->db->from('users');
+        $this->db->join('users_groups', 'users_groups.user_id = users.id');
+        $this->db->where('group_id !=',2);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 
     public function set_noticia_api($id, $date, $title, $subtitle, $content)
     {
@@ -88,6 +105,56 @@ class Api_model  extends CI_Model
 
         return $this->db->insert('noticies', $data);
     }
+
+
+    public function set_message($from, $to, $asunto, $mensaje, $data)
+    {
+        $data = array(
+            'from' => $from,
+            'to' => $to,
+            'asunto' => $asunto,
+            'mensaje' => $mensaje,
+            'data' => $data
+        );
+
+        return $this->db->insert('mensajes', $data);
+    }
+
+    public function getUserInfo($id)
+    {
+        $query = $this->db->query("SELECT * From users where id='" . $id . "'");
+        return $query->result_array();
+    }
+
+    public function set_opciones($id, $username, $lastname, $phone, $email, $password)
+    {
+        $data = array(
+            'username' => $username,
+            'last_name' => $lastname,
+            'phone' => $phone,
+            'email' => $email,
+            'password' => $password
+        );
+        $this->db->where('id', $id);
+        return $this->db->update('users', $data);
+    }
+
+    public function set_opcionesWithout($id, $username, $lastname, $phone, $email)
+    {
+        $data = array(
+            'username' => $username,
+            'last_name' => $lastname,
+            'phone' => $phone,
+            'email' => $email
+        );
+        $this->db->where('id', $id);
+        return $this->db->update('users', $data);
+    }
+
+
+
+
+    //    ----------------------------------------------------------------
 
 
     public function set_noticia()
@@ -109,6 +176,14 @@ class Api_model  extends CI_Model
     {
         $this->db->delete('noticies', array('id' => $noticies));
         return $this->db->affected_rows();
+    }
+
+    
+    public function getMessages($id)
+    {
+        $this->db->order_by('data', 'DESC');
+        $query = $this->db->get_where('mensajes', array('to' => $id));
+        return $query->result_array();
     }
 
 

@@ -31,7 +31,7 @@ class ApiJwt_controller extends JwtAPI_Controller
         $pass = $this->post('password');
 
         $this->login($user, $pass);
-    }
+    }   
 
     public function homeinfo_get()
     {
@@ -69,8 +69,8 @@ class ApiJwt_controller extends JwtAPI_Controller
         $tema = $this->post('tema');
         $mensaje = $this->post('mensaje');
         // $this->api_model->set_consulta($nombre,$apellido,$telefono,$correo,$tema,$mensaje);
-       
-        if ($this->api_model->set_consulta($nombre,$apellido,$telefono,$correo,$tema,$mensaje)) {
+
+        if ($this->api_model->set_consulta($nombre, $apellido, $telefono, $correo, $tema, $mensaje)) {
             $message = [
                 'nombre' => $this->post('nombre'),
                 'apellido' => $this->post('apellido'),
@@ -101,20 +101,35 @@ class ApiJwt_controller extends JwtAPI_Controller
 
     public function noticias_get()
     {
-        $noticies = $this->api_model->get_noticias();
-        $id = $this->get('id');
 
-        if ($id === null) {
-            if ($noticies) {
-                $this->response($noticies, 200);
-            } else {
-                $this->response([
-                    'status' => false,
-                    'message' => 'No noticies were found'
-                ], 404);
-            }
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+        if ($this->auth_request()) {
+
+            $jwt = $this->renewJWT();
+
+            $noticies = $this->api_model->get_noticias();
+            
+                if ($noticies) {
+                    $message = [
+                        'noticies' => $noticies,
+                        'status' => RestController::HTTP_OK,
+                        'token' => $jwt
+                    ];
+                    $this->response($message, RestController::HTTP_OK); // CREATED (201) being the HTTP response code
+                } else {
+                    $this->response([
+                        'status' => false,
+                        'message' => 'No home information available'
+                    ], 404);
+                }
+            
         } else {
-            $this->response($this->noticies_model->get_noticies_by_id($id));
+            $message = [
+                'status' => $this->auth_code,
+                'token' => $this->token,
+                'message' => 'Bad auth information. ' . $this->error_message
+            ];
+            $this->response($message, $this->auth_code); // 400 / 401 / 419 / 500
         }
     }
 
@@ -236,23 +251,341 @@ class ApiJwt_controller extends JwtAPI_Controller
         }
     }
 
-    // public function userGroup_get(){
-    //     $userGroup = $this->api_model->get_userGroup();
-    //     if ($userGroup) {
-    //         $this->response($userGroup, 200);
-    //     } else {
-    //         $this->response([
-    //             'status' => false,
-    //             'message' => 'No home information available'
-    //         ], 404);
-    //     }
-    // }
+    public function incidencias_get($id)
+    {
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+        if ($this->auth_request()) {
 
-    public function logout_post(){
+            $jwt = $this->renewJWT();
+
+            $incidencias = $this->api_model->get_incidencias_by_id($id);
+
+            if ($incidencias) {
+                $message = [
+                    'incidencias' => $incidencias,
+                    'status' => RestController::HTTP_OK,
+                    'token' => $jwt
+                ];
+                $this->response($message, RestController::HTTP_OK); // CREATED (201) being the HTTP response code
+            } else {
+                $this->response([
+                    'status' => false,
+                    'message' => 'No home information available'
+                ], 404);
+            }
+        } else {
+            $message = [
+                'status' => $this->auth_code,
+                'token' => $this->token,
+                'message' => 'Bad auth information. ' . $this->error_message
+            ];
+            $this->set_response($message, $this->auth_code); // 400 / 401 / 419 / 500
+        }
+    }
+
+    public function noticiasByGroup_get($id)
+    {
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+        if ($this->auth_request()) {
+
+            $jwt = $this->renewJWT();
+
+            $noticias = $this->api_model->get_noticias_by_id($id);
+
+            if ($noticias) {
+                $message = [
+                    'noticias' => $noticias,
+                    'status' => RestController::HTTP_OK,
+                    'token' => $jwt
+                ];
+                $this->response($message, RestController::HTTP_OK); // CREATED (201) being the HTTP response code
+            } else {
+                $this->response([
+                    'status' => false,
+                    'message' => 'No notification information available'
+                ], 404);
+            }
+        } else {
+            $message = [
+                'status' => $this->auth_code,
+                'token' => $this->token,
+                'message' => 'Bad auth information. ' . $this->error_message
+            ];
+            $this->response($message, $this->auth_code); // 400 / 401 / 419 / 500
+        }
+    }
+
+
+    public function toMessagesAdmin_get()
+    {
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+        if ($this->auth_request()) {
+
+            $jwt = $this->renewJWT();
+
+            $tomessages = $this->api_model->get_tomessagesAdmin();
+
+            if ($tomessages) {
+                $message = [
+                    'tomessages' => $tomessages,
+                    'status' => RestController::HTTP_OK,
+                    'token' => $jwt
+                ];
+                $this->response($message, RestController::HTTP_OK); // CREATED (201) being the HTTP response code
+            } else {
+                $this->response([
+                    'status' => false,
+                    'message' => 'No notification information available'
+                ], 404);
+            }
+        } else {
+            $message = [
+                'status' => $this->auth_code,
+                'token' => $this->token,
+                'message' => 'Bad auth information. ' . $this->error_message
+            ];
+            $this->response($message, $this->auth_code); // 400 / 401 / 419 / 500
+        }
+    }
+
+
+    public function sendMessage_post()
+    {
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+        if ($this->auth_request()) {
+
+            $jwt = $this->renewJWT();
+
+            $from = $this->post('from');
+            $to = $this->post('to');
+            $asunto = $this->post('asunto');
+            $mensaje = $this->post('mensaje');
+            $data = date('Y-m-d');
+
+            $message = $this->api_model->set_message($from, $to, $asunto, $mensaje, $data);
+
+            if ($message) {
+                $message = [
+                    'message' => true,
+                    'status' => RestController::HTTP_OK,
+                    'token' => $jwt
+                ];
+                $this->response($message, RestController::HTTP_OK); // CREATED (201) being the HTTP response code
+            } else {
+                $this->response([
+                    'status' => false,
+                    'message' => 'No notification information available'
+                ], 404);
+            }
+        } else {
+            $message = [
+                'status' => $this->auth_code,
+                'token' => $this->token,
+                'message' => 'Bad auth information. ' . $this->error_message
+            ];
+            $this->response($message, $this->auth_code); // 400 / 401 / 419 / 500
+        }
+    }
+
+
+    
+    public function getMessages_get($id)
+    {
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+        if ($this->auth_request()) {
+
+            $jwt = $this->renewJWT();
+
+            $mymessages = $this->api_model->getMessages($id);
+
+            if ($mymessages) {
+                $message = [
+                    'mymessages' => $mymessages,
+                    'status' => RestController::HTTP_OK,
+                    'token' => $jwt
+                ];
+                $this->response($message, RestController::HTTP_OK); // CREATED (201) being the HTTP response code
+            } else {
+                $this->response([
+                    'status' => false,
+                    'message' => 'No notification information available'
+                ], 404);
+            }
+        } else {
+            $message = [
+                'status' => $this->auth_code,
+                'token' => $this->token,
+                'message' => 'Bad auth information. ' . $this->error_message
+            ];
+            $this->response($message, $this->auth_code); // 400 / 401 / 419 / 500
+        }
+    }
+
+    public function opciones_get($id)
+    {
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+        if ($this->auth_request()) {
+
+            $jwt = $this->renewJWT();
+
+            $userInfo = $this->api_model->getUserInfo($id);
+
+            if ($userInfo) {
+                $message = [
+                    'info' => $userInfo,
+                    'status' => RestController::HTTP_OK,
+                    'token' => $jwt
+                ];
+                $this->response($message, RestController::HTTP_OK); // CREATED (201) being the HTTP response code
+            } else {
+                $this->response([
+                    'status' => false,
+                    'message' => 'No notification information available'
+                ], 404);
+            }
+        } else {
+            $message = [
+                'status' => $this->auth_code,
+                'token' => $this->token,
+                'message' => 'Bad auth information. ' . $this->error_message
+            ];
+            $this->response($message, $this->auth_code); // 400 / 401 / 419 / 500
+        }
+    }
+
+    public function updateOpciones_post()
+    {
+        // var_dump("das");die();
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+        if ($this->auth_request()) {
+
+            $jwt = $this->renewJWT();
+
+            $id = $this->post('id');
+            $username = $this->post('username');
+            $lastname = $this->post('lastname');
+            $phone = $this->post('phone');
+            $email = $this->post('email');
+            $password = $this->post('password');
+
+            $password = $this->ion_auth_model->hash_password($password);
+
+            $opciones = $this->api_model->set_opciones($id, $username, $lastname, $phone, $email, $password);
+
+            if ($opciones) {
+                $message = [
+                    'status' => RestController::HTTP_OK,
+                    'token' => $jwt
+                ];
+                $this->response($message, RestController::HTTP_OK); // CREATED (201) being the HTTP response code
+            } else {
+                $this->response([
+                    'status' => false,
+                    'message' => 'No notification information available'
+                ], 404);
+            }
+        } else {
+            $message = [
+                'status' => $this->auth_code,
+                'token' => $this->token,
+                'message' => 'Bad auth information. ' . $this->error_message
+            ];
+            $this->response($message, $this->auth_code); // 400 / 401 / 419 / 500
+        }
+    }
+
+
+    public function updateOpcionesWithout_post()
+    {
+        // var_dump("das");die();
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+        if ($this->auth_request()) {
+
+            $jwt = $this->renewJWT();
+
+            $id = $this->post('id');
+            $username = $this->post('username');
+            $lastname = $this->post('lastname');
+            $phone = $this->post('phone');
+            $email = $this->post('email');
+
+            $opciones = $this->api_model->set_opcionesWithout($id, $username, $lastname, $phone, $email);
+
+            if ($opciones) {
+                $message = [
+                    'status' => RestController::HTTP_OK,
+                    'token' => $jwt
+                ];
+                $this->response($message, RestController::HTTP_OK); // CREATED (201) being the HTTP response code
+            } else {
+                $this->response([
+                    'status' => false,
+                    'message' => 'No notification information available'
+                ], 404);
+            }
+        } else {
+            $message = [
+                'status' => $this->auth_code,
+                'token' => $this->token,
+                'message' => 'Bad auth information. ' . $this->error_message
+            ];
+            $this->response($message, $this->auth_code); // 400 / 401 / 419 / 500
+        }
+    }
+
+
+
+    public function logout_post()
+    {
         $this->ion_auth->logout();
     }
 
     // OPTIONS OF API Models
+
+    public function uupdateOpcionesWithouts_options()
+    {
+        $this->output->set_header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        $this->output->set_header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+
+        $this->response(null, API_Controller::HTTP_OK);
+    }
+
+    public function updateOpciones_options()
+    {
+        $this->output->set_header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        $this->output->set_header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+
+        $this->response(null, API_Controller::HTTP_OK);
+    }
+
+    public function opciones_options()
+    {
+        $this->output->set_header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        $this->output->set_header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+
+        $this->response(null, API_Controller::HTTP_OK);
+    }
+
+    public function noticiasByGroup_options()
+    {
+        $this->output->set_header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        $this->output->set_header("Access-Control-Allow-Methods: GET, OPTIONS");
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+
+        $this->response(null, API_Controller::HTTP_OK);
+    }
+
+    public function toMessagesAdmin_options()
+    {
+        $this->output->set_header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        $this->output->set_header("Access-Control-Allow-Methods: GET, OPTIONS");
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+
+        $this->response(null, API_Controller::HTTP_OK);
+    }
 
     public function homeinfo_options()
     {
@@ -293,8 +626,17 @@ class ApiJwt_controller extends JwtAPI_Controller
 
     public function index_options()
     {
-        $this->output->set_header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+        $this->output->set_header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
         $this->output->set_header("Access-Control-Allow-Methods: GET, DELETE, OPTIONS");
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+
+        $this->response(null, JwtAPI_Controller::HTTP_OK); // OK (200) being the HTTP response code
+    }
+
+    public function incidencias_options()
+    {
+        $this->output->set_header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        $this->output->set_header("Access-Control-Allow-Methods: GET, OPTIONS");
         $this->output->set_header("Access-Control-Allow-Origin: *");
 
         $this->response(null, JwtAPI_Controller::HTTP_OK); // OK (200) being the HTTP response code

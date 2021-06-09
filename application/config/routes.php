@@ -135,7 +135,20 @@ $route['tipoConsulta/(:any)/(:any)'] = 'Admin_controller/tipoConsulta/$1/$2';
     
     
     // PRIVATE INFO 
-    // $route['private/userGroup'] = "ApiJwt_controller/userGroup";
+    $route['private/noticiasByGroup/(:any)'] = "ApiJwt_controller/noticias/$1";
+    $route['private/incidencias/(:any)'] = "ApiJwt_controller/incidencias/$1";
+    // $route['private/incidencias/(:any)/(:any)'] = "ApiJwt_controller/incidencias/$1/$2";
+    
+    // MESSAGES 
+    $route['private/getmessages/(:any)'] = "ApiJwt_controller/getMessages/$1";
+    $route['private/messages'] = "ApiJwt_controller/sendMessage";
+    $route['private/tomessages'] = "ApiJwt_controller/toMessagesAdmin";
+    
+    //OPTIONS
+    $route['private/opciones/(:any)'] = "ApiJwt_controller/opciones/$1";
+    $route['private/updateOpciones'] = "ApiJwt_controller/updateOpciones";
+    $route['private/updateOpcionesWithout'] = "ApiJwt_controller/updateOpcionesWithout";
+    
 
 // $route['public/noticias'] = "ApiJwt_controller/noticias";
 

@@ -13,6 +13,7 @@ class Mensajes_model  extends CI_Model
 
     public function get_mensajes_by_user_id($id)
     {
+        $this->db->order_by('data', 'DESC');
         $query = $this->db->get_where('mensajes', array('to' => $id));
         return $query->result_array();
     }
@@ -20,6 +21,7 @@ class Mensajes_model  extends CI_Model
     
     public function get_cout_of_messages($id)
     {
+
         $query = $this->db->get_where('mensajes', array('to' => $id));
         return $query->num_rows();
     }

@@ -35,6 +35,7 @@ class JwtAPI_Controller extends API_Controller{
         $this->load->library('ion_auth');
         $this->load->library('uuid');
 
+        $this->token=null;
         $this->token_data=new stdClass();
         $this->auth_code=200;
         $this->error_message="";
@@ -90,7 +91,7 @@ class JwtAPI_Controller extends API_Controller{
             $message = [
                 'status' => RestController::HTTP_UNAUTHORIZED,
                 'token' => "",
-                'message' => 'Bad username/password'
+                'message' => 'Bad username/password' 
             ];
             $this->set_response($message, RestController::HTTP_UNAUTHORIZED); // 401
         }
@@ -101,7 +102,7 @@ class JwtAPI_Controller extends API_Controller{
         try {
             $token=explode(" ",$this->head ("Authorization"));
             // token + password used to sign + array of allowed algorithms
-
+            // echo var_dump($token);die();
             if (count($token)!=2)
             {
                 $this->auth_code=400;
@@ -119,8 +120,9 @@ class JwtAPI_Controller extends API_Controller{
                     $this->tokens_m->revoke($this->token_data);
                 }
             }
-
-            $user=$this->ion_auth->user($this->token_data->usr)->row();
+            $this->token=$token[1];
+        
+                $user=$this->ion_auth->user($this->token_data->usr)->row();
             if ($user->active) {     // user exists && is active
                 if ($memberof!==null) {   //chek if user is member of a group or groups
                     if ($this->ion_auth->in_group($memberof,$this->token_data->usr)){
