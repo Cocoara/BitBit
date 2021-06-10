@@ -150,4 +150,4 @@ file_put_contents ($path, $canva);
 $pdf->Image($path, 30, 50, 150, 180, 'PNG', '', '', true, 150, '', false, false, 1, false, false, false);
 
 
-$pdf->Output('example_001.pdf', 'D');
+$pdf->Output('example_001.pdf', 'I');

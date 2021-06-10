@@ -18,9 +18,11 @@ class Api_model  extends CI_Model
     }
 
 
-    public function get_noticias()
-    {
-        $query =  $this->db->query("SELECT * from noticias");
+    public function get_noticias_by_id($id){
+        $this->db->select('*');
+        $this->db->from('noticias');
+        $this->db->where('id_grupo', $id);
+        $query = $this->db->get();
         return $query->result_array();
     }
 
@@ -44,6 +46,12 @@ class Api_model  extends CI_Model
         $query = $this->db->query("SELECT * From incidencia where id_user='" . $id . "'");
         return $query->result_array();
     }
+
+    public function get_incidenciasTecnico($id){
+        $query = $this->db->query("SELECT * From incidencia where id_tecnico='" . $id . "'");
+        return $query->result_array();
+    }
+
 
     public function set_consulta($nombre, $apellido,$telefono,$correo,$tema,$mensaje)
     {
@@ -88,6 +96,16 @@ class Api_model  extends CI_Model
         $this->db->from('users');
         $this->db->join('users_groups', 'users_groups.user_id = users.id');
         $this->db->where('group_id !=',2);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function get_tomessagesAll(){
+        $this->db->distinct();
+        $this->db->select('username');
+        $this->db->select('users.id');
+        $this->db->from('users');
+        $this->db->join('users_groups', 'users_groups.user_id = users.id');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -152,6 +170,23 @@ class Api_model  extends CI_Model
     }
 
 
+    public function getMessages($id)
+    {
+        $this->db->order_by('data', 'DESC');
+        $query = $this->db->get_where('mensajes', array('to' => $id));
+        return $query->result_array();
+    }
+
+    public function get_incidenciaById($id_incidencia){
+        $query = $this->db->query("SELECT * From incidencia where id_incidencia='" . $id_incidencia . "'");
+        return $query->result_array();
+    }
+
+    public function get_estadosIncidencia(){
+        $query = $this->db->query("SELECT * From tipo_estado");
+        return $query->result_array();
+    }
+
 
 
     //    ----------------------------------------------------------------
@@ -179,14 +214,6 @@ class Api_model  extends CI_Model
     }
 
     
-    public function getMessages($id)
-    {
-        $this->db->order_by('data', 'DESC');
-        $query = $this->db->get_where('mensajes', array('to' => $id));
-        return $query->result_array();
-    }
-
-
     public function editNoticies($id)
     {
 

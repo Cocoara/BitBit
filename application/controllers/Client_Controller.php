@@ -33,9 +33,9 @@ class Client_Controller  extends CI_Controller
             $this->load->view('templates/footer');
             return;
         } else {
-            
-			$user = $this->ion_auth->user()->row();
-			$id= $user->id;
+
+            $user = $this->ion_auth->user()->row();
+            $id = $user->id;
             $data['badgeMail'] = $this->mensajes_model->get_cout_of_messages($id);
             $data['user'] = $this->ion_auth->user()->row();
             $this->load->view('templates/headerInsideClient', $data);
@@ -59,10 +59,10 @@ class Client_Controller  extends CI_Controller
             if ($this->incidencies_model->get_incidencias_by_uuid($uuid)) {
                 $id_incidencia = $this->incidencies_model->get_incidencias_by_uuid($uuid);
                 $data['ficheros'] = $this->incidencies_model->get_ficheros_by_incidencia($id_incidencia[0]['id_incidencia']);
-                /* INNER JOIN QUERYIES*/ 
-                $data['incidencia'] = $this->incidencies_model->get_nombre_tecnicos_incidencia($id_incidencia[0]['id_incidencia']); 
-                $data['incidenciaEsatdo'] = $this->incidencies_model->get_estado_incidencia($id_incidencia[0]['id_incidencia']); 
-                $data['incidenciaCliente'] = $this->incidencies_model->get_cliente_incidencia($id_incidencia[0]['id_incidencia']); 
+                /* INNER JOIN QUERYIES*/
+                $data['incidencia'] = $this->incidencies_model->get_nombre_tecnicos_incidencia($id_incidencia[0]['id_incidencia']);
+                $data['incidenciaEsatdo'] = $this->incidencies_model->get_estado_incidencia($id_incidencia[0]['id_incidencia']);
+                $data['incidenciaCliente'] = $this->incidencies_model->get_cliente_incidencia($id_incidencia[0]['id_incidencia']);
                 $this->load->view('pdf/uuid', $data);
             } else {
                 $data['user'] = $this->ion_auth->user()->row();
@@ -72,6 +72,27 @@ class Client_Controller  extends CI_Controller
                 $this->load->view('pages/generateForUuid');
                 $this->load->view('templates/footer');
             }
+        }
+    }
+
+    public function fichaUUIDApp($uuid)
+    {
+        $this->load->library('Pdf');
+        if ($this->incidencies_model->get_incidencias_by_uuid($uuid)) {
+            $id_incidencia = $this->incidencies_model->get_incidencias_by_uuid($uuid);
+            $data['ficheros'] = $this->incidencies_model->get_ficheros_by_incidencia($id_incidencia[0]['id_incidencia']);
+            /* INNER JOIN QUERYIES*/
+            $data['incidencia'] = $this->incidencies_model->get_nombre_tecnicos_incidencia($id_incidencia[0]['id_incidencia']);
+            $data['incidenciaEsatdo'] = $this->incidencies_model->get_estado_incidencia($id_incidencia[0]['id_incidencia']);
+            $data['incidenciaCliente'] = $this->incidencies_model->get_cliente_incidencia($id_incidencia[0]['id_incidencia']);
+            $this->load->view('pdf/uuid', $data);
+        } else {
+            $data['user'] = $this->ion_auth->user()->row();
+            $this->session->set_flashdata('error', "Error, revisa que el UUID sea correcto");
+            $this->load->view('templates/headerInsideClient', $data);
+            $this->load->view('templates/sidebarInsideClient');
+            $this->load->view('pages/generateForUuid');
+            $this->load->view('templates/footer');
         }
     }
 }
