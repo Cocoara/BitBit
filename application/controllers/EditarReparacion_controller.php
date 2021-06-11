@@ -23,7 +23,12 @@ class EditarReparacion_controller  extends CI_Controller
 	}
 
 
-
+	
+	/**
+	 * editar_reparacion
+	 * Función que pasará los datos del formulario para editar la información de la incidencia
+	 * @return void
+	 */
 	public function editar_reparacion()
 	{
 
@@ -59,7 +64,12 @@ class EditarReparacion_controller  extends CI_Controller
 		}
 	}
 
-
+	
+	/**
+	 * do_upload
+	 * Subirá los archivos pasados por post en el campo input->"file"
+	 * @return void
+	 */
 	public function do_upload()
 	{
 
@@ -151,7 +161,14 @@ class EditarReparacion_controller  extends CI_Controller
 			redirect('');
 		}
 	}
-
+	
+	 /**
+     * imagen
+     * Descargará o mostrará el fichero con los siguientes parámetros 
+     * @param  mixed $id_incidencia identificador de incidencia
+     * @param  mixed $nom_arxiu Nombre del archivo
+     * @return void
+     */
 	public function imagen($id_incidencia, $nom_arxiu)
 	{
 		$this->load->helper('download');
@@ -162,7 +179,13 @@ class EditarReparacion_controller  extends CI_Controller
 			force_download('C:\xampp\uploads/' . $id_incidencia . '/' . $nom_arxiu, NULL, TRUE);
 		}
 	}
-
+	
+	/**
+	 * delete_fichero
+	 * Eliminará el fichero que le pasemos por la id, lo eliminará de la base de datos
+	 * @param  mixed $id
+	 * @return void
+	 */
 	public function delete_fichero($id)
 	{
 		$id = $this->input->post('id');

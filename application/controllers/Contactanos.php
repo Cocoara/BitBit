@@ -31,7 +31,12 @@ class Contactanos extends CI_Controller
 		$this->load->library("form_validation");
 		$this->load->library("ion_auth");
 	}
-
+	
+	/**
+	 * index
+	 * Mostrará la vista de la consulta pública
+	 * @return void
+	 */
 	public function index()
 	{
 

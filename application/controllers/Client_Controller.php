@@ -3,6 +3,12 @@
 class Client_Controller  extends CI_Controller
 {
 
+    /** 
+    * @param $data['badgeMail'] Mostrará el número de mensajes disponibles del usuario logueado
+    * @param $data['user'] Mostrará toda la información del usuario loqueado
+    */
+
+
     public function __construct()
     {
         parent::__construct();
@@ -23,7 +29,12 @@ class Client_Controller  extends CI_Controller
             return;
         }
     }
-
+    
+    /**
+     * generateForUuid
+     * Mostrará la vista del generador de pdfs opr UUID
+     * @return void
+     */
     public function generateForUuid()
     {
 
@@ -44,7 +55,18 @@ class Client_Controller  extends CI_Controller
             $this->load->view('templates/footer');
         }
     }
-
+    
+    /**
+     * fichaUUID
+     * Mostrará una vista que generará un pdf con la información siguiente:
+     * @param $data['ficheros'] los ficheros adjuntados a la incidencia
+     * 
+     * INNER JOINS => de ID -> nombre
+     * @param $data['incidencia'] nombre de los tecnicos de la incidencia en lugar del id
+     * @param $data['incidenciaEsatdo'] estado de la incidencia mostrando la descripcion en lugar del id 
+     * @param $data['incidenciaCliente'] nombre del cliente en lugar del id
+     * @return void
+     */
     public function fichaUUID()
     {
 
@@ -74,7 +96,13 @@ class Client_Controller  extends CI_Controller
             }
         }
     }
-
+    
+    /**
+     * fichaUUIDApp
+     * Generará la misma información, esta para la aplicación através de un uuid
+     * @param  mixed $uuid Se pasará por get i generará el pdf a partir del uuid de la incidencia
+     * @return void
+     */
     public function fichaUUIDApp($uuid)
     {
         $this->load->library('Pdf');

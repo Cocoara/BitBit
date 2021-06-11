@@ -14,7 +14,12 @@ class Login_controller  extends CI_Controller
         $this->load->library("ion_auth");
     }
 
-
+    
+    /**
+     * login
+     * Función que efectuará el login con la librería Ion_auth
+     * @return void
+     */
     public function login()
     {
 
@@ -48,7 +53,12 @@ class Login_controller  extends CI_Controller
         
     }
 
-
+    
+    /**
+     * logout
+     * Cerrará session y redireccionará al inicio público
+     * @return void
+     */
     public function logout()
     {
         $this->ion_auth->logout();

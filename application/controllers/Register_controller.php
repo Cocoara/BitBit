@@ -24,7 +24,12 @@ class Register_controller  extends CI_Controller
 	}
 
 
-
+	
+	/**
+	 * create_user
+	 * Función que valida los datos i añade un nuevo usuario a la base de datos 
+	 * @return void
+	 */
 	public function create_user()
 	{
 		$this->form_validation->set_rules('username', $this->lang->line('create_user_validation_fname_label'), 'trim|required');

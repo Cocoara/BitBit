@@ -15,7 +15,12 @@ class editarReparacionGestor_controller  extends CI_Controller
 		$this->load->library("form_validation");
 		$this->load->library("ion_auth");
 	}
-
+	
+	/**
+	 * index
+	 * Mostrará la vista de edicción de incidencia del Gestor
+	 * @return void
+	 */
 	public function index()
 	{
 
@@ -32,7 +37,12 @@ class editarReparacionGestor_controller  extends CI_Controller
 	}
 
 
-
+	
+	/**
+	 * editar_reparacion
+	 * Editará la información de la incidencia en la parte del gestor
+	 * @return void
+	 */
 	public function editar_reparacion()
 	{
 		$id_incidencia = $this->input->post('id_incidencia');

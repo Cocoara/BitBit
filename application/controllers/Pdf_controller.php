@@ -13,7 +13,13 @@ class Pdf_controller  extends CI_Controller
         $this->load->library('Pdf');
     }
 
-
+    
+    /**
+     * index
+     * Ejemplo del generador de pdfs(No es el original)
+     * @param  mixed $noticia
+     * @return void
+     */
     public function index($noticia)
     {
             $data['noticia'] = $this->noticies_model->get_noticies_by_id($noticia);

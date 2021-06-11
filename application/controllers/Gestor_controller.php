@@ -19,7 +19,12 @@ class Gestor_controller extends CI_Controller
         $this->load->library("ion_auth");
         $this->load->model('users_model');
     }
-
+    
+    /**
+     * todasLasIncidencias
+     * Mostrará la tabla Grocery CRUD de la parte del Gestor
+     * @return void
+     */
     public function todasLasIncidencias()
     {
         if ($this->ion_auth->in_group('gestor')) {
@@ -52,7 +57,12 @@ class Gestor_controller extends CI_Controller
         }
     }
 
-
+    
+    /**
+     * changePassword
+     * Cambio de contraseña de la parte gestor
+     * @return void
+     */
     public function changePassword()
     {
         $data['user'] = $this->ion_auth->user()->row();
@@ -63,7 +73,13 @@ class Gestor_controller extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-
+    
+    /**
+     * uuid_callback
+     * Generará un UUID para asignarlo en las nuevas incidencias
+     * @param  mixed $post_array
+     * @return void
+     */
     function uuid_callback($post_array)
     {   
         $this->load->library('uuid');
@@ -77,7 +93,13 @@ class Gestor_controller extends CI_Controller
         return  $post_array;
         
     }
-
+    
+    /**
+     * output
+     * Salida de las vistas de la librería Grocery CRUD
+     * @param  mixed $output
+     * @return void
+     */
     function output($output = null)
     {
         $user = $this->ion_auth->user()->row();

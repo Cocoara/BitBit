@@ -32,7 +32,12 @@ class Home extends CI_Controller
 		$this->load->library("form_validation");
 		$this->load->library("ion_auth");
 	}
-
+	
+	/**
+	 * index
+	 * Mostrará la vista de Inicio en función del usuario logueado
+	 * @return void
+	 */
 	public function index()
 	{
 		if (!$this->ion_auth->logged_in()) {
@@ -114,7 +119,12 @@ class Home extends CI_Controller
 		$this->load->view('templates/footer');
 	}
 
-
+	
+	/**
+	 * listado
+	 * Listará todas las noticias de la base de datos
+	 * @return void
+	 */
 	public function listado()
 	{
 		$data['noticies'] = $this->noticies_model->get_noticies();

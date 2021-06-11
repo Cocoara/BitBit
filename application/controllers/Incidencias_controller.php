@@ -31,7 +31,12 @@ class Incidencias_controller extends CI_Controller
 		$this->load->library("form_validation");
 		$this->load->library("ion_auth");
 	}
-
+	
+	/**
+	 * index
+	 * Mostrará la vista de las incidencias según el usuario logueado
+	 * @return void
+	 */
 	public function index()
 	{
 
@@ -91,7 +96,12 @@ class Incidencias_controller extends CI_Controller
 		
 	}
 
-
+	
+	/**
+	 * listado
+	 * listará todas las noticias
+	 * @return void
+	 */
 	public function listado()
 	{
 		$data['noticies'] = $this->noticies_model->get_noticies();

@@ -15,7 +15,12 @@ class Mensajes_controller  extends CI_Controller
 		$this->load->library("form_validation");
 		$this->load->library("ion_auth");
 	}
-
+	
+	/**
+	 * contactanosPeticion
+	 * Enviará la información sobre la petición hecha por el cliente en la parte publica
+	 * @return void
+	 */
 	public function contactanosPeticion()
 	{
 		$first_name = $this->input->post('first_name');
@@ -34,7 +39,12 @@ class Mensajes_controller  extends CI_Controller
 			redirect('');
 		}
 	}
-
+	
+	/**
+	 * myMessages
+	 * Mostrará los mensajes del usuario logueado
+	 * @return void
+	 */
 	public function myMessages(){
 		if (!$this->ion_auth->logged_in()) {
 			$this->load->view('templates/header');
@@ -100,7 +110,12 @@ class Mensajes_controller  extends CI_Controller
 		$this->load->view('templates/footer');
 	}
 
-
+	
+	/**
+	 * mensajeria
+	 * Mostrará la vista con los mensajes de cada usuario
+	 * @return void
+	 */
 	public function mensajeria()
 	{
 		if (!$this->ion_auth->logged_in()) {
@@ -168,7 +183,12 @@ class Mensajes_controller  extends CI_Controller
 
 		$this->load->view('templates/footer');
 	}
-
+	
+	/**
+	 * setMensaje
+	 * Recogerá los datos del formulario para poder enviar el mensaje
+	 * @return void
+	 */
 	public function setMensaje()
 	{
 		$to = $this->input->post('to');
@@ -185,7 +205,13 @@ class Mensajes_controller  extends CI_Controller
 			redirect('mensajeriaClient');
 		}
 	}
-
+	
+	/**
+	 * delete_mensaje
+	 * Función que elimina el mensaje por identificador
+	 * @param  mixed $id
+	 * @return void
+	 */
 	public function delete_mensaje($id){
 			$id= $this->input->post('id');
 			$this->mensajes_model->delete_mensaje_by_id($id);

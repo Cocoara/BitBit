@@ -15,7 +15,12 @@ class NuevaReparacion_controller  extends CI_Controller
 		$this->load->library("ion_auth");
     }
 
-
+    
+    /**
+     * index
+     *	Mostrará la vista para la inserción de una nueva incidencia
+     * @return void
+     */
     public function index()
     {
         if (!$this->ion_auth->logged_in()) {
