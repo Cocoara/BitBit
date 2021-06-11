@@ -32,7 +32,12 @@ class ApiJwt_controller extends JwtAPI_Controller
 
         $this->login($user, $pass);
     }
-
+    
+    /**
+     * homeinfo_get
+     * Devolverá la respuesta sobre la información de inicio (pública)
+     * @return void
+     */
     public function homeinfo_get()
     {
         $homeinfo = $this->api_model->get_homeinfo();
@@ -45,7 +50,12 @@ class ApiJwt_controller extends JwtAPI_Controller
             ], 404);
         }
     }
-
+    
+    /**
+     * temas_get
+     * Devolverá la respuesta sobre los temas de las consultas
+     * @return void
+     */
     public function temas_get()
     {
         $temas = $this->api_model->get_temasConsulta();
@@ -54,11 +64,16 @@ class ApiJwt_controller extends JwtAPI_Controller
         } else {
             $this->response([
                 'status' => false,
-                'message' => 'No home information available'
+                'message' => 'No hay temas que devolver'
             ], 404);
         }
     }
-
+    
+    /**
+     * estadosIncidencia_get
+     * Devolverá la respuesta sobre los estados de la incidencia
+     * @return void
+     */
     public function estadosIncidencia_get()
     {
         $estados = $this->api_model->get_estadosIncidencia();
@@ -67,11 +82,16 @@ class ApiJwt_controller extends JwtAPI_Controller
         } else {
             $this->response([
                 'status' => false,
-                'message' => 'No home information available'
+                'message' => 'No hay estados que devolver'
             ], 404);
         }
     }
-
+    
+    /**
+     * consulta_post
+     *  Enviará los datos POST sobre la consulta pública 
+     * @return void
+     */
     public function consulta_post()
     {
 
@@ -81,7 +101,6 @@ class ApiJwt_controller extends JwtAPI_Controller
         $correo = $this->post('correo');
         $tema = $this->post('tema');
         $mensaje = $this->post('mensaje');
-        // $this->api_model->set_consulta($nombre,$apellido,$telefono,$correo,$tema,$mensaje);
 
         if ($this->api_model->set_consulta($nombre, $apellido, $telefono, $correo, $tema, $mensaje)) {
             $message = [
@@ -111,7 +130,12 @@ class ApiJwt_controller extends JwtAPI_Controller
             $this->set_response($message, RestController::HTTP_BAD_REQUEST); // BAD_REQUEST (400)            
         }
     }
-
+    
+    /**
+     * noticies_post
+     * Enviará los datos POST sobre las noticias generales 
+     * @return void
+     */
     public function noticies_post()
     {
 
@@ -653,6 +677,7 @@ class ApiJwt_controller extends JwtAPI_Controller
 
             if ($incidenciaUpdate) {
                 $message = [
+                    'incidenciaUpdate' => $incidenciaUpdate,
                     'status' => RestController::HTTP_OK,
                     'token' => $jwt
                 ];

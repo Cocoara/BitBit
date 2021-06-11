@@ -20,6 +20,13 @@ class Admin_controller extends CI_Controller
         $this->load->model('users_model');
     }
 
+    
+        
+    /**
+     * adminUsuarios
+     * Crea una tabla en grocery crud para poder administrar los usuarios sólamente si eres Admin
+     * @return void
+     */
     public function adminUsuarios()
     {
         if ($this->ion_auth->in_group('admin')) {
@@ -39,7 +46,13 @@ class Admin_controller extends CI_Controller
             redirect('');
         }
     }
-
+    
+    /**
+     * pass_hash
+     * Cifrará la contraseña y la guardará en la base de datos
+     * @param  mixed $post_array es la contraseña sin cifrar
+     * @return void 
+     */
     public function pass_hash($post_array)
     {
         $passwordHashed = $this->ion_auth_model->hash_password($post_array['password'], FALSE, FALSE);
@@ -51,7 +64,13 @@ class Admin_controller extends CI_Controller
         return true;
     }
 
-
+    
+    /**
+     * prevent_delete_admin
+     * Evitará la eliminación del usuario Admin
+     * @param  mixed $primary_key
+     * @return void
+     */
     public function prevent_delete_admin($primary_key)
     {
         if ($primary_key == 33) {
@@ -63,7 +82,12 @@ class Admin_controller extends CI_Controller
 
 
 
-
+    
+    /**
+     * user_groups
+     *  Crea una tabla en grocery crud para poder administrar los usuarios
+     * @return void
+     */
     public function user_groups()
     {
         $crud = new grocery_CRUD();
@@ -74,7 +98,12 @@ class Admin_controller extends CI_Controller
 
         $this->output($output);
     }
-
+    
+    /**
+     * groups
+     * Crea una tabla en grocery crud para poder administrar los grupos de los usuarios
+     * @return void
+     */
     public function groups()
     {
         $crud = new grocery_CRUD();
@@ -84,7 +113,12 @@ class Admin_controller extends CI_Controller
 
         $this->output($output);
     }
-
+    
+    /**
+     * incidencia
+     * Crea una tabla en grocery crud para poder administrar las incidencias
+     * @return void
+     */
     public function incidencia()
     {
         $crud = new grocery_CRUD();
@@ -93,7 +127,12 @@ class Admin_controller extends CI_Controller
 
         $this->output($output);
     }
-
+    
+    /**
+     * infocontacto
+     * Crea una tabla en grocery crud para poder administrar la información del contacto
+     * @return void
+     */
     public function infocontacto()
     {
         $crud = new grocery_CRUD();
@@ -103,6 +142,12 @@ class Admin_controller extends CI_Controller
         $this->output($output);
     }
 
+        
+    /**
+     * mail
+     * Crea una tabla en grocery crud para poder enviar correos (inactivo)
+     * @return void
+     */
     public function mail()
     {
         $crud = new grocery_CRUD();
@@ -111,7 +156,12 @@ class Admin_controller extends CI_Controller
 
         $this->output($output);
     }
-
+    
+    /**
+     * noticias
+     * Crea una tabla en grocery crud para poder administrar noticias
+     * @return void
+     */
     public function noticias()
     {
         $crud = new grocery_CRUD();
@@ -125,7 +175,12 @@ class Admin_controller extends CI_Controller
 
         $this->output($output);
     }
-
+    
+    /**
+     * homeinfo
+     * Crea una tabla en grocery crud para poder administrar la información de inicio
+     * @return void
+     */
     public function homeinfo()
     {
         $crud = new grocery_CRUD();
@@ -137,7 +192,12 @@ class Admin_controller extends CI_Controller
 
         $this->output($output);
     }
-
+    
+    /**
+     * material
+     * Crea una tabla en grocery crud para poder administrar material
+     * @return void
+     */
     public function material()
     {
         $crud = new grocery_CRUD();
@@ -146,7 +206,12 @@ class Admin_controller extends CI_Controller
 
         $this->output($output);
     }
-
+    
+    /**
+     * tipoConsulta
+     * Crea una tabla en grocery crud para poder administrar el tipo de consulta que pueden hacer los clientes antes de registrarse (parte pública)
+     * @return void
+     */
     public function tipoConsulta()
     {
         $crud = new grocery_CRUD();
@@ -156,7 +221,12 @@ class Admin_controller extends CI_Controller
 
         $this->output($output);
     }
-
+    
+    /**
+     * consulta
+     * Crea una tabla en grocery crud para poder administrar las consultas hechas por los clientes
+     * @return void
+     */
     public function consulta()
     {
         if ($this->ion_auth->in_group('admin')) {
@@ -181,7 +251,12 @@ class Admin_controller extends CI_Controller
         }
     }
 
-
+    
+    /**
+     * changePassword
+     * Mostrará la vista que permitirá cambiar la contraseña del usuario
+     * @return void
+     */
     public function changePassword()
     {
 
@@ -191,7 +266,13 @@ class Admin_controller extends CI_Controller
         $this->load->view('pages/changePassword.php');
     }
 
-
+    
+    /**
+     * outputGestor
+     * Es la función que renderizara la vista de las tablas del Grocery CRUD del gestor
+     * @param  mixed $output
+     * @return void
+     */
     function outputGestor($output = null)
     {
         $user = $this->ion_auth->user()->row();
@@ -206,7 +287,13 @@ class Admin_controller extends CI_Controller
         $this->load->view('grocery/index.php', $output);
         $this->load->view('templates/footer');
     }
-
+    
+    /**
+     * output
+     * La función que renderiza las tablas del Grocery CRUD
+     * @param  mixed $output
+     * @return void
+     */
     function output($output = null)
     {
         $user = $this->ion_auth->user()->row();
@@ -221,7 +308,13 @@ class Admin_controller extends CI_Controller
         $this->load->view('grocery/index.php', $output);
         $this->load->view('templates/footer');
     }
-
+    
+    /**
+     * date_callback
+     * Devolverá la data de hoy
+     * @param  mixed $post_array
+     * @return void
+     */
     function date_callback($post_array)
     {
         $data = date('d-m-y');
@@ -231,7 +324,14 @@ class Admin_controller extends CI_Controller
     }
 
     // GET PUBLIC IMAGES CONTROLLERS
-
+    
+    /**
+     * public_imagen
+     * Descargará o mostrará el fichero con los siguientes parámetros
+     * @param  mixed $id_incidencia identificador de incidencia
+     * @param  mixed $nom_arxiu Nombre del archivo
+     * @return void
+     */
     public function public_imagen($id_incidencia, $nom_arxiu)
     {
         $this->load->helper('download');
