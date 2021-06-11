@@ -140,6 +140,7 @@ $route['tipoConsulta/(:any)/(:any)'] = 'Admin_controller/tipoConsulta/$1/$2';
     $route['private/incidencias/(:any)'] = "ApiJwt_controller/incidencias/$1";
     $route['private/incidenciasTecnico/(:any)'] = "ApiJwt_controller/incidenciasTecnico/$1";
     $route['private/incidenciaById/(:any)'] = "ApiJwt_controller/incidenciaById/$1";
+    $route['private/updateIncidencia/(:any)'] = "ApiJwt_controller/updateIncidencia/$1";
     
     // MESSAGES 
     $route['private/getmessages/(:any)'] = "ApiJwt_controller/getMessages/$1";

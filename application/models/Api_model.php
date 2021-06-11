@@ -110,7 +110,6 @@ class Api_model  extends CI_Model
         return $query->result_array();
     }
 
-
     public function set_noticia_api($id, $date, $title, $subtitle, $content)
     {
         $data = array(
@@ -188,6 +187,24 @@ class Api_model  extends CI_Model
     }
 
 
+    public function set_UpdateIncidencia($id_incidencia, $id_Estado, $Fecha_entrada, $desc_averia, $uuid, $Marca, $Modelo, $Numerio_serio, $Diagnostico_prev, $tiempo_reparacion, $descripcion_gestor, $material, $canvasImage){
+        $data = array(
+            'id_Estado' => $id_Estado,
+            'Fecha_entrada' => $Fecha_entrada,
+            'desc_averia' => $desc_averia,
+            'uuid' => $uuid,
+            'Marca' => $Marca,
+            'Modelo' => $Modelo,
+            'Numero_serie' => $Numerio_serio,
+            'Diagnostico_prev' => $Diagnostico_prev,
+            'tiempo_reparcion' => $tiempo_reparacion,
+            'descripcion_gestor' => $descripcion_gestor,
+            'material' => $material,
+            'canvasImage' => $canvasImage
+        );
+        $this->db->where('id_incidencia', $id_incidencia);
+        return $this->db->update('incidencia', $data);
+    }
 
     //    ----------------------------------------------------------------
 

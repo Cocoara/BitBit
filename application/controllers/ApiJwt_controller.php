@@ -174,6 +174,7 @@ class ApiJwt_controller extends JwtAPI_Controller
                 $message = [
                     'id' => $this->delete('id'),
                     'status' => RestController::HTTP_NOT_MODIFIED,
+                    'token' => $jwt,
                     'message' => validation_errors()
                 ];
                 $this->set_response($message, RestController::HTTP_NOT_MODIFIED); // BAD_REQUEST (400)            
@@ -249,6 +250,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             } else {
                 $this->response([
                     'status' => false,
+                    'token' => $jwt,
                     'message' => 'No home information available'
                 ], 404);
             }
@@ -281,6 +283,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             } else {
                 $this->response([
                     'status' => false,
+                    'token' => $jwt,
                     'message' => 'No home information available'
                 ], 404);
             }
@@ -313,6 +316,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             } else {
                 $this->response([
                     'status' => false,
+                    'token' => $jwt,
                     'message' => 'No notification information available'
                 ], 404);
             }
@@ -346,6 +350,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             } else {
                 $this->response([
                     'status' => false,
+                    'token' => $jwt,
                     'message' => 'No notification information available'
                 ], 404);
             }
@@ -379,6 +384,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             } else {
                 $this->response([
                     'status' => false,
+                    'token' => $jwt,
                     'message' => 'No notification information available'
                 ], 404);
             }
@@ -418,6 +424,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             } else {
                 $this->response([
                     'status' => false,
+                    'token' => $jwt,
                     'message' => 'No notification information available'
                 ], 404);
             }
@@ -451,6 +458,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             } else {
                 $this->response([
                     'status' => false,
+                    'token' => $jwt,
                     'message' => 'No notification information available'
                 ], 404);
             }
@@ -483,6 +491,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             } else {
                 $this->response([
                     'status' => false,
+                    'token' => $jwt,
                     'message' => 'No notification information available'
                 ], 404);
             }
@@ -524,6 +533,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             } else {
                 $this->response([
                     'status' => false,
+                    'token' => $jwt,
                     'message' => 'No notification information available'
                 ], 404);
             }
@@ -563,6 +573,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             } else {
                 $this->response([
                     'status' => false,
+                    'token' => $jwt,
                     'message' => 'No notification information available'
                 ], 404);
             }
@@ -603,6 +614,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             } else {
                 $this->response([
                     'status' => false,
+                    'token' => $jwt,
                     'message' => 'No home information available'
                 ], 404);
             }
@@ -615,8 +627,64 @@ class ApiJwt_controller extends JwtAPI_Controller
             $this->set_response($message, $this->auth_code); // 400 / 401 / 419 / 500
         }
     }
+
+    public function updateIncidencia_post()
+    {
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+        if ($this->auth_request()) {
+
+            $jwt = $this->renewJWT();
+
+            $id_incidencia = $this->post('id_incidencia');
+            $id_Estado = $this->post('id_Estado');
+            $Fecha_entrada = $this->post('Fecha_entrada');
+            $desc_averia = $this->post('desc_averia');
+            $uuid = $this->post('uuid');
+            $Marca = $this->post('Marca');
+            $Modelo = $this->post('Modelo');
+            $Numerio_serio = $this->post('Numerio_serio');
+            $Diagnostico_prev = $this->post('Diagnostico_prev');
+            $tiempo_reparacion = $this->post('tiempo_reparacion');
+            $descripcion_gestor = $this->post('descripcion_gestor');
+            $material = $this->post('material');
+            $canvasImage = $this->post('canvasImage');
+
+            $incidenciaUpdate = $this->api_model->set_UpdateIncidencia($id_incidencia, $id_Estado, $Fecha_entrada, $desc_averia, $uuid, $Marca, $Modelo, $Numerio_serio, $Diagnostico_prev, $tiempo_reparacion, $descripcion_gestor, $material, $canvasImage);
+
+            if ($incidenciaUpdate) {
+                $message = [
+                    'status' => RestController::HTTP_OK,
+                    'token' => $jwt
+                ];
+                $this->response($message, RestController::HTTP_OK); // CREATED (201) being the HTTP response code
+            } else {
+                $this->response([
+                    'status' => false,
+                    'token' => $jwt,
+                    'message' => 'No notification information available'
+                ], 404);
+            }
+        } else {
+            $message = [
+                'status' => $this->auth_code,
+                'token' => $this->token,
+                'message' => 'Bad auth information. ' . $this->error_message
+            ];
+            $this->response($message, $this->auth_code); // 400 / 401 / 419 / 500
+        }
+    }
+
     
     // OPTIONS OF API Models
+
+    public function  updateIncidencia_options()
+    {
+        $this->output->set_header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        $this->output->set_header("Access-Control-Allow-Methods: POST, OPTIONS");
+        $this->output->set_header("Access-Control-Allow-Origin: *");
+
+        $this->response(null, API_Controller::HTTP_OK);
+    }
 
     public function incidenciaById_options()
     {
