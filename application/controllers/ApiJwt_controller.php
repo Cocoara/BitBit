@@ -32,7 +32,7 @@ class ApiJwt_controller extends JwtAPI_Controller
 
         $this->login($user, $pass);
     }
-    
+
     /**
      * homeinfo_get
      * Devolverá la respuesta sobre la información de inicio (pública)
@@ -50,7 +50,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             ], 404);
         }
     }
-    
+
     /**
      * temas_get
      * Devolverá la respuesta sobre los temas de las consultas
@@ -68,7 +68,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             ], 404);
         }
     }
-    
+
     /**
      * estadosIncidencia_get
      * Devolverá la respuesta sobre los estados de la incidencia
@@ -86,7 +86,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             ], 404);
         }
     }
-    
+
     /**
      * consulta_post
      *  Enviará los datos POST sobre la consulta pública 
@@ -132,7 +132,7 @@ class ApiJwt_controller extends JwtAPI_Controller
     }
 
 
-        
+
     /**
      * incidencias_get
      *  Devolverá la respuesta sobre las incidencias
@@ -171,7 +171,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             $this->set_response($message, $this->auth_code); // 400 / 401 / 419 / 500
         }
     }
-    
+
     /**
      * incidenciasTecnico_get
      * Devolverá la respuesta sobre las incidencias del tecnico
@@ -210,7 +210,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             $this->set_response($message, $this->auth_code); // 400 / 401 / 419 / 500
         }
     }
-    
+
     /**
      * noticiasByGroup_get
      * Devolverá las incidencias del grupo respectivo
@@ -244,13 +244,13 @@ class ApiJwt_controller extends JwtAPI_Controller
             $message = [
                 'status' => $this->auth_code,
                 'token' => $this->token,
-                'message' => 'Bad auth information. ' . $this->error_message
+                'message' => 'Bad auth information.  ' . $this->error_message
             ];
             $this->response($message, $this->auth_code); // 400 / 401 / 419 / 500
         }
     }
 
-    
+
     /**
      * toMessagesAdmin_get
      *  Devolverá la respuesta de la petición a todos los nombres de usuarios Administradores para la mensajería interna
@@ -289,7 +289,7 @@ class ApiJwt_controller extends JwtAPI_Controller
         }
     }
 
-    
+
     /**
      * toMessagesAll_get
      * Devolverá la respuesta de devolver todos los usuarios, de tal manera los administradores podrán enviar mensajes internos a todos los usuarios 
@@ -328,7 +328,7 @@ class ApiJwt_controller extends JwtAPI_Controller
         }
     }
 
-    
+
     /**
      * sendMessage_post
      * Enviará el mensaje por POST al destinatario pasado por $to
@@ -373,7 +373,7 @@ class ApiJwt_controller extends JwtAPI_Controller
         }
     }
 
-    
+
     /**
      * getMessages_get
      *  Devolverá los mensajes del identificador
@@ -412,7 +412,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             $this->response($message, $this->auth_code); // 400 / 401 / 419 / 500
         }
     }
-    
+
     /**
      * opciones_get
      *  Devolverá la información para el cambio de datos privados del usuario $id
@@ -451,7 +451,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             $this->response($message, $this->auth_code); // 400 / 401 / 419 / 500
         }
     }
-    
+
     /**
      * updateOpciones_post
      *  Enviará la petición para el cambio de datos personales
@@ -498,7 +498,7 @@ class ApiJwt_controller extends JwtAPI_Controller
         }
     }
 
-    
+
     /**
      * updateOpcionesWithout_post
      * Enviara por separado la contraseña (en caso de rellenar el campo en la vista de cambio de datos)
@@ -506,7 +506,7 @@ class ApiJwt_controller extends JwtAPI_Controller
      */
     public function updateOpcionesWithout_post()
     {
-        
+
         $this->output->set_header("Access-Control-Allow-Origin: *");
         if ($this->auth_request()) {
 
@@ -544,7 +544,7 @@ class ApiJwt_controller extends JwtAPI_Controller
     }
 
 
-    
+
     /**
      * logout_post
      * Deslogueará al usuario que llame la funcion vía POST
@@ -553,9 +553,15 @@ class ApiJwt_controller extends JwtAPI_Controller
     public function logout_post()
     {
         $this->ion_auth->logout();
+        $message = [
+            'status'=> true,
+            'message' => 'Logout Success',
+        ];
+        $this->response($message, RestController::HTTP_OK); // CREATED (201) being the HTTP response code
+
     }
 
-    
+
     /**
      * incidenciaById_get
      * Devuelve la incidencia que pasemos el id
@@ -594,7 +600,7 @@ class ApiJwt_controller extends JwtAPI_Controller
             $this->set_response($message, $this->auth_code); // 400 / 401 / 419 / 500
         }
     }
-    
+
     /**
      * updateIncidencia_post
      *  Actualizará la incidencia con la informacion pasada por POST
@@ -625,9 +631,9 @@ class ApiJwt_controller extends JwtAPI_Controller
 
             if ($incidenciaUpdate) {
                 $message = [
-                    'incidenciaUpdate' => $incidenciaUpdate,
                     'status' => RestController::HTTP_OK,
-                    'token' => $jwt
+                    'token' => $jwt,
+                    'incidenciaUpdate' => $incidenciaUpdate
                 ];
                 $this->response($message, RestController::HTTP_OK); // CREATED (201) being the HTTP response code
             } else {
@@ -647,9 +653,9 @@ class ApiJwt_controller extends JwtAPI_Controller
         }
     }
 
-    
+
     // OPTIONS OF API Models
-    
+
     /**
      * Opciones de las API para evitar errores CORS Policy
      *

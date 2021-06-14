@@ -127,15 +127,15 @@ $route['tipoConsulta/(:any)/(:any)'] = 'Admin_controller/tipoConsulta/$1/$2';
     $route['public/homeinfo'] = "ApiJwt_controller/homeinfo";
     $route['public/temasConsulta'] = "ApiJwt_controller/temas";
     $route['public/consulta'] = "ApiJwt_controller/consulta"; 
-    $route['private/estadosIncidencia'] = "ApiJwt_controller/estadosIncidencia";
-
-
+    
+    
     // LOGIN & LOGOUT
     $route['private/login'] = "ApiJwt_controller/params";
     $route['private/logout'] = "ApiJwt_controller/logout";
     
     
     // PRIVATE INFO 
+    $route['private/estadosIncidencia'] = "ApiJwt_controller/estadosIncidencia";
     $route['private/noticiasByGroup/(:any)'] = "ApiJwt_controller/noticiasByGroup/$1";
     $route['private/incidencias/(:any)'] = "ApiJwt_controller/incidencias/$1";
     $route['private/incidenciasTecnico/(:any)'] = "ApiJwt_controller/incidenciasTecnico/$1";
